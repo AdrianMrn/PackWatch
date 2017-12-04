@@ -65,25 +65,34 @@ function readNFC(nfcEvent){
         // dump the raw json of the message
         // note: real code will need to decode
         // the payload from each record
-        alert(JSON.stringify(ndefMessage));
+        // alert(JSON.stringify(ndefMessage));
+
+        navigator.vibrate(500);
+        
 
         // assuming the first record in the message has
         // a payload that can be converted to a string.
-        alert(nfc.bytesToString(ndefMessage[0].payload));
+        var message = nfc.bytesToString(ndefMessage[0].payload);
+        
+        alert( message.substring(3) );
     
 }
 
 function writeNFC(){
     alert("Gelieve de NFC tag tegen de gsm te houden aub");
+    var input_value = document.getElementById('input_message').value
     var message = [
-        ndef.textRecord("Hello World"),
+        ndef.textRecord(input_value),
     ];
     
     nfc.write(message, function () { // success callback
+        navigator.vibrate(500);
         alert("Write succesfull " + message[0]);
     },
     function (error) { // error callback
+        navigator.vibrate([100, 100, 300]);
         alert("Error writing: " + message[0] + JSON.stringify(error));
+
     });
 }
 function readTag() {
