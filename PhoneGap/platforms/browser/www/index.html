@@ -39,16 +39,38 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <title>Hello World</title>
+    <title>PackWatch</title>
 </head>
+<style>
+    button {
+    height: 35px;
+    width: 100px;
+    border-radius: 12px;
+    margin: 5px;
+    background: white;
+    box-shadow: #9e9e9e 3px 3px 3px;
+    }
+    #stop {
+        background-color:#f78080;
+    }
+</style>
 
 <body>
     <div class="app">
-        <h1>PhoneGap</h1>
+        <h1>PackWatch</h1>
         <div id="deviceready" class="blink">
             <p class="event listening">Connecting to Device</p>
             <p class="event received">Device is Ready</p>
+            
+            <hr>
+            
         </div>
+        <button type="submit" id="start">Tag lezen starten</button>
+        <button type="submit" id="stop">Tag lezen stoppen</button>
+        <br>
+        <input type="text" id="input_message">
+        <button type="submit" id="write">Tag Schrijven</button>
+    </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>

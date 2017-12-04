@@ -34,30 +34,15 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        document.getElementById("start").addEventListener("click", readTag, false);
+        document.getElementById("stop").addEventListener("click", dontReadTag, false);
+        document.getElementById("write").addEventListener("click", writeNFC, true);
 
-        // Read NDEF formatted NFC Tags
-        nfc.addNdefListener (
-            function (nfcEvent) {
-                var tag = nfcEvent.tag,
-                    ndefMessage = tag.ndefMessage;
+        
 
-                // dump the raw json of the message
-                // note: real code will need to decode
-                // the payload from each record
-                alert(JSON.stringify(ndefMessage));
-
-                // assuming the first record in the message has
-                // a payload that can be converted to a string.
-                alert(nfc.bytesToString(ndefMessage[0].payload));
-            },
-            function () { // success callback
-                alert("Waiting for NDEF tag");
-            },
-            function (error) { // error callback
-                alert("Error adding NDEF listener " + JSON.stringify(error));
-            }
-        );
+       
     },
+    
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
@@ -68,5 +53,79 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
-    }
+    }, 
+
+  
 };
+function readNFC(nfcEvent){
+   
+        var tag = nfcEvent.tag,
+            ndefMessage = tag.ndefMessage;
+
+        // dump the raw json of the message
+        // note: real code will need to decode
+        // the payload from each record
+        // alert(JSON.stringify(ndefMessage));
+
+        navigator.vibrate(500);
+        
+
+        // assuming the first record in the message has
+        // a payload that can be converted to a string.
+        var message = nfc.bytesToString(ndefMessage[0].payload);
+        
+        alert( message.substring(3) );
+    
+}
+
+function writeNFC(){
+    alert("Gelieve de NFC tag tegen de gsm te houden aub");
+    var input_value = document.getElementById('input_message').value
+    var message = [
+        ndef.textRecord(input_value),
+    ];
+    
+    nfc.write(message, function () { // success callback
+        navigator.vibrate(500);
+        alert("Write succesfull " + message[0]);
+    },
+    function (error) { // error callback
+        navigator.vibrate([100, 100, 300]);
+        alert("Error writing: " + message[0] + JSON.stringify(error));
+
+    });
+}
+function readTag() {
+    alert('Tag gaat gelezen worden')
+    // Read NDEF formatted NFC Tags
+    nfc.addNdefListener (
+        readNFC
+       ,
+       function () { // success callback
+        document.getElementById("start").style.backgroundColor = "#a5ff82";
+        document.getElementById("stop").style.backgroundColor = "white";
+       },
+       function (error) { // error callback
+           alert("Error adding NDEF listener " + JSON.stringify(error));
+       }
+   );
+}
+
+function dontReadTag() {
+
+    alert('Tag gaat niet meer gelezen worden');
+    nfc.removeNdefListener(
+        readNFC
+        ,
+        function () { // success callback
+            alert("Succesfull stopped listening");
+            document.getElementById("stop").style.backgroundColor = "#f78080";
+            document.getElementById("start").style.backgroundColor = "white";
+        },
+        function (error) { // error callback
+            alert("Error stopped listening");
+        }
+    );
+ }
+
+
