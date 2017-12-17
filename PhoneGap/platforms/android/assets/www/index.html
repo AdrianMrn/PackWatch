@@ -63,7 +63,7 @@
 <body>
     <div id="app" class="app">
             <v-app>
-                    <v-toolbar color="pink">
+                    <v-toolbar :active.sync="e2" :color="computedColor">
                             <v-toolbar-side-icon></v-toolbar-side-icon>
                             <v-toolbar-title class="white--text">Packwatch</v-toolbar-title>
                             <v-spacer></v-spacer>
@@ -82,8 +82,8 @@
                                 
                             </div>
                             <div>
-                                <v-btn color="success" dark block type="submit"  id="start">Tag lezen starten</v-btn>
-                                <v-btn color="error" dark block type="submit" id="stop">Tag lezen stoppen</v-btn>
+                                <v-btn v-if="startNFC" v-on:click="startNFC = false; stopNFC = true" color="success" dark block type="submit"  id="start">Tag lezen starten</v-btn>
+                                <v-btn v-if="stopNFC" v-on:click="stopNFC = false; startNFC = true" color="error" dark block type="submit" id="stop">Tag lezen stoppen</v-btn>
                             </div>
                             <div>
                                 <hr>

@@ -2,10 +2,11 @@ new Vue({
     el: '#app',
     data () {
       return {
-        e2: 0
+        e2: 0,
+        startNFC: true,
+        stopNFC: false
       }
     },
-  
     computed: {
       computedColor () {
         switch (this.e2) {
