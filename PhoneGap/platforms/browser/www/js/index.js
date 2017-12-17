@@ -37,7 +37,7 @@ var app = {
         document.getElementById("start").addEventListener("click", readTag, false);
         document.getElementById("stop").addEventListener("click", dontReadTag, false);
         document.getElementById("write").addEventListener("click", writeNFC, true);
-
+        document.getElementById("stop").hide();
         
 
        
@@ -102,8 +102,8 @@ function readTag() {
         readNFC
        ,
        function () { // success callback
-        document.getElementById("start").style.backgroundColor = "#a5ff82";
-        document.getElementById("stop").style.backgroundColor = "white";
+        document.getElementById("start").fadeIn('fast');
+        document.getElementById("stop").fadeOut('fast');
        },
        function (error) { // error callback
            alert("Error adding NDEF listener " + JSON.stringify(error));
@@ -119,13 +119,19 @@ function dontReadTag() {
         ,
         function () { // success callback
             alert("Succesfull stopped listening");
-            document.getElementById("stop").style.backgroundColor = "#f78080";
-            document.getElementById("start").style.backgroundColor = "white";
+            document.getElementById("stop").fadeIn('fast');
+            document.getElementById("start").fadeOut('fast');
         },
         function (error) { // error callback
             alert("Error stopped listening");
         }
     );
  }
+
+
+ 
+
+
+ 
 
 
