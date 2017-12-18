@@ -16,17 +16,16 @@ Route::get('/', function () {
     /* return ("kek"); */
 });
 
-Route::get('kek', function () {
+Route::get('/kek', function () {
     return "kek";
 });
 
 Auth::routes();
 
-/* Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('item', 'ItemController');
 Route::resource('pack', 'PackController');
 Route::resource('linkitemspacks', 'LinkitemspacksController');
 Route::resource('schedule', 'ScheduleController');
 Route::resource('user', 'UserController');
- */

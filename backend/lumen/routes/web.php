@@ -15,6 +15,9 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('/kek', function () use ($router) {
+    return ("lol wat");
+});
 
 Route::resource('item', 'ItemController');
 Route::resource('pack', 'PackController');
