@@ -19,8 +19,8 @@ new Vue({
           case 2:
             return 'brown'
           break
-          case 4:
-            return 'brown lighten-1'
+          case 3:
+            return 'lime darken-3'
           break
         }
       }

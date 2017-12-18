@@ -78,29 +78,26 @@
                                 <p class="event listening">Connecting to Device</p>
                                 <p class="event received">Device is Ready</p>
                                 
-                                <hr>
+                                
                                 
                             </div>
-                            <div>
-                                <v-btn v-if="startNFC" v-on:click="startNFC = false; stopNFC = true" color="success" dark block type="submit"  id="start">Tag lezen starten</v-btn>
-                                <v-btn v-if="stopNFC" v-on:click="stopNFC = false; startNFC = true" color="error" dark block type="submit" id="stop">Tag lezen stoppen</v-btn>
+                            <div class="mt-4">
+                                <v-btn v-if="startNFC" v-on:click="startNFC = false; stopNFC = true" color="light-green darken-1" dark block type="submit"  id="start">Tag lezen starten</v-btn>
+                                <v-btn v-if="stopNFC" v-on:click="stopNFC = false; startNFC = true" color="red darken-1" dark block type="submit" id="stop">Tag lezen stoppen</v-btn>
                             </div>
-                            <div>
-                                <hr>
+                            <div class="mt-5">
+                                
                                     <template>
                                             <v-form v-model="valid">
-                                              <v-text-field
-                                                label="Tag"
-                                                v-model="name"
-                                                :rules="nameRules"
-                                                :counter="10"
-                                                required
-                                              ></v-text-field>
+                                              <v-text-field label="Tag" v-model="name" :rules="nameRules" :counter="10" required id="input_message">
+                                            </v-text-field>
                                               
                                             </v-form>
                                           </template>
-                                    <input type="text" id="input_message">
-                                <v-btn color="primary" dark block type="submit" id="write">Tag schrijven</v-btn>
+                                    <!-- <input type="text" id="input_message"> -->
+                                    <!-- <button type="submit" id="write">Tag Schrijven</button> -->
+
+                                <v-btn color="primary" dark block type="submit" onclick="writeNFC()" id="write">Tag schrijven</v-btn>
                             </div>
                             
                             
@@ -114,11 +111,11 @@
                         >
                           <v-btn dark>
                             <span>Inpakken</span>
-                            <v-icon>ondemand_video</v-icon>
+                            <v-icon>shop</v-icon>
                           </v-btn>
                           <v-btn dark>
                             <span>Pack maken</span>
-                            <v-icon>music_note</v-icon>
+                            <v-icon>shop_two</v-icon>
                           </v-btn>
                           <v-btn dark>
                             <span>Pack bekijen</span>

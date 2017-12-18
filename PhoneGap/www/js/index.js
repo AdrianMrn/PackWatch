@@ -77,7 +77,7 @@ function readNFC(nfcEvent){
 
 function writeNFC(){
     alert("Gelieve de NFC tag tegen de gsm te houden aub");
-    var input_value = document.getElementById('input_message').value
+    var input_value = document.getElementById('input_message').value;
     var message = [
         ndef.textRecord(input_value),
     ];
