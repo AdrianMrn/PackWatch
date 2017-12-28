@@ -41,10 +41,10 @@ class ItemController extends Controller
   public function store(Request $request)
   {
 
-    /* $this->validate($request, [
+    $this->validate($request, [
       'name' => 'required|string|max:255',
       'color' => 'required|string|max:255'
-    ]); */
+    ]);
 
     $user_id = $request->user()->id;
 
@@ -55,7 +55,8 @@ class ItemController extends Controller
     $item->save();
 
     return response()->json([
-      'message' => 'OK'
+      'message' => 'OK',
+      'id' => $item->id
     ]);
   }
 

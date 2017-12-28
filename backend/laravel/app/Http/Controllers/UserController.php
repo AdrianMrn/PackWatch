@@ -4,8 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\User;
+
 class UserController extends Controller 
 {
+
+  public function getPacks(Request $request)
+  {
+    $user_id = $request->user()->id;
+    $user_packs = User::find($user_id)->packs();
+    return $user_packs;
+  }
+
+  public function getItems(Request $request)
+  {
+    $user_id = $request->user()->id;
+    $user_items = User::find($user_id)->user_items();
+    return $user_items;
+  }
 
   /**
    * Display a listing of the resource.

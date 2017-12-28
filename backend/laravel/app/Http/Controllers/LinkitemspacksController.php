@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Linkitemspacks, App\Pack, App\Item;
+
 class LinkitemspacksController extends Controller 
 {
 
@@ -34,7 +36,26 @@ class LinkitemspacksController extends Controller
    */
   public function store(Request $request)
   {
-    
+    // Protecting against other users changing someone's packs/items
+    $user_id = $request->user()->id;
+    $item = Item::where('id', $request->item_id)->firstOrFail();
+    $pack = Pack::where('id', $request->pack_id)->firstOrFail();
+    if ($item->user_id != $user_id || $pack->user_id != $user_id)
+    {
+      return response()->json([
+        'message' => 'incorrect request'
+      ]);
+    }
+
+    $link = new Linkitemspacks;
+    $link->item_id = $request->item_id;
+    $link->pack_id = $request->pack_id;
+    $link->save();
+
+    return response()->json([
+      'message' => 'OK',
+      'id' => $link->id
+    ]);
   }
 
   /**

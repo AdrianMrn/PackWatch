@@ -17,7 +17,7 @@ class Pack extends Model
 
     public function pack()
     {
-        return $this->hasMany('Linkitemspacks');
+        return $this->hasMany('App\Linkitemspacks')->get();
     }
 
     public function packSchedules()
