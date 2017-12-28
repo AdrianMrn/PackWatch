@@ -19,6 +19,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// Register
+Route::post('/register','UserController@create');
+
 //API routes. All of these require a bearer token (see examples in /backend/authtest)
 Route::group(['middleware' => ['auth:api']], function () {
     Route::resources([
@@ -26,7 +29,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         'pack' => 'PackController', // POST to /pack with name & color to create a new pack: responds with message & id of created pack
         'schedule' => 'ScheduleController',
         'link' => 'LinkitemspacksController', // POST to /link with pack_id & item_id to link a pack and an item: responds with message & id of link
-        'user' => 'UserController'
+        /* 'user' => 'UserController' */
     ]);
 
     Route::get('/getuserpacks', 'UserController@getPacks'); // Returns an array of all of a users' packs without the items, no querystring (user id from token)

@@ -72,6 +72,20 @@ function getPackItems(access_token, next) {
     });
 }
 
+function registerUser() {
+    request.post({
+        url: 'http://packwatch.test/register',
+        form: {
+            name: "kekkertop",
+            email: "kekkertop@hotmail.com",
+            password: "kekkertop"
+        }
+    }, function(error, response, body) {
+        console.log(body);
+    });
+}
+/* registerUser(); */
+
 function start() {
     getAccessToken(function(access_token) {
         /* storeItem(access_token, function(response) {
@@ -93,4 +107,4 @@ function start() {
     });
 }
 
-start();
+/* start(); */
