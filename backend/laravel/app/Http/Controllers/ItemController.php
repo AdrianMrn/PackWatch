@@ -4,17 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Item;
+
 class ItemController extends Controller 
 {
+
+  /* public function __construct() {
+  } */
 
   /**
    * Display a listing of the resource.
    *
    * @return Response
    */
-  public function index()
+  public function index(Request $request)
   {
-    return "kek";
+    $user_id = $request->user()->id;
+    return($user_id);
   }
 
   /**
@@ -24,7 +30,7 @@ class ItemController extends Controller
    */
   public function create()
   {
-    
+
   }
 
   /**
@@ -34,7 +40,23 @@ class ItemController extends Controller
    */
   public function store(Request $request)
   {
-    
+
+    /* $this->validate($request, [
+      'name' => 'required|string|max:255',
+      'color' => 'required|string|max:255'
+    ]); */
+
+    $user_id = $request->user()->id;
+
+    $item = new Item;
+    $item->name = $request->name;
+    $item->color = $request->color;
+    $item->user_id = $user_id;
+    $item->save();
+
+    return response()->json([
+      'message' => 'OK'
+    ]);
   }
 
   /**
