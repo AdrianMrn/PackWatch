@@ -40,7 +40,6 @@ class ItemController extends Controller
    */
   public function store(Request $request)
   {
-
     $this->validate($request, [
       'name' => 'required|string|max:255',
       'color' => 'required|string|max:255'
@@ -88,9 +87,31 @@ class ItemController extends Controller
    * @param  int  $id
    * @return Response
    */
-  public function update($id)
+  public function update(Request $request, $id)
   {
-    
+    $this->validate($request, [
+      'name' => 'required|string|max:255',
+      'color' => 'required|string|max:255'
+    ]);
+
+    $user_id = $request->user()->id;
+    $item = Item::where('id', $id)->first();
+    if ($item->user_id != $user_id)
+    {
+      return response()->json([
+        'message' => 'incorrect request'
+      ]);
+    }
+
+    $item->name = $request->name;
+    $item->color = $request->color;
+    $item->user_id = $user_id;
+    $item->save();
+
+    return response()->json([
+      'message' => 'OK',
+      'id' => $item->id
+    ]);
   }
 
   /**

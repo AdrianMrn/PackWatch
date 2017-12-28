@@ -22,6 +22,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Register
 Route::post('/register','UserController@create');
 
+
+
+
+
+
+//DEPRECATED --> USE /API/...
+//
+//
+//
 //API routes. All of these require a bearer token (see examples in /backend/authtest)
 Route::group(['middleware' => ['auth:api']], function () {
     Route::resources([

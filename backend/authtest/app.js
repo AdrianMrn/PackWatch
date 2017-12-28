@@ -16,9 +16,8 @@ function getAccessToken(next) {
 }
 
 function getUserId(access_token, next) {
-    
     request({
-        url: 'http://packwatch.test/item',
+        url: 'http://packwatch.test/api/item',
         headers: {
             Accept: 'application/json',
             Authorization: 'Bearer ' + access_token
@@ -30,7 +29,7 @@ function getUserId(access_token, next) {
 
 function storeItem(access_token, next) {
     request.post({
-        url: 'http://packwatch.test/item',
+        url: 'http://packwatch.test/api/item',
         headers: {
             Accept: 'application/json',
             Authorization: 'Bearer ' + access_token
@@ -44,9 +43,25 @@ function storeItem(access_token, next) {
     });
 }
 
+function updateItem(access_token, next) {
+    request.put({
+        url: 'http://packwatch.test/api/item/2',
+        headers: {
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + access_token
+        },
+        form: {
+            name: "new name",
+            color: "new color"
+        }
+    }, function(error, response, body) {
+        next(body);
+    });
+}
+
 function createLink(access_token, next) {
     request.post({
-        url: 'http://packwatch.test/link',
+        url: 'http://packwatch.test/api/link',
         headers: {
             Accept: 'application/json',
             Authorization: 'Bearer ' + access_token
@@ -62,7 +77,7 @@ function createLink(access_token, next) {
 
 function getPackItems(access_token, next) {
     request({
-        url: 'http://packwatch.test/getpackitems?id=1',
+        url: 'http://packwatch.test/api/getpackitems?id=1',
         headers: {
             Accept: 'application/json',
             Authorization: 'Bearer ' + access_token
@@ -74,7 +89,7 @@ function getPackItems(access_token, next) {
 
 function registerUser() {
     request.post({
-        url: 'http://packwatch.test/register',
+        url: 'http://packwatch.test/api/register',
         form: {
             name: "kekkertop",
             email: "kekkertop@hotmail.com",
@@ -100,11 +115,15 @@ function start() {
             console.log(user_id);
         }); */
 
-        getPackItems(access_token, function(response) {
+        /* getPackItems(access_token, function(response) {
             console.log(response);
-        });
+        }); */
+
+        updateItem(access_token, function(response) {
+            console.log(response);
+        })
         
     });
 }
 
-/* start(); */
+start();
