@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+
+    <!-- <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet"> -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>PackWatch</title>
+</head>
+
+
+<body>
+    <div id="app" class="app">
+           
+
+       
+      
+              <style>
+               
+            
+                body {
+                  background: #fff;
+                }
+            
+                .input-field input[type=date]:focus + label,
+                .input-field input[type=text]:focus + label,
+                .input-field input[type=email]:focus + label,
+                .input-field input[type=password]:focus + label {
+                  color: #e91e63;
+                }
+            
+                .input-field input[type=date]:focus,
+                .input-field input[type=text]:focus,
+                .input-field input[type=email]:focus,
+                .input-field input[type=password]:focus {
+                  border-bottom: 2px solid #e91e63;
+                  box-shadow: none;
+                }
+                .input-field label.active {
+                    transform: translateY(-180%) !important;
+                }
+              </style>
+         
+              <div class="section"></div>
+              <main>
+                <center>
+                <div class="section"></div>
+                  <h5 class="indigo-text">Please register your account</h5>
+                  <div class="section"></div>
+            
+                  <div class="container">
+                    <div class="row" style=" padding: 32px 48px 0px 48px; ">
+            
+                      <form class="col s12" method="post">
+                        
+
+                       
+            
+                        <div class='row'>
+                          <div class='input-field col s12'>
+                            <input class='validate' type='email' name='email' id='email' />
+                            <label for='email'>Enter your email</label>
+                          </div>
+                        </div>
+            
+                        <div class='row'>
+                          <div class='input-field col s12'>
+                            <input class='validate' type='password' name='password' id='password' />
+                            <label for='password'>Enter your password</label>
+                          </div>
+                        </div>
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                <input class='validate' type='password' name='password-repeat' id='password-repeat' />
+                                <label for='password-repeat'>Repeat your password</label>
+                            </div>
+                        </div>
+            
+                        <br>
+                        <center>
+                          <div class='row'>
+                            <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Login</button>
+                          </div>
+                        </center>
+                      </form>
+                    </div>
+                  </div>
+                  <small><p>Already have an accout?</p></small>
+                  <a href="login.html">Login</a>
+                </center>
+            
+                <div class="section"></div>
+                <div class="section"></div>
+              </main>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    
+    <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
+    <script src="js/ui.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+</body>
+
+</html>
