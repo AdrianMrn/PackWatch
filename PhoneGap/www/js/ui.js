@@ -1,4 +1,26 @@
-
+Vue.component('toast', {
+  template: 
+  ` 
+  <v-snackbar
+      :timeout="timeout"
+      :color="color"
+      :multi-line="mode === 'multi-line'"
+      :vertical="mode === 'vertical'"
+      top multi-line
+      v-model="snackbar">
+      <slot></slot>
+      <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
+    </v-snackbar>
+  `,
+  data () {
+    return {
+      snackbar: true,
+      color: '',
+      mode: '',
+      timeout: 6000,
+    }
+  },
+}),
 Vue.component('pack-alert', {
     
 
@@ -32,23 +54,26 @@ new Vue({
         section1: true, 
         section2: false,
         settings_items: [
-          { title: 'Click Me' },
-          { title: 'Click Me' },
-          { title: 'Click Me' },
-          { title: 'Click Me 2' }
+          { title: 'Settings' },
+          { title: 'Add Items' },
+          { title: 'Add Pack' },
+          { title: 'Scan Item' }
         ],
         packs: [
           { id: 0, favorite: true, title: 'Fitness Pack', icon: 'fitness_center' },
           { id: 1, favorite: true, title: 'Bike Pack', icon: 'directions_bike' },
           { id: 2, favorite: true, title: 'Beach Pack', icon: 'beach_access' },
-          { id: 3, favorite: false, title: 'Fitness Pack', icon: 'fitness_center' },
-          { id: 4, favorite: false, title: 'Golf Pack', icon: 'golf_course' },
-          { id: 5, favorite: false, title: 'Bike Pack', icon: 'directions_bike' },
-          { id: 6, favorite: false, title: 'Beach Pack', icon: 'beach_access' },
+          { id: 3, favorite: false, title: 'Fitneess Pack', icon: 'fitness_center' },
+          { id: 4, favorite: false, title: 'Golff Pack', icon: 'golf_course' },
+          { id: 5, favorite: false, title: 'Bikee Pack', icon: 'directions_bike' },
+          { id: 6, favorite: false, title: 'Beaach Pack', icon: 'beach_access' },
           
         //  paginate api from laravel 
         ],
         page: 1,
+        //snackbar
+        snackbar: false,
+        //end
 
     },
     computed: {

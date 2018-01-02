@@ -64,9 +64,10 @@
     <div id="app" class="app">
             <v-app>
                     <v-toolbar :active.sync="e2" :color="computedColor">
-                      <v-toolbar-side-icon></v-toolbar-side-icon>
+                     
+                      <v-icon>assistant</v-icon>
                       <v-toolbar-title class="white--text">Packwatch</v-toolbar-title>
-                      <v-toolbar-title class="subheading black--text ">{{ e1 }}</v-toolbar-title>
+                      <!-- <v-toolbar-title class="subheading black--text ">{{ e1 }}</v-toolbar-title> -->
                       <v-spacer></v-spacer>
                       
                         <v-menu offset-y>
@@ -81,10 +82,12 @@
                         </v-menu>
                     </v-toolbar>
 
-                    
+                    <toast v-model='snackbar'>Ik ben een toast</toast>
                     <v-layout row>
                         <v-flex lg12  offset-lg3>
                           <v-card>
+                            <h2 class="text-xs-center pa-2">Packs</h2>
+                            <v-divider></v-divider>
                             <v-list>
                               <v-list-tile avatar v-for="pack in packs" v-bind:key="pack.title" @click="">
                                 <v-list-tile-action>
@@ -102,31 +105,34 @@
                               </v-list-tile>
                             </v-list>
                           </v-card>
-                          <v-pagination circle :length="6" v-model="page"></v-pagination>
+                          
                         </v-flex>
+                        
                       </v-layout>
-                    
+                      <div style="position:relative;">
+                        <v-pagination circle :length="6" v-model="page" style="position: absolute; bottom:10px; left:50%; transform:translateX(-50%)"></v-pagination>
+                      </div>
                   
-               
+                        <div style="position: relative; height:50px">
                         <v-bottom-nav style="bottom:0;" absolute shift :value="true" :active.sync="e2" :color="computedColor">
                           <v-btn dark v-on:click="e1 = 'Inpakken'; section1 = true; section2 = false;">
-                            <span>Inpakken</span>
+                            <span>menu1</span>
                             <v-icon>shop</v-icon>
                           </v-btn>
                           <v-btn dark v-on:click="e1 = 'Pack maken'; section2 = true; section1 = false">
-                            <span>Pack maken</span>
+                            <span>menu2</span>
                             <v-icon>shop_two</v-icon>
                           </v-btn>
                           <v-btn dark v-on:click="e1 = 'Pack bekijken'">
-                            <span>Pack bekijen</span>
+                            <span>menu3</span>
                             <v-icon>book</v-icon>
                           </v-btn>
                           <v-btn dark v-on:click="e1 = 'Instellingen'">
-                            <span>Instellingen</span>
+                            <span>menu4</span>
                             <v-icon>build</v-icon>
                           </v-btn>
                         </v-bottom-nav>
-                      
+                      </div>
             </v-app>
     </div>
 

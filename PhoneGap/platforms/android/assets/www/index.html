@@ -64,31 +64,66 @@
     <div id="app" class="app">
             <v-app>
                     <v-toolbar :active.sync="e2" :color="computedColor">
-                      <v-toolbar-side-icon></v-toolbar-side-icon>
+                     
+                      <v-icon>assistant</v-icon>
                       <v-toolbar-title class="white--text">Packwatch</v-toolbar-title>
-                      <v-toolbar-title class="subheading black--text ">{{ e1 }}</v-toolbar-title>
+                      <!-- <v-toolbar-title class="subheading black--text ">{{ e1 }}</v-toolbar-title> -->
                       <v-spacer></v-spacer>
-                      <v-btn icon>
-                        <v-icon>search</v-icon>
-                      </v-btn>
+                      
+                        <v-menu offset-y>
+                          <v-btn icon slot="activator">
+                            <v-icon>more_vert</v-icon>
+                          </v-btn>
+                          <v-list>
+                            <v-list-tile v-for="settings_item in settings_items" :key="settings_item.title" @click="">
+                              <v-list-tile-title>{{ settings_item.title }}</v-list-tile-title>
+                            </v-list-tile>
+                          </v-list>
+                        </v-menu>
                     </v-toolbar>
+
+                    <toast v-model='snackbar'>Ik ben een toast</toast>
+                    <v-layout row>
+                        <v-flex lg12  offset-lg3>
+                          <v-card>
+                            <v-list>
+                              <v-list-tile avatar v-for="pack in packs" v-bind:key="pack.title" @click="">
+                                <v-list-tile-action>
+                                  <v-icon color="amber" v-if="pack.favorite" @click="favorite(true, pack.id)">star</v-icon>
+                                  <v-icon color="amber" v-else @click="favorite(false, pack.id)">star_border</v-icon>
+                                </v-list-tile-action>
+                               
+                                  <v-list-tile-content @click="goto(pack.id)">
+                                    <v-list-tile-title v-text="pack.title"></v-list-tile-title>
+                                  </v-list-tile-content>
+                               
+                                <v-list-tile-avatar>
+                                  <v-icon>{{pack.icon}}</v-icon>
+                                </v-list-tile-avatar>
+                              </v-list-tile>
+                            </v-list>
+                          </v-card>
+                          <v-pagination circle :length="6" v-model="page"></v-pagination>
+                        </v-flex>
+                      </v-layout>
+                    
                   
                
-                        <v-bottom-nav style="bottom:0;"absolute shift :value="true" :active.sync="e2" :color="computedColor">
+                        <v-bottom-nav style="bottom:0;" absolute shift :value="true" :active.sync="e2" :color="computedColor">
                           <v-btn dark v-on:click="e1 = 'Inpakken'; section1 = true; section2 = false;">
-                            <span>Inpakken</span>
+                            <span>menu1</span>
                             <v-icon>shop</v-icon>
                           </v-btn>
                           <v-btn dark v-on:click="e1 = 'Pack maken'; section2 = true; section1 = false">
-                            <span>Pack maken</span>
+                            <span>menu2</span>
                             <v-icon>shop_two</v-icon>
                           </v-btn>
                           <v-btn dark v-on:click="e1 = 'Pack bekijken'">
-                            <span>Pack bekijen</span>
+                            <span>menu3</span>
                             <v-icon>book</v-icon>
                           </v-btn>
                           <v-btn dark v-on:click="e1 = 'Instellingen'">
-                            <span>Instellingen</span>
+                            <span>menu4</span>
                             <v-icon>build</v-icon>
                           </v-btn>
                         </v-bottom-nav>
@@ -98,8 +133,10 @@
 
 
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
     
     <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/ui.js"></script>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
