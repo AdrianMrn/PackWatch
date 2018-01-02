@@ -1,4 +1,43 @@
 
+Vue.component('pack-alert', {
+    
+
+    
+  template: ` 
+  <div>
+          <v-card>
+          <v-card-title class="headline text-lg-center">Info</v-card-title>
+          <v-card-text>Please hold the NFC tag near the phoooone!</v-card-text>
+          <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="green darken-1" flat @click="$emit('close-alert')">The fuck?</v-btn>
+              <v-btn color="green darken-1" flat >OK</v-btn>
+          </v-card-actions>
+          </v-card>
+  </div>
+  `,
+
+}),
+Vue.component('login', {
+    
+
+    
+  template: ` 
+  <div>
+          <v-card>
+          <v-card-title class="headline text-lg-center">Info</v-card-title>
+          <v-card-text>Please hold the NFC tag near the phoooone!</v-card-text>
+          <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="green darken-1" flat @click="$emit('close-alert')">The fuck?</v-btn>
+              <v-btn color="green darken-1" flat >OK</v-btn>
+          </v-card-actions>
+          </v-card>
+  </div>
+  `,
+
+})
+
 new Vue({
     el: '#app',
     data: {
@@ -32,22 +71,3 @@ new Vue({
     }
   });
 
-Vue.component('pack-alert', {
-    
-
-    
-    template: ` 
-    <div>
-            <v-card>
-            <v-card-title class="headline text-lg-center">Info</v-card-title>
-            <v-card-text>Please hold the NFC tag near the phoooone!</v-card-text>
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="green darken-1" flat @click="$emit('close-alert')">The fuck?</v-btn>
-                <v-btn color="green darken-1" flat >OK</v-btn>
-            </v-card-actions>
-            </v-card>
-    </div>
-    `,
-
-})
