@@ -73,7 +73,27 @@ new Vue({
         page: 1,
         //snackbar
         snackbar: false,
-        //end
+        //form
+        valid: true,
+        name: '',
+        nameRules: [
+          (v) => !!v || 'Name is required',
+          (v) => v && v.length <= 10 || 'Name must be less than 10 characters'
+        ],
+        email: '',
+        emailRules: [
+          (v) => !!v || 'E-mail is required',
+          (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+        ],
+        select: null,
+        packSelect: [
+          'Pack 1',
+          'Pack 2',
+          'Pack 3',
+          'Pack 4'
+        ],
+        checkbox: false
+
 
     },
     computed: {
@@ -95,6 +115,20 @@ new Vue({
       },
     },
     methods: {
+      submit () {
+        if (this.$refs.form.validate()) {
+          // Native form submission is not yet supported
+          axios.post('/api/submit', {
+            name: this.name,
+            email: this.email,
+            select: this.select,
+            checkbox: this.checkbox
+          })
+        }
+      },
+      clear () {
+        this.$refs.form.reset()
+      }, // end form methods
     
       alert: function (message) {
         alert(message);

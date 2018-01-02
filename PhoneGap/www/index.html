@@ -83,6 +83,8 @@
                     </v-toolbar>
 
                     <toast v-model='snackbar'>Ik ben een toast</toast>
+
+                    <section id="section1" v-if="section1">
                     <v-layout row>
                         <v-flex lg12  offset-lg3>
                           <v-card>
@@ -109,11 +111,59 @@
                         </v-flex>
                         
                       </v-layout>
-                      <div style="position:relative;">
-                        <v-pagination circle :length="6" v-model="page" style="position: absolute; bottom:10px; left:50%; transform:translateX(-50%)"></v-pagination>
-                      </div>
-                  
-                        <div style="position: relative; height:50px">
+                      
+                     
+                        <v-pagination circle :length="6" v-model="page" style="position: absolute; bottom:80px; left:50%; transform:translateX(-50%)"></v-pagination>
+                      
+                    </section>
+                    <!-- end section 1 -->
+                    <section id="section2" v-if="section2">
+                        <v-container>
+                        <template>
+                            <h2 class="text-xs-center pa-2">Add Item</h2>
+                            <v-divider></v-divider>
+                            <v-form v-model="valid" ref="form" lazy-validation>
+                              <v-text-field
+                                label="Name"
+                                v-model="name"
+                                :rules="nameRules"
+                                :counter="10"
+                                required
+                              ></v-text-field>
+                              <!-- <v-text-field
+                                label="E-mail"
+                                v-model="email"
+                                :rules="emailRules"
+                                required
+                              ></v-text-field> -->
+                              <v-select
+                                label="Pack"
+                                v-model="select"
+                                :items="packSelect"
+                                :rules="[v => !!v || 'Item is required']"
+                                required
+                              ></v-select>
+                              <v-checkbox
+                                label="Already scanned item?"
+                                v-model="checkbox"
+                                :rules="[v => !!v || 'You must agree to continue!']"
+                                required
+                              ></v-checkbox>
+                          
+                              <v-btn
+                                @click="submit"
+                                :disabled="!valid"
+                              >
+                                submit
+                              </v-btn>
+                              <v-btn @click="clear">clear</v-btn>
+                            </v-form>
+                          </template>
+                        </v-container>
+
+                      </section>
+                      <!-- end section 2 -->
+                        <div style="position:initial; height:50px">
                         <v-bottom-nav style="bottom:0;" absolute shift :value="true" :active.sync="e2" :color="computedColor">
                           <v-btn dark v-on:click="e1 = 'Inpakken'; section1 = true; section2 = false;">
                             <span>menu1</span>
