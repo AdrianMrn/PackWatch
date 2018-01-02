@@ -88,13 +88,14 @@
                             <v-list>
                               <v-list-tile avatar v-for="pack in packs" v-bind:key="pack.title" @click="">
                                 <v-list-tile-action>
-                                  <v-icon color="amber" @click="alert('favorite')">{{pack.icon}}</v-icon>
+                                  <v-icon color="amber" v-if="pack.favorite" @click="favorite(true)">star</v-icon>
+                                  <v-icon color="amber" v-else @click="favorite(false, $event)">star_border</v-icon>
                                 </v-list-tile-action>
                                 <v-list-tile-content>
                                   <v-list-tile-title v-text="pack.title"></v-list-tile-title>
                                 </v-list-tile-content>
                                 <v-list-tile-avatar>
-                                  <v-icon>{{pack.avatar}}</v-icon>
+                                  <v-icon>{{pack.icon}}</v-icon>
                                 </v-list-tile-avatar>
                               </v-list-tile>
                             </v-list>
@@ -129,8 +130,10 @@
 
 
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
     
     <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/ui.js"></script>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>

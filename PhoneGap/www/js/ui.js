@@ -38,13 +38,13 @@ new Vue({
           { title: 'Click Me 2' }
         ],
         packs: [
-          { icon: 'star', title: 'Bike Pack', avatar: 'directions_bike' },
-          { icon: 'star', title: 'Beach Pack', avatar: 'beach_access' },
-          { icon: 'star_border', title: 'Fitness Pack', avatar: 'fitness_center' },
-          { icon: 'star_border', title: 'Golf Pack', avatar: 'golf_course' },
-          { icon: 'star_border', title: 'Bike Pack', avatar: 'directions_bike' },
-          { icon: 'star_border', title: 'Beach Pack', avatar: 'beach_access' },
-          { icon: 'star_border', title: 'Fitness Pack', avatar: 'fitness_center' },
+          { favorite: true, title: 'Bike Pack', icon: 'directions_bike' },
+          { favorite: true, title: 'Beach Pack', icon: 'beach_access' },
+          { favorite: false, title: 'Fitness Pack', icon: 'fitness_center' },
+          { favorite: false, title: 'Golf Pack', icon: 'golf_course' },
+          { favorite: false, title: 'Bike Pack', icon: 'directions_bike' },
+          { favorite: false, title: 'Beach Pack', icon: 'beach_access' },
+          { favorite: false, title: 'Fitness Pack', icon: 'fitness_center' },
         //  paginate api from laravel 
         ],
         page: 1,
@@ -72,6 +72,20 @@ new Vue({
     
       alert: function (message) {
         alert(message);
+      },
+      favorite: function (boolean) {
+        
+        // alert(event.target);
+        alert("Favorite = " + boolean);
+         api = 'https://api.github.com/users/1'
+        axios.get(api).then(response => {
+        this.data = response.data
+        console.log(response.data);
+      }).catch(error => {
+        this.errorMsg = 'No user or no location!'
+        this.data = []
+      })
+
       }
 
     }
