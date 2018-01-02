@@ -83,17 +83,19 @@
 
                     
                     <v-layout row>
-                        <v-flex xs12 sm6 offset-sm3>
+                        <v-flex lg12  offset-lg3>
                           <v-card>
                             <v-list>
                               <v-list-tile avatar v-for="pack in packs" v-bind:key="pack.title" @click="">
                                 <v-list-tile-action>
-                                  <v-icon color="amber" v-if="pack.favorite" @click="favorite(true)">star</v-icon>
-                                  <v-icon color="amber" v-else @click="favorite(false, $event)">star_border</v-icon>
+                                  <v-icon color="amber" v-if="pack.favorite" @click="favorite(true, pack.id)">star</v-icon>
+                                  <v-icon color="amber" v-else @click="favorite(false, pack.id)">star_border</v-icon>
                                 </v-list-tile-action>
-                                <v-list-tile-content>
-                                  <v-list-tile-title v-text="pack.title"></v-list-tile-title>
-                                </v-list-tile-content>
+                               
+                                  <v-list-tile-content @click="goto(pack.id)">
+                                    <v-list-tile-title v-text="pack.title"></v-list-tile-title>
+                                  </v-list-tile-content>
+                               
                                 <v-list-tile-avatar>
                                   <v-icon>{{pack.icon}}</v-icon>
                                 </v-list-tile-avatar>

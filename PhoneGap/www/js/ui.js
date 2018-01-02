@@ -38,13 +38,14 @@ new Vue({
           { title: 'Click Me 2' }
         ],
         packs: [
-          { favorite: true, title: 'Bike Pack', icon: 'directions_bike' },
-          { favorite: true, title: 'Beach Pack', icon: 'beach_access' },
-          { favorite: false, title: 'Fitness Pack', icon: 'fitness_center' },
-          { favorite: false, title: 'Golf Pack', icon: 'golf_course' },
-          { favorite: false, title: 'Bike Pack', icon: 'directions_bike' },
-          { favorite: false, title: 'Beach Pack', icon: 'beach_access' },
-          { favorite: false, title: 'Fitness Pack', icon: 'fitness_center' },
+          { id: 0, favorite: true, title: 'Fitness Pack', icon: 'fitness_center' },
+          { id: 1, favorite: true, title: 'Bike Pack', icon: 'directions_bike' },
+          { id: 2, favorite: true, title: 'Beach Pack', icon: 'beach_access' },
+          { id: 3, favorite: false, title: 'Fitness Pack', icon: 'fitness_center' },
+          { id: 4, favorite: false, title: 'Golf Pack', icon: 'golf_course' },
+          { id: 5, favorite: false, title: 'Bike Pack', icon: 'directions_bike' },
+          { id: 6, favorite: false, title: 'Beach Pack', icon: 'beach_access' },
+          
         //  paginate api from laravel 
         ],
         page: 1,
@@ -73,10 +74,19 @@ new Vue({
       alert: function (message) {
         alert(message);
       },
-      favorite: function (boolean) {
+      goto: function (id) {
         
-        // alert(event.target);
-        alert("Favorite = " + boolean);
+        window.location.href = 'packs/' + id;
+        
+      },
+      favorite: function (boolean, id) {
+        
+        pack = this.packs[id];
+
+        pack.favorite = !boolean;
+        // alert(pack.favorite);
+        
+        // alert("Favorite = " + boolean);
          api = 'https://api.github.com/users/1'
         axios.get(api).then(response => {
         this.data = response.data
