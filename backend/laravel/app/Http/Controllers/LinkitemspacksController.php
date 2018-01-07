@@ -38,9 +38,9 @@ class LinkitemspacksController extends Controller
   {
     // Protecting against other users changing someone's packs/items
     $user_id = $request->user()->id;
-    $item = Item::where('id', $request->item_id)->firstOrFail();
-    $pack = Pack::where('id', $request->pack_id)->firstOrFail();
-    if ($item->user_id != $user_id || $pack->user_id != $user_id)
+    $item = Item::where('id', $request->item_id)->first();
+    $pack = Pack::where('id', $request->pack_id)->first();
+    if (!$item || !$pack || $item->user_id != $user_id || $pack->user_id != $user_id)
     {
       return response()->json([
         'message' => 'incorrect request'
@@ -97,9 +97,26 @@ class LinkitemspacksController extends Controller
    * @param  int  $id
    * @return Response
    */
-  public function destroy($id)
+  public function destroy(Request $request, $id)
   {
-    
+    // Protecting against other users changing someone's packs/items
+    $user_id = $request->user()->id;
+    $item = Item::where('id', $request->item_id)->firstOrFail();
+    $pack = Pack::where('id', $request->pack_id)->firstOrFail();
+    if ($item->user_id != $user_id || $pack->user_id != $user_id)
+    {
+      return response()->json([
+        'message' => 'incorrect request'
+      ]);
+    }
+
+    $link = Linkitemspacks::where([['item_id', '=', $request->item_id], ['pack_id', '=', $request->pack_id]])->firstOrFail();
+    $link->delete();
+
+    return response()->json([
+      'message' => 'OK',
+      'id' => $link->id
+    ]);
   }
   
 }

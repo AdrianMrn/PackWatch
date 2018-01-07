@@ -107,9 +107,31 @@ class PackController extends Controller
    * @param  int  $id
    * @return Response
    */
-  public function update($id)
+  public function update(Request $request, $id)
   {
-    
+    $this->validate($request, [
+      'name' => 'required|string|max:255',
+      'color' => 'required|string|max:255'
+    ]);
+
+    $user_id = $request->user()->id;
+    $pack = Pack::where('id', $id)->first();
+    if ($pack->user_id != $user_id)
+    {
+      return response()->json([
+        'message' => 'incorrect request'
+      ]);
+    }
+
+    $pack->name = $request->name;
+    $pack->color = $request->color;
+    $pack->user_id = $user_id;
+    $pack->save();
+
+    return response()->json([
+      'message' => 'OK',
+      'id' => $pack->id
+    ]);
   }
 
   /**
@@ -118,9 +140,22 @@ class PackController extends Controller
    * @param  int  $id
    * @return Response
    */
-  public function destroy($id)
+  public function destroy(Request $request, $id)
   {
-    
+    $user_id = $request->user()->id;
+    $pack = Pack::where('id', $id)->first();
+    if (!$pack || $pack->user_id != $user_id)
+    {
+      return response()->json([
+        'message' => 'incorrect request'
+      ]);
+    }
+
+    $pack->delete();
+
+    return response()->json([
+      'message' => 'OK'
+    ]);
   }
   
 }

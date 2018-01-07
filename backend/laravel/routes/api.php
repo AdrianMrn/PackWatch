@@ -20,8 +20,8 @@ Route::post('/register','UserController@create');
 
 Route::group(['middleware' => ['auth:api']], function () {
     Route::resources([
-        'item' => 'ItemController', // POST to /item with name & color to create a new item: responds with message & id of created item
-        'pack' => 'PackController', // POST to /pack with name & color to create a new pack: responds with message & id of created pack
+        'item' => 'ItemController', // POST to /item with name & color to create a new item: responds with message & id of created item; PUT to /item/{id} to update an item (name & color); DELETE to /item/{id} to delete an item
+        'pack' => 'PackController', // POST to /pack with name & color to create a new pack: responds with message & id of created pack;  PUT to /pack/{id} to update a pack (name & color); DELETE to /pack/{id} to delete a pack
         'schedule' => 'ScheduleController',
         'link' => 'LinkitemspacksController', // POST to /link with pack_id & item_id to link a pack and an item: responds with message & id of link
         /* 'user' => 'UserController' */

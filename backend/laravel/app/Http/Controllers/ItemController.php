@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Item;
+use App\Item, App\Linkitemspacks;
 
 class ItemController extends Controller 
 {
@@ -120,9 +120,23 @@ class ItemController extends Controller
    * @param  int  $id
    * @return Response
    */
-  public function destroy($id)
+  public function destroy(Request $request, $id)
   {
+    $user_id = $request->user()->id;
+    $item = Item::where('id', $id)->first();
+    if (!$item || $item->user_id != $user_id)
+    {
+      return response()->json([
+        'message' => 'incorrect request'
+      ]);
+    }
     
+    Linkitemspacks::where('item_id', '=', $id)->delete();
+    $item->delete();
+
+    return response()->json([
+      'message' => 'OK'
+    ]);
   }
   
 }

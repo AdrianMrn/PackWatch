@@ -59,6 +59,18 @@ function updateItem(access_token, next) {
     });
 }
 
+function deleteItem(access_token, next) {
+    request.delete({
+        url: 'http://packwatch.test/api/item/3',
+        headers: {
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + access_token
+        }
+    }, function(error, response, body) {
+        next(body);
+    });
+}
+
 function createLink(access_token, next) {
     request.post({
         url: 'http://packwatch.test/api/link',
@@ -67,7 +79,23 @@ function createLink(access_token, next) {
             Authorization: 'Bearer ' + access_token
         },
         form: {
-            item_id: 2,
+            item_id: 3,
+            pack_id: 1
+        }
+    }, function(error, response, body) {
+        next(body);
+    });
+}
+
+function deleteLink(access_token, next) {
+    request.delete({
+        url: 'http://packwatch.test/api/link/0',
+        headers: {
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + access_token
+        },
+        form: {
+            item_id: 3,
             pack_id: 1
         }
     }, function(error, response, body) {
@@ -111,6 +139,10 @@ function start() {
             console.log(response);
         }); */
 
+        /* deleteLink(access_token, function(response) {
+            console.log(response);
+        }); */
+
         /* getUserId(access_token, function(user_id) {
             console.log(user_id);
         }); */
@@ -119,9 +151,13 @@ function start() {
             console.log(response);
         }); */
 
-        updateItem(access_token, function(response) {
+        /* updateItem(access_token, function(response) {
             console.log(response);
-        })
+        }); */
+
+        deleteItem(access_token, function(response) {
+            console.log(response);
+        });
         
     });
 }
