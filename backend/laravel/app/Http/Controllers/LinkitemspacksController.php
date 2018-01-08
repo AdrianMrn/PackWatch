@@ -54,7 +54,9 @@ class LinkitemspacksController extends Controller
 
     return response()->json([
       'message' => 'OK',
-      'id' => $link->id
+      'itemId' => $item->id,
+      'itemName' => $item->name,
+      'itemColor' => $item->color,
     ]);
   }
 

@@ -14,6 +14,7 @@ class CreateItemsTable extends Migration {
 			$table->string('name', 255);
 			$table->string('color', 255);
 			$table->integer('user_id')->unsigned();
+			$table->string('nfcId')->nullable();
 		});
 	}
 

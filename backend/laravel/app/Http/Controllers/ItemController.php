@@ -42,14 +42,22 @@ class ItemController extends Controller
   {
     $this->validate($request, [
       'name' => 'required|string|max:255',
-      'color' => 'required|string|max:255'
+      'color' => 'required|string|max:255',
+      'nfcId' => 'string|max:255'
     ]);
+
+    $nfcId = null;
+    if ($request->nfcId)
+    {
+      $nfcId = $request->nfcId;
+    }
 
     $user_id = $request->user()->id;
 
     $item = new Item;
     $item->name = $request->name;
     $item->color = $request->color;
+    $item->nfcId = $nfcId;
     $item->user_id = $user_id;
     $item->save();
 

@@ -117,17 +117,17 @@ function getPackItems(access_token, next) {
 
 function registerUser() {
     request.post({
-        url: 'http://packwatch.test/api/register',
+        url: 'http://packwatch.dietervercammen.be/api/register',
         form: {
             name: "kekkertop",
-            email: "kekkertop@hotmail.com",
+            email: "kekkertqsdddfop@hotmail.com",
             password: "kekkertop"
         }
     }, function(error, response, body) {
         console.log(body);
     });
 }
-/* registerUser(); */
+registerUser();
 
 function start() {
     getAccessToken(function(access_token) {
@@ -155,9 +155,9 @@ function start() {
             console.log(response);
         }); */
 
-        deleteItem(access_token, function(response) {
+        /* deleteItem(access_token, function(response) {
             console.log(response);
-        });
+        }); */
         
     });
 }
