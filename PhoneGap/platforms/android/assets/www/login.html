@@ -111,14 +111,14 @@
             
                         <div class='row'>
                           <div class='input-field col s12'>
-                            <input class='validate' type='email' name='email' id='email' />
+                            <input class='validate' type='email' name='email' id='email' ref="loginemail" />
                             <label for='email'>Enter your email</label>
                           </div>
                         </div>
             
                         <div class='row'>
                           <div class='input-field col s12'>
-                            <input class='validate' type='password' name='password' id='password' />
+                            <input class='validate' type='password' name='password' id='password' ref="loginpassword" />
                             <label for='password'>Enter your password</label>
                           </div>
                           <label style='float: right;'>
@@ -129,7 +129,7 @@
                         <br>
                         <center>
                           <div class='row'>
-                            <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Login</button>
+                            <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'  @click.prevent="login()" >Login</button>
                           </div>
                         </center>
                       </form>
@@ -143,6 +143,8 @@
               </main>
     </div>
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>

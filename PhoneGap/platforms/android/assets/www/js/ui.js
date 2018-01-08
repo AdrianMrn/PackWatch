@@ -66,14 +66,45 @@ new Vue({
           { id: 3, favorite: false, title: 'Fitneess Pack', icon: 'fitness_center' },
           { id: 4, favorite: false, title: 'Golff Pack', icon: 'golf_course' },
           { id: 5, favorite: false, title: 'Bikee Pack', icon: 'directions_bike' },
-          { id: 6, favorite: false, title: 'Beaach Pack', icon: 'beach_access' },
+         
           
         //  paginate api from laravel 
         ],
         page: 1,
+        // nfcScanstepper
+        nfcScan:1,
         //snackbar
         snackbar: false,
-        //end
+        //form
+        valid: true,
+        itemName: '',
+        nameRules: [
+          (v) => !!v || 'Name is required',
+          // (v) => v && v.length <= 10 || 'Name must be less than 10 characters'
+        ],
+        email: '',
+        emailRules: [
+          (v) => !!v || 'E-mail is required',
+          (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+        ],
+        selectColor: null,
+        colors: [
+          'green',
+          'red',
+          'blue',
+          'pink'
+        ],
+        showNFCStepper: false,
+        NFCTimestamp: 0,
+        
+    },
+    mounted() {
+      
+
+      
+
+      //axios.defaults.headers.common['Accept'] = 'application/json'
+     // axios.defaults.headers.common['Authorization'] = 'value' // for all requests
 
     },
     computed: {
@@ -95,6 +126,82 @@ new Vue({
       },
     },
     methods: {
+      
+      addItem () {
+
+        apiUrl = 'https://packwatch.dietervercammen.be/api/item'
+        axios.post(apiUrl, {
+          name: this.itemName,
+          color: this.selectColor,
+
+        }, {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
+        }).then(response => {
+          console.log(response);
+        }).catch(error => {
+          //todo: catch & show bad password, email taken errors ...: this.errorMsgs[] = error.response.data
+          console.log(error.response.data);
+          this.errorMsg = 'No user or no location!'
+          this.data = []
+        })
+
+      },
+      register () {
+        
+        apiUrl = 'https://packwatch.dietervercammen.be/api/register'
+        axios.post(apiUrl, {
+          name: this.$refs.registername.value,
+          email: this.$refs.registeremail.value,
+          password: this.$refs.registerpassword.value
+        }).then(response => {
+          window.localStorage.setItem("accestoken", response.data.access_token);
+          window.location.href = 'index.html';
+        }).catch(error => {
+          //todo: catch bad password, catch email taken, 
+          console.log(error.response.data);
+          this.errorMsg = 'No user or no location!'
+          this.data = []
+        })
+        //window.localStorage.setItem("accestoken", response);
+      },
+      login () {
+
+        apiUrl = 'https://packwatch.dietervercammen.be/oauth/token'
+        axios.post(apiUrl, {
+          username: this.$refs.loginemail.value,
+          password: this.$refs.loginpassword.value, 
+          grant_type: 'password',
+          client_id: '4',
+          client_secret: 'I8pD2NrqTzoI0aUCeKTxuzR19yIFXTdFo0PP5sXJ', //todo: maybe set this in phonegap manifest or whatever?
+          scope: '*',
+          
+        }).then(response => {
+          window.localStorage.setItem("accestoken", response.data.access_token);
+          window.location.href = 'index.html';
+        }).catch(error => {
+          //todo: catch & show bad password, email taken errors ...: this.errorMsgs[] = error.response.data
+          console.log(error.response.data);
+          this.errorMsg = 'No user or no location!'
+          this.data = []
+        })
+
+      },
+      submit () {
+        if (this.$refs.form.validate()) {
+          // Native form submission is not yet supported
+          axios.post('/api/submit', {
+            name: this.name,
+            email: this.email,
+            select: this.select,
+            checkbox: this.checkbox
+          })
+        }
+      },
+      clear () {
+        this.$refs.form.reset()
+      }, // end form methods
     
       alert: function (message) {
         alert(message);
@@ -109,9 +216,7 @@ new Vue({
         pack = this.packs[id];
 
         pack.favorite = !boolean;
-        // alert(pack.favorite);
         
-        // alert("Favorite = " + boolean);
          api = 'https://api.github.com/users/1'
         axios.get(api).then(response => {
         this.data = response.data
