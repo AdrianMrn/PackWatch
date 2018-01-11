@@ -45,10 +45,10 @@ new Vue({
     el: '#app',
     data: {
       
-        e2: 0,
+        e2: 1,
         startNFC: true,
         stopNFC: false,
-        e1: 'recent',
+        e1: '',
         dialog:false,
         stepper1: 0,
 
@@ -57,6 +57,7 @@ new Vue({
         sectionCreateItem: false,
         sectionCreatePack: false,
         sectionEditPack: false,
+        sectionEditItems: false,
 
         settings_items: [
           { title: 'Settings' },
@@ -64,17 +65,17 @@ new Vue({
           { title: 'Add Pack' },
           { title: 'Scan Item' }
         ],
-        packs: [
-          { id: 0, favorite: true, title: 'Fitness Pack', icon: 'fitness_center' },
-          { id: 1, favorite: true, title: 'Bike Pack', icon: 'directions_bike' },
-          { id: 2, favorite: true, title: 'Beach Pack', icon: 'beach_access' },
-          { id: 3, favorite: false, title: 'Fitneess Pack', icon: 'fitness_center' },
-          { id: 4, favorite: false, title: 'Golff Pack', icon: 'golf_course' },
-          { id: 5, favorite: false, title: 'Bikee Pack', icon: 'directions_bike' },
+        // packs: [
+        //   { id: 0, favorite: true, title: 'Fitness Pack', icon: 'fitness_center' },
+        //   { id: 1, favorite: true, title: 'Bike Pack', icon: 'directions_bike' },
+        //   { id: 2, favorite: true, title: 'Beach Pack', icon: 'beach_access' },
+        //   { id: 3, favorite: false, title: 'Fitneess Pack', icon: 'fitness_center' },
+        //   { id: 4, favorite: false, title: 'Golff Pack', icon: 'golf_course' },
+        //   { id: 5, favorite: false, title: 'Bikee Pack', icon: 'directions_bike' },
          
           
-        //  paginate api from laravel 
-        ],
+        // //  paginate api from laravel 
+        // ],
         page: 1,
         // nfcScanstepper
         nfcScan:1,
@@ -106,14 +107,19 @@ new Vue({
         userPacks: [],
         userItems: [],
 
+        currentItemId: null,
+
         currentPackName: '',
         currentPackId: null,
         currentPackItems: [],
 
         addingItemToPack: false,
+        showToast:false,
 
     },
     mounted() {
+      // start at dashboard when app is mounted
+      this.navigate('sectionCreateItem');
       //if we are on homepage (lol pls don't judge us)
       if (window.location.href.indexOf('index.html') != -1) {
         //todo: show loading screen/icon/whatever & disable everything else until last "then"
@@ -163,11 +169,13 @@ new Vue({
     },
     methods: {
       navigate(url) {
+        
         this.sectionPacks = false;
         this.sectionItems = false;
         this.sectionCreateItem = false;
         this.sectionCreatePack = false;
         this.sectionEditPack = false;
+        this.sectionEditItems = false;
         switch(url){
           case "sectionPacks":
             this.sectionPacks = true;
@@ -184,6 +192,9 @@ new Vue({
           case "sectionItems":
             this.sectionItems = true;
             break;
+          case "sectionEditItems":
+            this.sectionEditItems = true;
+            break;
         }
       },
       interactWithItem(id) {
@@ -192,6 +203,7 @@ new Vue({
           for (var i = 0; i < this.currentPackItems.length; i++) {
             if (id == this.currentPackItems[i].id) {
               //todo: toast "item is already in pack"
+              alert("Item is already in pack");
               return;
             }
           }
@@ -270,12 +282,47 @@ new Vue({
           this.packName = "";
           this.selectColor = "";
           this.getPackItems(response.data.id);
+          this.showToast = true;
         }).catch(error => {
           //todo: catch & show bad password, email taken errors ...: this.errorMsgs[] = error.response.data
           console.log(error.response.data);
           this.errorMsg = 'No user or no location!'
           this.data = []
         })
+      },
+      deleteItem(id) {
+
+        apiUrl = 'http://packwatch.test/api/item/' + id;
+        axios.post(apiUrl, {
+          _method: 'delete',
+          item_id: id,
+        }, {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
+        }).then(response => {
+          console.log(response);
+          //this.getPackItems(this.currentPackId);
+        }).catch(error => {
+          console.log(error);
+        });
+      },
+      updateItem(id) {
+
+        apiUrl = 'http://packwatch.test/api/item/' + id;
+        axios.post(apiUrl, {
+          _method: 'patch',
+          item_id: id,
+        }, {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
+        }).then(response => {
+          console.log(response);
+          //this.getPackItems(this.currentPackId);
+        }).catch(error => {
+          console.log(error);
+        });
       },
       createItem() {
         apiUrl = 'https://packwatch.dietervercammen.be/api/item'
@@ -303,7 +350,7 @@ new Vue({
           }
         }).catch(error => {
           //todo: catch & show bad password, email taken errors ...: this.errorMsgs[] = error.response.data
-          console.log(error.response.data);
+          console.log(error);
           this.errorMsg = 'No user or no location!'
           this.data = []
         })

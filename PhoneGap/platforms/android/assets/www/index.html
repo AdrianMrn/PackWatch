@@ -65,7 +65,7 @@
             <v-app>
                     <v-toolbar :active.sync="e2" :color="computedColor">
                      
-                      <v-icon>assistant</v-icon>
+                      <a href="register.html"> <v-icon>assistant</v-icon></a>
                       <v-toolbar-title class="white--text">Packwatch</v-toolbar-title>
                       <!-- <v-toolbar-title class="subheading black--text ">{{ e1 }}</v-toolbar-title> -->
                       <v-spacer></v-spacer>
@@ -83,28 +83,71 @@
                     </v-toolbar>
 
                     <toast v-model='snackbar'>Ik ben een toast</toast>
+                    <!--  -->
+                    <section id="sectionItems" v-if="sectionItems">
+                    <v-layout row>
+                        <v-flex lg12  offset-lg3>
+                          <v-card>
+                            <h2 class="text-xs-center pa-2">Items</h2>
+                            <v-divider></v-divider>
+                            <v-list>
+                              <v-list-tile avatar @click="navigate('sectionCreateItem');">
+                                <v-list-tile-content>
+                                  <v-list-tile-title><strong>New Item</strong></v-list-tile-title>
+                                </v-list-tile-content>
+                              </v-list-tile>
+                              <v-divider></v-divider>
+                                
+                              <div v-for="item in userItems">
+                                <v-list-tile avatar @click="interactWithItem(item.id)">
+                                    <v-list-tile-content>
+                                      <v-list-tile-title v-text="item.name"></v-list-tile-title>
+                                    </v-list-tile-content>
+                                  <v-list-tile-avatar>
+                                    <v-icon color="red" @click="">delete_forever</v-icon><!-- todo: remove from this pack (unlink) -->
+                                  </v-list-tile-avatar>
+                                </v-list-tile>
+                                <v-divider></v-divider>
+                              </div>
 
-                    <section id="section1" v-if="section1">
+                            </v-list>
+                          </v-card>
+                          
+                        </v-flex>
+                        
+                      </v-layout>
+                      
+                     
+                        <v-pagination circle :length="6" v-model="page" style="position: absolute; bottom:80px; left:50%; transform:translateX(-50%)"></v-pagination>
+                      
+                    </section>
+                    <!--  -->
+                    <section id="sectionPacks" v-if="sectionPacks">
                     <v-layout row>
                         <v-flex lg12  offset-lg3>
                           <v-card>
                             <h2 class="text-xs-center pa-2">Packs</h2>
                             <v-divider></v-divider>
                             <v-list>
-                              <v-list-tile avatar v-for="pack in packs" v-bind:key="pack.title" @click="">
-                                <v-list-tile-action>
-                                  <v-icon color="amber" v-if="pack.favorite" @click="favorite(true, pack.id)">star</v-icon>
-                                  <v-icon color="amber" v-else @click="favorite(false, pack.id)">star_border</v-icon>
-                                </v-list-tile-action>
-                               
-                                  <v-list-tile-content @click="goto(pack.id)">
-                                    <v-list-tile-title v-text="pack.title"></v-list-tile-title>
-                                  </v-list-tile-content>
-                               
-                                <v-list-tile-avatar>
-                                  <v-icon>{{pack.icon}}</v-icon>
-                                </v-list-tile-avatar>
+                              <v-list-tile avatar @click="navigate('sectionCreatePack');">
+                                <v-list-tile-content>
+                                  <v-list-tile-title><strong>New Pack</strong></v-list-tile-title>
+                                </v-list-tile-content>
                               </v-list-tile>
+                              <v-divider></v-divider>
+                                
+                              <div v-for="pack in userPacks">
+                                <v-list-tile avatar @click="">
+                                    <v-list-tile-content @click="currentPackName = pack.name; currentPackId = pack.id; getPackItems(pack.id)">
+                                      <v-list-tile-title v-text="pack.name"></v-list-tile-title>
+                                    </v-list-tile-content>
+                                  <v-list-tile-avatar>
+                                    <v-icon color="red" @click="favorite(true, pack.id)">delete_forever</v-icon>
+                                  </v-list-tile-avatar>
+                                </v-list-tile>
+                                <v-divider></v-divider>
+                              </div>
+
                             </v-list>
                           </v-card>
                           
@@ -117,10 +160,10 @@
                       
                     </section>
                     <!-- end section 1 -->
-                    <section id="section2" v-if="section2">
+                    <section id="sectionCreateItem" v-if="sectionCreateItem">
                         <v-container>
                         <template>
-                            <h2 class="text-xs-center pa-2">Add Item</h2>
+                            <h2 class="text-xs-center pa-2">Create Item</h2>
                             <v-divider></v-divider>
                             <v-form v-model="valid" ref="form" lazy-validation>
                               <v-text-field
@@ -156,42 +199,104 @@
                                   <v-stepper-content step="1">
                                     <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
                                     <v-btn color="primary" @click.native="nfcScan = 2" onclick="NFCTimestamp=Math.round((new Date()).getTime() / 1000); writeNFC(NFCTimestamp)">Continue</v-btn>
-                                    {{NFCTimestamp}}
+                                   
                                   </v-stepper-content>
                                   <v-stepper-content step="2">
                                     <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-                                    
                                     <v-btn flat @click.native="nfcScan = 1">Cancel</v-btn>
                                   </v-stepper-content>
                                   
                                 </v-stepper-items>
                               </v-stepper>
                           
-                          
                               <v-btn
-                              @click="addItem()"
+                              @click="createItem()"
                                 :disabled="!valid"
                               >
-                                submit
+                                Create Item
                               </v-btn>
-                              <v-btn @click="clear">clear</v-btn>
                             </v-form>
                           </template>
                         </v-container>
 
                       </section>
                       <!-- end section 2 -->
+                      <section id="sectionCreatePack" v-if="sectionCreatePack">
+                          <v-container>
+                          <template>
+                              <h2 class="text-xs-center pa-2">Create a Pack</h2>
+                              <v-divider></v-divider>
+                              <v-form v-model="valid" ref="form" lazy-validation>
+                                <v-text-field
+                                  label="Name"
+                                  v-model="packName"
+                                  :rules="nameRules"
+                                  required
+                                ></v-text-field>
+                                <v-select
+                                  label="Color"
+                                  v-model="selectColor"
+                                  :items="colors"
+                                  required
+                                ></v-select>
+                            
+                                <v-btn
+                                @click="createPack()"
+                                  :disabled="!valid"
+                                >
+                                  Create Pack
+                                </v-btn>
+                              </v-form>
+                            </template>
+                          </v-container>
+  
+                        </section>
+
+                        <section id="sectionEditPack" v-if="sectionEditPack">
+                            <v-container>
+                            <template>
+                                <h2 class="text-xs-center pa-2">{{ currentPackName }}</h2>
+                                <v-divider></v-divider>
+                                
+                                  <v-list>
+                                    <v-list-tile avatar @click="addingItemToPack=true; navigate('sectionItems');">
+                                      <!-- todo: add 'plus' avatar -->
+                                      <v-list-tile-content>
+                                        <v-list-tile-title><strong>Add Item</strong></v-list-tile-title>
+                                      </v-list-tile-content>
+                                    </v-list-tile>
+                                    <v-divider></v-divider>
+                                      
+                                    <div v-for="item in currentPackItems">
+                                      <v-list-tile avatar @click="">
+                                          <v-list-tile-content>
+                                            <v-list-tile-title v-text="item.name"></v-list-tile-title>
+                                          </v-list-tile-content>
+                                        <v-list-tile-avatar>
+                                          <v-icon color="red" @click="unlinkItemFromPack(item.id)">delete_forever</v-icon>
+                                        </v-list-tile-avatar>
+                                      </v-list-tile>
+                                      <v-divider></v-divider>
+                                    </div>
+      
+                                  </v-list>
+
+                              </template>
+                            </v-container>
+    
+                          </section>
+
                         <div style="position:initial; height:50px">
                         <v-bottom-nav style="bottom:0;" absolute shift :value="true" :active.sync="e2" :color="computedColor">
-                          <v-btn dark v-on:click="e1 = 'Inpakken'; section1 = true; section2 = false;">
+                          <v-btn dark v-on:click="e1 = 'Inpakken'; navigate('sectionPacks');">
                             <span>menu1</span>
                             <v-icon>shop</v-icon>
                           </v-btn>
-                          <v-btn dark v-on:click="e1 = 'Pack maken'; section2 = true; section1 = false">
+                          <v-btn dark v-on:click="e1 = 'Pack maken'; navigate('sectionCreateItem');">
                             <span>menu2</span>
                             <v-icon>shop_two</v-icon>
                           </v-btn>
-                          <v-btn dark v-on:click="e1 = 'Pack bekijken'">
+                          <v-btn dark v-on:click="e1 = 'items bekijken'; navigate('sectionItems');">
                             <span>menu3</span>
                             <v-icon>book</v-icon>
                           </v-btn>
