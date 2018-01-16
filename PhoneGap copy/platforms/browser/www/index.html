@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+    <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>PackWatch</title>
+</head>
+<style>
+    button {
+    height: 35px;
+    width: 100px;
+    border-radius: 12px;
+    margin: 5px;
+    background: white;
+    box-shadow: #9e9e9e 3px 3px 3px;
+    }
+    #stop {
+        background-color:#f78080;
+    }
+</style>
+
+<body>
+    <div id="app" class="app">
+            <v-app>
+                    <v-toolbar :active.sync="e2" :color="computedColor">
+                     
+                      <a href="register.html"> <v-icon>assistant</v-icon></a>
+                      <v-toolbar-title class="white--text">Packwatch</v-toolbar-title>
+                      <!-- <v-toolbar-title class="subheading black--text ">{{ e1 }}</v-toolbar-title> -->
+                      <v-spacer></v-spacer>
+                      
+                        <v-menu offset-y>
+                          <v-btn icon slot="activator">
+                            <v-icon>more_vert</v-icon>
+                          </v-btn>
+                          <v-list>
+                            <v-list-tile v-for="settings_item in settings_items" :key="settings_item.title" @click="">
+                              <v-list-tile-title>{{ settings_item.title }}</v-list-tile-title>
+                            </v-list-tile>
+                          </v-list>
+                        </v-menu>
+                    </v-toolbar>
+
+                    <toast v-model='snackbar'>Ik ben een toast</toast>
+                    <!--  -->
+                    <section id="sectionItems" v-if="sectionItems">
+                    <v-layout row>
+                        <v-flex lg12  offset-lg3>
+                          <v-card>
+                            <h2 class="text-xs-center pa-2">Items</h2>
+                            <v-divider></v-divider>
+                            <v-list>
+                              <v-list-tile avatar @click="navigate('sectionCreateItem');">
+                                <v-list-tile-content>
+                                  <v-list-tile-title><strong>New Item</strong></v-list-tile-title>
+                                </v-list-tile-content>
+                              </v-list-tile>
+                              <v-divider></v-divider>
+                                
+                              <div v-for="item in userItems">
+                                <v-list-tile avatar @click="interactWithItem(item.id)">
+                                    <v-list-tile-content>
+                                      <v-list-tile-title v-text="item.name"></v-list-tile-title>
+                                    </v-list-tile-content>
+                                  <v-list-tile-avatar>
+                                    <v-icon color="red" @click="">delete_forever</v-icon><!-- todo: remove from this pack (unlink) -->
+                                  </v-list-tile-avatar>
+                                </v-list-tile>
+                                <v-divider></v-divider>
+                              </div>
+
+                            </v-list>
+                          </v-card>
+                          
+                        </v-flex>
+                        
+                      </v-layout>
+                      
+                     
+                        <v-pagination circle :length="6" v-model="page" style="position: absolute; bottom:80px; left:50%; transform:translateX(-50%)"></v-pagination>
+                      
+                    </section>
+                    <!--  -->
+                    <section id="sectionPacks" v-if="sectionPacks">
+                    <v-layout row>
+                        <v-flex lg12  offset-lg3>
+                          <v-card>
+                            <h2 class="text-xs-center pa-2">Packs</h2>
+                            <v-divider></v-divider>
+                            <v-list>
+                              <v-list-tile avatar @click="navigate('sectionCreatePack');">
+                                <v-list-tile-content>
+                                  <v-list-tile-title><strong>New Pack</strong></v-list-tile-title>
+                                </v-list-tile-content>
+                              </v-list-tile>
+                              <v-divider></v-divider>
+                                
+                              <div v-for="pack in userPacks">
+                                <v-list-tile avatar @click="">
+                                    <v-list-tile-content @click="currentPackName = pack.name; currentPackId = pack.id; getPackItems(pack.id)">
+                                      <v-list-tile-title v-text="pack.name"></v-list-tile-title>
+                                    </v-list-tile-content>
+                                  <v-list-tile-avatar>
+                                    <v-icon color="red" @click="favorite(true, pack.id)">delete_forever</v-icon>
+                                  </v-list-tile-avatar>
+                                </v-list-tile>
+                                <v-divider></v-divider>
+                              </div>
+
+                            </v-list>
+                          </v-card>
+                          
+                        </v-flex>
+                        
+                      </v-layout>
+                      
+                     
+                        <v-pagination circle :length="6" v-model="page" style="position: absolute; bottom:80px; left:50%; transform:translateX(-50%)"></v-pagination>
+                      
+                    </section>
+                    <!-- end section 1 -->
+                    <section id="sectionCreateItem" v-if="sectionCreateItem">
+                        <v-container>
+                        <template>
+                            <h2 class="text-xs-center pa-2">Create Item</h2>
+                            <v-divider></v-divider>
+                            <v-form v-model="valid" ref="form" lazy-validation>
+                              <v-text-field
+                                label="Name"
+                                v-model="itemName"
+                                :rules="nameRules"
+                                required
+                              ></v-text-field>
+                              <!-- <v-text-field
+                                label="E-mail"
+                                v-model="email"
+                                :rules="emailRules"
+                                required
+                              ></v-text-field> -->
+                              <v-select
+                                label="Color"
+                                v-model="selectColor"
+                                :items="colors"
+                                
+                                required
+                              ></v-select>
+                              <v-checkbox
+                                label="Scan item"
+                                v-model="showNFCStepper"
+                              ></v-checkbox>
+                              <v-stepper v-model="nfcScan" v-if="showNFCStepper">
+                                <v-stepper-header>
+                                  <v-stepper-step step="1" :complete="nfcScan > 1">Name of step 1</v-stepper-step>
+                                  <v-divider></v-divider>
+                                  <v-stepper-step step="2" :complete="nfcScan > 2">Name of step 2</v-stepper-step>
+                                </v-stepper-header>
+                                <v-stepper-items>
+                                  <v-stepper-content step="1">
+                                    <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+                                    <v-btn color="primary" @click.native="nfcScan = 2" onclick="NFCTimestamp=Math.round((new Date()).getTime() / 1000); writeNFC(NFCTimestamp)">Continue</v-btn>
+                                   
+                                  </v-stepper-content>
+                                  <v-stepper-content step="2">
+                                    <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+                                    <v-btn flat @click.native="nfcScan = 1">Cancel</v-btn>
+                                  </v-stepper-content>
+                                  
+                                </v-stepper-items>
+                              </v-stepper>
+                          
+                              <v-btn
+                              @click="createItem()"
+                                :disabled="!valid"
+                              >
+                                Create Item
+                              </v-btn>
+                            </v-form>
+                          </template>
+                        </v-container>
+
+                      </section>
+                      <!-- end section 2 -->
+                      <section id="sectionCreatePack" v-if="sectionCreatePack">
+                          <v-container>
+                          <template>
+                              <h2 class="text-xs-center pa-2">Create a Pack</h2>
+                              <v-divider></v-divider>
+                              <v-form v-model="valid" ref="form" lazy-validation>
+                                <v-text-field
+                                  label="Name"
+                                  v-model="packName"
+                                  :rules="nameRules"
+                                  required
+                                ></v-text-field>
+                                <v-select
+                                  label="Color"
+                                  v-model="selectColor"
+                                  :items="colors"
+                                  required
+                                ></v-select>
+                            
+                                <v-btn
+                                @click="createPack()"
+                                  :disabled="!valid"
+                                >
+                                  Create Pack
+                                </v-btn>
+                              </v-form>
+                            </template>
+                          </v-container>
+  
+                        </section>
+
+                        <section id="sectionEditPack" v-if="sectionEditPack">
+                            <v-container>
+                            <template>
+                                <h2 class="text-xs-center pa-2">{{ currentPackName }}</h2>
+                                <v-divider></v-divider>
+                                
+                                  <v-list>
+                                    <v-list-tile avatar @click="addingItemToPack=true; navigate('sectionItems');">
+                                      <!-- todo: add 'plus' avatar -->
+                                      <v-list-tile-content>
+                                        <v-list-tile-title><strong>Add Item</strong></v-list-tile-title>
+                                      </v-list-tile-content>
+                                    </v-list-tile>
+                                    <v-divider></v-divider>
+                                      
+                                    <div v-for="item in currentPackItems">
+                                      <v-list-tile avatar @click="">
+                                          <v-list-tile-content>
+                                            <v-list-tile-title v-text="item.name"></v-list-tile-title>
+                                          </v-list-tile-content>
+                                        <v-list-tile-avatar>
+                                          <v-icon color="red" @click="unlinkItemFromPack(item.id)">delete_forever</v-icon>
+                                        </v-list-tile-avatar>
+                                      </v-list-tile>
+                                      <v-divider></v-divider>
+                                    </div>
+      
+                                  </v-list>
+
+                              </template>
+                            </v-container>
+    
+                          </section>
+
+                        <div style="position:initial; height:50px">
+                        <v-bottom-nav style="bottom:0;" absolute shift :value="true" :active.sync="e2" :color="computedColor">
+                          <v-btn dark v-on:click="e1 = 'Inpakken'; navigate('sectionPacks');">
+                            <span>menu1</span>
+                            <v-icon>shop</v-icon>
+                          </v-btn>
+                          <v-btn dark v-on:click="e1 = 'Pack maken'; navigate('sectionCreateItem');">
+                            <span>menu2</span>
+                            <v-icon>shop_two</v-icon>
+                          </v-btn>
+                          <v-btn dark v-on:click="e1 = 'items bekijken'; navigate('sectionItems');">
+                            <span>menu3</span>
+                            <v-icon>book</v-icon>
+                          </v-btn>
+                          <v-btn dark v-on:click="e1 = 'Instellingen'">
+                            <span>menu4</span>
+                            <v-icon>build</v-icon>
+                          </v-btn>
+                        </v-bottom-nav>
+                      </div>
+            </v-app>
+    </div>
+
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+    
+    <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/ui.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+</body>
+
+</html>

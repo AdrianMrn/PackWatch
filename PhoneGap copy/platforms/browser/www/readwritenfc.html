@@ -1,0 +1,77 @@
+<section v-if="section1">
+    <v-content>
+        <v-container>
+                <h1>PackWatch</h1>
+                <div id="deviceready" class="blink">
+                    <p class="event listening">Connecting to Device</p>
+                    <p class="event received">Device is Ready</p>    
+                </div>
+                <div class="mt-4">
+                    <v-btn v-if="startNFC" v-on:click="startNFC = false; stopNFC = true" color="light-green darken-1" dark block type="submit"  id="start">Tag lezen starten</v-btn>
+                    <v-btn v-if="stopNFC" v-on:click="stopNFC = false; startNFC = true" color="red darken-1" dark block type="submit" id="stop">Tag lezen stoppen</v-btn>
+                </div>
+                <div class="mt-5"> 
+                        <template>
+                                <v-form v-model="valid">
+                                  <v-text-field label="Tag" v-model="name" :rules="nameRules" :counter="10" required id="input_message">
+                                </v-text-field>
+                                  
+                                </v-form>
+                              </template>
+                        <!-- <input type="text" id="input_message"> -->
+                        <!-- <button type="submit" id="write">Tag Schrijven</button> -->   
+                                <v-layout row justify-center>
+                                  <v-dialog v-model="dialog" persistent max-width="290">
+                                   
+                                    <v-btn color="primary" dark block type="submit" slot="activator" onclick="writeNFC()" id="write">Tag schrijven</v-btn>
+                                    <v-card>
+                                      <v-card-title class="headline text-lg-center">Info</v-card-title>
+                                      <v-card-text>Please hold the NFC tag near the phoooone!</v-card-text>
+                                      <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn color="green darken-1" flat @click.native="dialog = false">The fuck?</v-btn>
+                                        <v-btn color="green darken-1" flat @click.native="dialog = false">OK</v-btn>
+                                      </v-card-actions>
+                                    </v-card>
+                                  </v-dialog>
+                                </v-layout>
+                            </div>
+        </v-container>
+    </v-content>
+  </section>
+  <section v-if="section2">
+    <v-content>
+      <v-container>
+          <template>
+              
+                <v-stepper v-model="stepper1">
+                  <v-stepper-header>
+                    <v-stepper-step step="1" :complete="stepper1 > 1">Name of step 1</v-stepper-step>
+                    <v-divider></v-divider>
+                    <v-stepper-step step="2" :complete="stepper1 > 2">Name of step 2</v-stepper-step>
+                    <v-divider></v-divider>
+                    <v-stepper-step step="3">Name of step 3</v-stepper-step>
+                  </v-stepper-header>
+                  <v-stepper-items>
+                    <v-stepper-content step="1">
+                      <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+                      <v-btn color="primary" @click.native="stepper1 = 2">Continue</v-btn>
+                      <!-- <v-btn flat>Cancel</v-btn> -->
+                    </v-stepper-content>
+                    <v-stepper-content step="2">
+                      <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+                      <v-btn color="primary" @click.native="stepper1 = 3">Continue</v-btn>
+                      <v-btn flat @click.native="stepper1 = 1">Previous</v-btn>
+                    </v-stepper-content>
+                    <v-stepper-content step="3">
+                      <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+                      <v-btn color="primary" @click.native="stepper1 = 1">Continue</v-btn>
+                      <v-btn flat @click.native="stepper1 = 2">Previous</v-btn>
+                    </v-stepper-content>
+                  </v-stepper-items>
+                </v-stepper>
+            </template>
+            
+      </v-container>
+    </v-content>
+  </section>
