@@ -65,6 +65,10 @@
    
       
     <div id="app" class="app">
+        <modal v-if="modalOpen" @cancel="modalOpen = false">
+            <template slot="header"> Are you sure?</template>
+            <template></template>
+          </modal>
       
         <ul id="tabs-swipe-demo" class="tabs">
             <li class="tab col s3" @click="navigate('sectionItems');">
@@ -85,16 +89,18 @@
                 <div class="nav-wrapper">
                     <div class="nav-content">
                         <i aria-hidden="true" class="material-icons icon brand-logo">assistant</i>
-                        <a href="login.html"><span class="nav-title">Packwatch</span></a>
+                        <a href="login.html"><span class="nav-title">{{sectionTitle}}</span></a>
                         
                     </div>
                 </div>
               </nav>
 
+              
+
             
                     <section id="sectionItems" v-if="sectionItems">
                         <div class="col s12">
-                            <h3 class="center-align">All items</h3>
+                            <h3 class="center-align">All items <small>( 15 ) </small></h3>
                             <div class="col s12 break">
                                 
                                 <a class="btn-floating btn-large waves-effect waves-light red add-item" id="items-add" @click="navigate('sectionCreateItem')"><i class="material-icons">add</i></a>
@@ -182,7 +188,7 @@
                             
                             
                             <div class="input-field">
-                              <ul id="selectColor" class="dropdown-content" v-model="currentItemEdit.color">
+                              <ul id="selectColor" class="dropdown-content" v-model="">
                                 <li><a href="#!">Red</a></li>
                                 <li><a href="#!">Green</a></li>
                                 <li><a href="#!">Yellow</a></li>
@@ -208,12 +214,16 @@
                     
                     <section id="sectionPacks" v-if="sectionPacks">
                         <div class="col s12">
-                            <h3 class="center-align">All packs</h3>
+                            <h3 class="center-align">All packs <small>( 3 )</small></h3>
                             <div class="col s12 break">
                                 
                                 <a class="btn-floating btn-large waves-effect waves-light red add-pack" id="packs-add" @click="navigate('sectionCreatePack')"><i class="material-icons">add</i></a>
                             </div>
                             
+                           
+                         
+          
+
 
                             <ul class="collection">
                               <li v-for="pack in userPacks" class="collection-item dismissable">
@@ -237,7 +247,7 @@
                                         <ul class="btn-slide-ul">
                                           <li class="waves-effect waves-light  btn-change-li"><a href="#!"><i class="material-icons" @click="currentPackName = pack.name; currentPackId = pack.id; getPackItems(pack.id)">insert_link</i></a></li>
                                           <li class="waves-effect waves-light  btn-change-li"><a href="#!"><i class="material-icons" @click=" currentPackEdit = pack;">edit</i></a></li>
-                                          <li class="waves-effect waves-light   btn-change-li"><a href="#!"><i class="material-icons" @click="">delete</i></a></li>
+                                          <li class="waves-effect waves-light   btn-change-li"><a href="#!"><i class="material-icons" @click="modalOpen = true">delete</i></a></li>
                                         </ul>
                                       </div>
                                 <div> 
@@ -262,31 +272,52 @@
 
                       <div class="container">
                         <h3 class="center-align">Dashboard</h3>
-                        <div class="row">
-                          <div class="col offset-s1 s4 center-align btn-large red">
-                            32 Items
+                        <div class="card">
+                            <div class="card-image waves-effect waves-block waves-light">
+                              <img class="activator" src="img/backpack.jpeg">
+                            </div>
+                            <div class="card-content card-position">
+                              <span class="card-title activator grey-text text-darken-4">Your backpack contains:
+                                <a class="btn-floating halfway-fab halfway-fab-bag waves-effect waves-light red">
+                                  <div class="icon-wrapper"><i class="material-icons">add</i></div>
+                                </a>
+                              </span>
+                              <p> 2 Packs</p>
+                              <p>7 Items</p>
+                            </div>
+                            <div class="card-reveal">
+                              <span class="card-title grey-text text-darken-4">Start packing<i class="material-icons right">close</i></span>
+                              <p>Choose the packs or items you would like to pack.</p>
+                              <br>
+                              <div class="row">
+                                <div class="col offset-s2 s8 center-align btn-large red">
+                                  Add Items
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col offset-s2 s8 center-align btn-large red">
+                                  Add Packs
+                                </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col offset-s2 s8 center-align btn-large red">
+                                    Clear backpack
+                                  </div>
+                              </div>
+                            </div>
                           </div>
-                          <div class="col offset-s1 s4 center-align btn-large red">
-                            4 Packs
-                          </div>
-                        </div>
-                        
-                        <div class="fixed-action-btn vertical packing-btn" @click="navigate('sectionPacking')">
-                            <a class="btn-large red ">
-                              Start packing
-                            </a>
-                            <!-- <ul>
-                              
-                              <li><a class="btn-floating btn-dashboard yellow darken-1">Add packs<i class="material-icons">format_quote</i></a></li>
-                              <li><a class="btn-floating btn-dashboard green">Add items<i class="material-icons">publish</i></a></li>
-                              <li><a class="btn-floating btn-dashboard blue">Scan backpack<i class="material-icons">attach_file</i></a></li>
-                            </ul> -->
-                          </div>
-                                
-                      </div>
+        
+                          
+
                       
 
-
+                      <div class="row">
+                        <div class="col offset-s1 s10 center-align btn-large red" @click="navigate('sectionPacking')">
+                          Scan backpack
+                        </div>
+                      </div>
+                        
+                      </div>
                     </section>
 
                     <section id="sectionPacking" v-if="sectionPacking">
@@ -294,42 +325,7 @@
                       <br><br>
                       <div class="container">
 
-                          <div class="card">
-                              <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="img/backpack.jpeg">
-                              </div>
-                              <div class="card-content card-position">
-                                <span class="card-title activator grey-text text-darken-4">Your backpack contains:
-                                  <a class="btn-floating halfway-fab halfway-fab-bag waves-effect waves-light red">
-                                    <div class="icon-wrapper"><i class="material-icons">add</i></div>
-                                  </a>
-                                </span>
-                                <p> 2 Packs</p>
-                                <p>7 Items</p>
-                              </div>
-                              <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Start packing<i class="material-icons right">close</i></span>
-                                <p>Choose the packs or items you would like to pack.</p>
-                                <br>
-                                <div class="row">
-                                  <div class="col offset-s2 s8 center-align btn-large red">
-                                    Add Items
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col offset-s2 s8 center-align btn-large red">
-                                    Add Packs
-                                  </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col offset-s2 s8 center-align btn-large red">
-                                      Clear backpack
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
-          
-                            
+                          
 
                         
 

@@ -1,4 +1,27 @@
-
+Vue.component('modal', {
+  
+  props: ['header'],
+  template: `
+            <div id="modal1" class="modal open" style="z-index: 1003; display: block; opacity: 1; transform: scaleX(1); top: 10%;">
+              <div class="modal-content">
+              <img class="img-align" src="img/danger.png" />
+                <h4 class="center-align"><slot name="header"></slot></h4>
+                <p> <slot></slot></p>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class="left modal-action modal-close waves-effect waves-red btn-flat" @click="cancelModal">Cancel</a>
+                <a href="#!" class="right modal-action modal-close waves-effect waves-green btn-flat" @click="deleteModal">Agree</a>
+              </div>
+            </div>`,
+  methods: {
+    cancelModal: function() {
+      this.$emit('cancel');
+    }, 
+    deleteModal: function() {
+      this.$emit('delete');
+    }
+  }
+})
 
 new Vue({
     el: '#app',
@@ -78,7 +101,9 @@ new Vue({
 
         addingItemToPack: false,
         showToast:false,
-        loggedIn:null
+        loggedIn:null,
+        modalOpen:false,
+        sectionTitle: 'Dashboard',
 
     },
     mounted() {
@@ -152,27 +177,35 @@ new Vue({
         switch(url){
           case "sectionPacks":
             this.sectionPacks = true;
+            this.sectionTitle = 'Packs';
             break;
           case "sectionCreateItem":
             this.sectionCreateItem = true;
+            this.sectionTitle = 'Create item';
             break;
           case "sectionCreatePack":
             this.sectionCreatePack = true;
+            this.sectionTitle = 'Create pack';
             break;
           case "sectionEditPack":
             this.sectionEditPack = true;
+            this.sectionTitle = 'Edit pack';
             break;
           case "sectionItems":
             this.sectionItems = true;
+            this.sectionTitle = 'Items';
             break;
           case "sectionEditItems":
             this.sectionEditItems = true;
+            this.sectionTitle = 'Edit items';
             break;
           case "sectionPacking":
             this.sectionPacking = true;
+            this.sectionTitle = 'Packing';
             break;
           case "sectionDashboard":
             this.sectionDashboard = true;
+            this.sectionTitle = 'Dashboard';
             break;
         }
       },

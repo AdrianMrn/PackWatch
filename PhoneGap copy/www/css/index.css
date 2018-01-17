@@ -263,3 +263,15 @@ section {
     position: relative;
     height:40px;
 }
+.modal .open{
+    z-index: 1003;
+    display: block;
+    opacity: 1;
+    transform: scaleX(1);
+    top: 10%;
+
+}
+.img-align {
+    display: block;
+    margin:0 auto;
+}
