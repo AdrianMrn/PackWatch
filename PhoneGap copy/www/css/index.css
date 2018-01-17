@@ -48,8 +48,9 @@ body {
     box-shadow: none;
 }
 #sectionPacks {
-    height:100%;
+    height:80vh;
     position: relative;
+    overflow: visible;
 }
 .packs-wrapper {
     position: relative;
@@ -217,4 +218,48 @@ nav .nav-title{
     position: absolute;
     right: 5px;
     top: -30px;
+}
+section {
+    /* display: flex;
+    min-height: 80vh;
+    flex-direction: column;
+    overflow: scroll; */
+  }
+  .btn-slide {
+      height: 100%;
+      border-radius: 3px;
+      width:49px;
+      background-color:transparent !important;
+  }
+  .btn-slide-ul {
+    
+    background-color:#f44236 !important;
+}
+.pack-btn {
+    height:49px !important;
+}
+.packing-btn {
+    right:25%;
+    bottom:60px;
+}
+.btn-dashboard {
+    width:100px;
+    border-radius: 0;
+}
+.halfway-fab-bag {
+    top:-20px;
+    right:15px;
+}
+.card-position{
+    position: relative;
+}
+.icon-wrapper i {
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+.icon-wrapper {
+    position: relative;
+    height:40px;
 }

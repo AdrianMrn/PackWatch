@@ -12,11 +12,13 @@ new Vue({
         stepper1: 0,
 
         sectionItems: false,
-        sectionPacks: true,
+        sectionPacks: false,
         sectionCreateItem: false,
         sectionCreatePack: false,
         sectionEditPack: false,
         sectionEditItems: false,
+        sectionPacking: false,
+        sectionDashboard: false,
 
         settings_items: [
           { title: 'Settings' },
@@ -145,6 +147,8 @@ new Vue({
         this.sectionCreatePack = false;
         this.sectionEditPack = false;
         this.sectionEditItems = false;
+        this.sectionPacking = false;
+        this.sectionDashboard = false;
         switch(url){
           case "sectionPacks":
             this.sectionPacks = true;
@@ -160,10 +164,15 @@ new Vue({
             break;
           case "sectionItems":
             this.sectionItems = true;
-            
             break;
           case "sectionEditItems":
             this.sectionEditItems = true;
+            break;
+          case "sectionPacking":
+            this.sectionPacking = true;
+            break;
+          case "sectionDashboard":
+            this.sectionDashboard = true;
             break;
         }
       },
