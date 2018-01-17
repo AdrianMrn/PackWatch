@@ -40,8 +40,9 @@ new Vue({
         sectionCreatePack: false,
         sectionEditPack: false,
         sectionEditItems: false,
-        sectionPacking: false,
+        sectionPackingItem: false,
         sectionDashboard: false,
+        sectionPackingPack: false,
 
         settings_items: [
           { title: 'Settings' },
@@ -89,6 +90,7 @@ new Vue({
         NFCTimestamp: 0,
 
         currentItemEdit:null,
+        currentPackEdit:null,
 
         userPacks: [],
         userItems: [],
@@ -162,6 +164,9 @@ new Vue({
           break
         }
       },
+      numberItems () {
+
+      },
     },
     methods: {
       navigate(url) {
@@ -172,8 +177,9 @@ new Vue({
         this.sectionCreatePack = false;
         this.sectionEditPack = false;
         this.sectionEditItems = false;
-        this.sectionPacking = false;
+        this.sectionPackingItem = false;
         this.sectionDashboard = false;
+        this.sectionPackingPack = false;
         switch(url){
           case "sectionPacks":
             this.sectionPacks = true;
@@ -199,13 +205,17 @@ new Vue({
             this.sectionEditItems = true;
             this.sectionTitle = 'Edit items';
             break;
-          case "sectionPacking":
-            this.sectionPacking = true;
+          case "sectionPackingItem":
+            this.sectionPackingItem = true;
             this.sectionTitle = 'Packing';
             break;
           case "sectionDashboard":
             this.sectionDashboard = true;
             this.sectionTitle = 'Dashboard';
+            break;
+          case "sectionPackingPack":
+            this.sectionPackingPack = true;
+            this.sectionTitle = 'Packing';
             break;
         }
       },
@@ -235,7 +245,7 @@ new Vue({
               'name': response.data.itemName,
               'color': response.data.itemColor,
             });
-            this.navigate("sectionEditPack");
+            //this.navigate("sectionEditPack");
           }).catch(error => {
             console.log(error);
           });
