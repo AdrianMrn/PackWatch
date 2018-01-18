@@ -1,62 +1,48 @@
-Vue.component('toast', {
-  template: 
-  ` 
-  <v-snackbar
-      :timeout="timeout"
-      :color="color"
-      :multi-line="mode === 'multi-line'"
-      :vertical="mode === 'vertical'"
-      top multi-line
-      v-model="snackbar">
-      <slot></slot>
-      <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
-    </v-snackbar>
-  `,
-  data () {
-    return {
-      snackbar: true,
-      color: '',
-      mode: '',
-      timeout: 6000,
+Vue.component('modal', {
+  
+  props: ['header'],
+  template: `
+            <div id="modal1" class="modal open" style="z-index: 1003; display: block; opacity: 1; transform: scaleX(1); top: 10%;">
+              <div class="modal-content">
+              <img class="img-align" src="img/danger.png" />
+                <h4 class="center-align"><slot name="header"></slot></h4>
+                <p> <slot></slot></p>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class="left modal-action modal-close waves-effect waves-red btn-flat" @click="cancelModal">Cancel</a>
+                <a href="#!" class="right modal-action modal-close waves-effect waves-green btn-flat" @click="deleteModal">Agree</a>
+              </div>
+            </div>`,
+  methods: {
+    cancelModal: function() {
+      this.$emit('cancel');
+    }, 
+    deleteModal: function() {
+      this.$emit('delete');
     }
-  },
-}),
-Vue.component('pack-alert', {
-    
-
-    
-  template: ` 
-  <div>
-          <v-card>
-          <v-card-title class="headline text-lg-center">Info</v-card-title>
-          <v-card-text>Please hold the NFC tag near the phoooone!</v-card-text>
-          <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="green darken-1" flat @click="$emit('close-alert')">The fuck?</v-btn>
-              <v-btn color="green darken-1" flat >OK</v-btn>
-          </v-card-actions>
-          </v-card>
-  </div>
-  `,
-
-}),
+  }
+})
 
 new Vue({
     el: '#app',
     data: {
       
-        e2: 0,
+        e2: 1,
         startNFC: true,
         stopNFC: false,
-        e1: 'recent',
+        e1: '',
         dialog:false,
         stepper1: 0,
 
         sectionItems: false,
-        sectionPacks: true,
+        sectionPacks: false,
         sectionCreateItem: false,
         sectionCreatePack: false,
         sectionEditPack: false,
+        sectionEditItems: false,
+        sectionPackingItem: false,
+        sectionDashboard: false,
+        sectionPackingPack: false,
 
         settings_items: [
           { title: 'Settings' },
@@ -64,17 +50,17 @@ new Vue({
           { title: 'Add Pack' },
           { title: 'Scan Item' }
         ],
-        packs: [
-          { id: 0, favorite: true, title: 'Fitness Pack', icon: 'fitness_center' },
-          { id: 1, favorite: true, title: 'Bike Pack', icon: 'directions_bike' },
-          { id: 2, favorite: true, title: 'Beach Pack', icon: 'beach_access' },
-          { id: 3, favorite: false, title: 'Fitneess Pack', icon: 'fitness_center' },
-          { id: 4, favorite: false, title: 'Golff Pack', icon: 'golf_course' },
-          { id: 5, favorite: false, title: 'Bikee Pack', icon: 'directions_bike' },
+        // packs: [
+        //   { id: 0, favorite: true, title: 'Fitness Pack', icon: 'fitness_center' },
+        //   { id: 1, favorite: true, title: 'Bike Pack', icon: 'directions_bike' },
+        //   { id: 2, favorite: true, title: 'Beach Pack', icon: 'beach_access' },
+        //   { id: 3, favorite: false, title: 'Fitneess Pack', icon: 'fitness_center' },
+        //   { id: 4, favorite: false, title: 'Golff Pack', icon: 'golf_course' },
+        //   { id: 5, favorite: false, title: 'Bikee Pack', icon: 'directions_bike' },
          
           
-        //  paginate api from laravel 
-        ],
+        // //  paginate api from laravel 
+        // ],
         page: 1,
         // nfcScanstepper
         nfcScan:1,
@@ -103,17 +89,29 @@ new Vue({
         showNFCStepper: false,
         NFCTimestamp: 0,
 
+        currentItemEdit:null,
+        currentPackEdit:null,
+
         userPacks: [],
         userItems: [],
+
+        currentItemId: null,
 
         currentPackName: '',
         currentPackId: null,
         currentPackItems: [],
 
         addingItemToPack: false,
+        showToast:false,
+        loggedIn:null,
+        modalOpen:false,
+        sectionTitle: 'Dashboard',
 
     },
     mounted() {
+      
+      // start at dashboard when app is mounted
+      this.navigate('sectionDashboard');
       //if we are on homepage (lol pls don't judge us)
       if (window.location.href.indexOf('index.html') != -1) {
         //todo: show loading screen/icon/whatever & disable everything else until last "then"
@@ -136,11 +134,17 @@ new Vue({
           }).catch(error => {
           })
         }).catch(error => {
+          // logout if unauthorised
+          window.location.replace('login.html');
         })
 
       }
       //axios.defaults.headers.common['Accept'] = 'application/json'
      // axios.defaults.headers.common['Authorization'] = 'value' // for all requests
+
+     
+       
+  
 
     },
     computed: {
@@ -160,29 +164,58 @@ new Vue({
           break
         }
       },
+      numberItems () {
+
+      },
     },
     methods: {
       navigate(url) {
+        
         this.sectionPacks = false;
         this.sectionItems = false;
         this.sectionCreateItem = false;
         this.sectionCreatePack = false;
         this.sectionEditPack = false;
+        this.sectionEditItems = false;
+        this.sectionPackingItem = false;
+        this.sectionDashboard = false;
+        this.sectionPackingPack = false;
         switch(url){
           case "sectionPacks":
             this.sectionPacks = true;
+            this.sectionTitle = 'All packs ( ' + this.userPacks.length + ' )';
             break;
           case "sectionCreateItem":
             this.sectionCreateItem = true;
+            this.sectionTitle = 'Create item';
             break;
           case "sectionCreatePack":
             this.sectionCreatePack = true;
+            this.sectionTitle = 'Create pack';
             break;
           case "sectionEditPack":
             this.sectionEditPack = true;
+            this.sectionTitle = 'Edit pack';
             break;
           case "sectionItems":
             this.sectionItems = true;
+            this.sectionTitle = 'All items ( ' + this.userPacks.length + ' )';
+            break;
+          case "sectionEditItems":
+            this.sectionEditItems = true;
+            this.sectionTitle = 'Edit items';
+            break;
+          case "sectionPackingItem":
+            this.sectionPackingItem = true;
+            this.sectionTitle = 'Pack item';
+            break;
+          case "sectionDashboard":
+            this.sectionDashboard = true;
+            this.sectionTitle = 'Dashboard';
+            break;
+          case "sectionPackingPack":
+            this.sectionPackingPack = true;
+            this.sectionTitle = 'Pack pack';
             break;
         }
       },
@@ -192,6 +225,7 @@ new Vue({
           for (var i = 0; i < this.currentPackItems.length; i++) {
             if (id == this.currentPackItems[i].id) {
               //todo: toast "item is already in pack"
+              alert("Item is already in pack");
               return;
             }
           }
@@ -211,7 +245,7 @@ new Vue({
               'name': response.data.itemName,
               'color': response.data.itemColor,
             });
-            this.navigate("sectionEditPack");
+            //this.navigate("sectionEditPack");
           }).catch(error => {
             console.log(error);
           });
@@ -270,12 +304,47 @@ new Vue({
           this.packName = "";
           this.selectColor = "";
           this.getPackItems(response.data.id);
+          this.showToast = true;
         }).catch(error => {
           //todo: catch & show bad password, email taken errors ...: this.errorMsgs[] = error.response.data
           console.log(error.response.data);
           this.errorMsg = 'No user or no location!'
           this.data = []
         })
+      },
+      deleteItem(id) {
+
+        apiUrl = 'http://packwatch.test/api/item/' + id;
+        axios.post(apiUrl, {
+          _method: 'delete',
+          item_id: id,
+        }, {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
+        }).then(response => {
+          console.log(response);
+          //this.getPackItems(this.currentPackId);
+        }).catch(error => {
+          console.log(error);
+        });
+      },
+      updateItem(id) {
+
+        apiUrl = 'http://packwatch.test/api/item/' + id;
+        axios.post(apiUrl, {
+          _method: 'patch',
+          item_id: id,
+        }, {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
+        }).then(response => {
+          console.log(response);
+          //this.getPackItems(this.currentPackId);
+        }).catch(error => {
+          console.log(error);
+        });
       },
       createItem() {
         apiUrl = 'https://packwatch.dietervercammen.be/api/item'
@@ -303,7 +372,7 @@ new Vue({
           }
         }).catch(error => {
           //todo: catch & show bad password, email taken errors ...: this.errorMsgs[] = error.response.data
-          console.log(error.response.data);
+          console.log(error);
           this.errorMsg = 'No user or no location!'
           this.data = []
         })

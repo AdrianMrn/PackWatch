@@ -38,7 +38,7 @@ var app = {
         app.receivedEvent('deviceready');
         document.getElementById("start").addEventListener("click", readTag, false);
         document.getElementById("stop").addEventListener("click", dontReadTag, false);
-        document.getElementById("write").addEventListener("click", writeNFC, true);
+        addEventListener("click", writeNFC, true);
         $('.collapsible').collapsible();
         $('ul.tabs').tabs();
         $('select').material_select();

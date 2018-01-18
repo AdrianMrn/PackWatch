@@ -61,7 +61,7 @@
     $('select').material_select(); 
 }, false);
 </script>
-<body onload="$('.collapsible').collapsible();   $('select').material_select(); ">
+<body onload="$('.collapsible').collapsible();   $('select').material_select(); $('.button-collapse').sideNav(); ">
    
       
     <div id="app" class="app">
@@ -74,34 +74,61 @@
       
         <ul id="tabs-swipe-demo" class="tabs">
             <li class="tab col s3" @click="navigate('sectionItems');">
-              <a href="#sectionItems">Items</a>
+              <a href="#Items" class="text-primary">Items</a>
             </li>
             <li class="tab col s3">
                 <a class="active" href="#dashboard" @click="navigate('sectionDashboard');">
-                    <i aria-hidden="true" class="material-icons icon">view_comfy</i>
+                    <i aria-hidden="true" class="material-icons icon text-primary">view_comfy</i>
                 </a>
             </li>
             <li class="tab col s3" @click="navigate('sectionPacks');">
-              <a href="#packs">Packs</a>
+              <a href="#packs" class="text-primary">Packs</a>
             </li>
         </ul>
         
 
-              <nav>
+              <!-- <nav>
                 <div class="nav-wrapper main-color">
-                    <div class="nav-content">
+                    <a href="#!" class="brand-logo"><i class="material-icons">cloud</i>Logo</a>
+                    <ul class="right hide-on-med-and-down">
+                      <li><a href="sass.html"><i class="material-icons">search</i></a></li>
+                      <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
+                      <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
+                      <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li>
+                    </ul>
+
+                     <div class="nav-content">
                         <a href="landing.html"><i aria-hidden="true" class="material-icons icon brand-logo">assistant</i></a>
                         <a href="login.html"><span class="nav-title">{{sectionTitle}}</span></a>
-                        
-                    </div>
+                    </div> 
                 </div>
-              </nav>
+              </nav> -->
+              <nav>
+                  <div class="nav-wrapper main-color">
+                    <a href="#!" class="brand-logo">{{sectionTitle}}</a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                      <li> &nbsp;</li>
+                      <li><a><b>Menu</b></a></li>
+                      <li><a href="#">Dieter Vercammen</a></li>
+                      <li><a href="#">Logout</a></li>
+                      
+                    </ul>
+                    <ul class="side-nav" id="mobile-demo">
+                      <li>&nbsp;</li>
+                      <li><a><b>Menu</b></a></li>
+                      <li><a href="#">Dieter Vercammen</a></li>
+                      <li><a href="#">Logout</a></li>
+                      
+                    </ul>
+                  </div>
+                </nav>
                
                 <!-- Section Items -->
 
                     <section id="sectionItems" v-if="sectionItems">
                         <div class="col s12">
-                            <h3 class="center-align">All items <small>( {{userItems.length}} ) </small></h3>
+                            <!-- <h3 class="center-align">All items <small>( {{userItems.length}} ) </small></h3> -->
                             <div class="col s12 break">
                                 
                             </div>
@@ -127,7 +154,7 @@
                                       </ul>
                                     </div>
                                 <div> 
-                                  <a href="#!" class="secondary-content item-list-icon">
+                                  <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': item.color  }">
                                     <i class="material-icons">filter</i>
                                   </a> {{item.name}}
                                   <!-- right -->
@@ -143,28 +170,27 @@
 
                     <!-- Section create item -->
 
-                    <section id="sectionCreateItem" v-if="sectionCreateItem" v-transition>
+                    <section id="sectionCreateItem" v-if="sectionCreateItem" >
 
                         <i class="material-icons back-icon" @click="navigate('sectionItems')">arrow_back</i>
-                        <h3 class="center-align">Create item</h3>
+                        <!-- <h3 class="center-align">Create item</h3> -->
                         
                         <div class="container">
+                          <form>
                             <div class="input-field">
                                     <input id="last_name" type="text" class="validate" 
                                     
-                                    v-model="packName"
+                                    v-model="itemName"
                                     :rules="nameRules"
                                     required>
-                                    <label for="last_name">Last Name</label>
+                                    <label for="last_name">Name</label>
                             </div>
-                            <div class="input-field">
-                              <ul id="selectColor" class="dropdown-content">
-                                <li><a href="#!">Red</a></li>
-                                <li><a href="#!">Green</a></li>
-                                <li><a href="#!">Yellow</a></li>
-                              </ul>
-                              <a class="btn dropdown-button" href="#!" data-activates="selectColor">Select<i class="material-icons right">arrow_drop_down</i></a>
-                            </div>
+                            <select v-model="selectColor">
+                                <option value="green">Green</option>
+                                <option value="red">Red</option>
+                                <option value="orange">Orange</option>
+                                <option value="blue">Blue</option>
+                              </select>
                             <div class="col">
                                 <p>
                                     <input type="checkbox" id="test5" v-model="showNFCStepper" />
@@ -172,10 +198,11 @@
                                 </p>
                             </div>
                             <div class="col">
-                                <button class="btn waves-effect waves-light btn-block" type="submit" name="action" onclick="Materialize.toast('Created Item', 1000, 'toast-style')">Submit
+                                <button class="btn waves-effect waves-light btn-block" type="submit" name="action" onclick="Materialize.toast('Created Item', 1000, 'toast-style');" @click="createItem()" >Submit
                                     <i class="material-icons right"></i>
                                 </button>
                             </div>
+                          </form>
                             
                         </div>
                     </section>
@@ -191,12 +218,12 @@
                                 <label for="last_name">Last Name</label>
                                     <input id="last_name" type="text" class="validate"
                                     v-model="currentItemEdit.name"
-                                    :value="{name}"
+                                   
                                     required>
                                     
                             </div>
                             <div class="input-field">
-                              <ul id="selectColor" class="dropdown-content" v-model="">
+                              <ul id="selectColor" class="dropdown-content" >
                                 <li><a href="#!">Red</a></li>
                                 <li><a href="#!">Green</a></li>
                                 <li><a href="#!">Yellow</a></li>
@@ -222,7 +249,7 @@
                     
                     <section id="sectionPacks" v-if="sectionPacks">
                         <div class="col s12">
-                            <h3 class="center-align">All packs <small>( {{userPacks.length}} )</small></h3>
+                            <!-- <h3 class="center-align">All packs <small>( {{userPacks.length}} )</small></h3> -->
                             <div class="col s12 break"></div>
                             <ul class="collection">
                               <li class="collection-item dismissable" @click="navigate('sectionCreatePack')">
@@ -244,7 +271,7 @@
                                         </ul>
                                       </div>
                                 <div> 
-                                  <a href="#!" class="secondary-content item-list-icon">
+                                  <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': pack.color  }">
                                     <i class="material-icons">work</i>
                                   </a> {{pack.name}}
                                   <small> | xx items </small>
@@ -259,7 +286,8 @@
                     <section id="sectionDashboard" v-if="sectionDashboard">
 
                       <div class="container">
-                        <h3 class="center-align">Dashboard</h3>
+                        <div class="col s12 break"></div>
+                        <!-- <h3 class="center-align">Dashboard</h3> -->
                         <div class="card">
                             <div class="card-image waves-effect waves-block waves-light">
                               <img class="activator" src="img/backpack.jpg">
@@ -312,7 +340,7 @@
                       <br><br>
                       <div class="container">
                         <div class="row">
-                          <div class="col offset-s1 s10 center-align btn-large red">
+                          <div class="col offset-s1 s10 center-align">
                             <h5>Add item to backpack</h5>
                           </div>
                         </div>
@@ -376,7 +404,7 @@
                     <section id="sectionCreatePack" v-if="sectionCreatePack" v-transition>
 
                         <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
-                        <h3 class="center-align">Create Pack</h3>
+                        <!-- <h3 class="center-align">Create Pack</h3> -->
                         
                         <div class="container">
                             <div class="input-field">
@@ -387,14 +415,12 @@
                                     required>
                                     <label for="last_name">Name</label>
                             </div>
-                            <div class="input-field">
-                              <ul id="selectColor" class="dropdown-content">
-                                <li><a href="#!">Red</a></li>
-                                <li><a href="#!">Green</a></li>
-                                <li><a href="#!">Yellow</a></li>
-                              </ul>
-                              <a class="btn dropdown-button" href="#!" data-activates="selectColor">Select<i class="material-icons right">arrow_drop_down</i></a>
-                            </div>
+                            <select>
+                                <option value="red">Red</option>
+                                <option value="green">Green</option>
+                                <option value="yellow">Yellow</option>
+                                <option value="blue">blue</option>
+                              </select>
                             
                             <div class="col">
                                 <button class="btn waves-effect waves-light btn-block" type="submit" name="action" onclick="Materialize.toast('Created Pack', 1000, 'toast-style')">Submit
@@ -416,12 +442,12 @@
                                 <label for="last_name">Last Name</label>
                                     <input id="last_name" type="text" class="validate"
                                     v-model="currentPackEdit.name"
-                                    :value="{name}"
+                                   
                                     required>
                                     
                             </div>
                             <div class="input-field">
-                              <ul id="selectColor" class="dropdown-content" v-model="">
+                              <ul id="selectColor" class="dropdown-content" >
                                 <li><a href="#!">Red</a></li>
                                 <li><a href="#!">Green</a></li>
                                 <li><a href="#!">Yellow</a></li>
@@ -439,134 +465,7 @@
                         </section>
 
                   
-                    <!-- end section 1 -->
-                    <section id="sectionCreatetem" v-if="sectionCreatItem" >
-                        <v-container>
-                        <template>
-                            <h2 class="text-xs-center pa-2">Create Item</h2>
-                            <v-divider></v-divider>
-                            <v-form v-model="valid" ref="form" lazy-validation>
-                              <v-text-field
-                                label="Name"
-                                v-model="itemName"
-                                :rules="nameRules"
-                                required
-                              ></v-text-field>
-                              <!-- <v-text-field
-                                label="E-mail"
-                                v-model="email"
-                                :rules="emailRules"
-                                required
-                              ></v-text-field> -->
-                              <v-select
-                                label="Color"
-                                v-model="selectColor"
-                                :items="colors"
-                                
-                                required
-                              ></v-select>
-                              <v-checkbox
-                                label="Scan item"
-                                v-model="showNFCStepper"
-                              ></v-checkbox>
-                              <v-stepper v-model="nfcScan" v-if="showNFCStepper">
-                                <v-stepper-header>
-                                  <v-stepper-step step="1" :complete="nfcScan > 1">Name of step 1</v-stepper-step>
-                                  <v-divider></v-divider>
-                                  <v-stepper-step step="2" :complete="nfcScan > 2">Name of step 2</v-stepper-step>
-                                </v-stepper-header>
-                                <v-stepper-items>
-                                  <v-stepper-content step="1">
-                                    <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-                                    <v-btn color="primary" @click.native="nfcScan = 2" onclick="NFCTimestamp=Math.round((new Date()).getTime() / 1000); writeNFC(NFCTimestamp)">Continue</v-btn>
-                                   
-                                  </v-stepper-content>
-                                  <v-stepper-content step="2">
-                                    <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-                                    <v-btn flat @click.native="nfcScan = 1">Cancel</v-btn>
-                                  </v-stepper-content>
-                                  
-                                </v-stepper-items>
-                              </v-stepper>
-                          
-                              <v-btn
-                              @click="createItem()"
-                                :disabled="!valid"
-                              >
-                                Create Item
-                              </v-btn>
-                            </v-form>
-                          </template>
-                        </v-container>
-
-                      </section>
-                      <!-- end section 2 -->
-                      
-                      <section id="sectionreatePack" v-if="sectionreatePack">
-                          <v-container >
-                          <template>
-                              <h2 class="text-xs-center pa-2">Create a Pack</h2>
-                              <v-divider></v-divider>
-                              <v-form v-model="valid" ref="form" lazy-validation>
-                                <v-text-field
-                                  label="Name"
-                                  v-model="packName"
-                                  :rules="nameRules"
-                                  required
-                                ></v-text-field>
-                                <v-select
-                                  label="Color"
-                                  v-model="selectColor"
-                                  :items="colors"
-                                  required
-                                ></v-select>
-                            
-                                <v-btn
-                                @click="createPack()"
-                                  :disabled="!valid"
-                                >
-                                  Create Pack
-                                </v-btn>
-                              </v-form>
-                            </template>
-                          </v-container>
-  
-                        </section>
-                      
-
-                        <section id="sectionssEditPack" v-if="sectionsssEditPack">
-                            <v-container>
-                            <template>
-                                <h2 class="text-xs-center pa-2">{{ currentPackName }}</h2>
-                                <v-divider></v-divider>
-                                
-                                  <v-list>
-                                    <v-list-tile avatar @click="addingItemToPack=true; navigate('sectionItems');">
-                                      <!-- todo: add 'plus' avatar -->
-                                      <v-list-tile-content>
-                                        <v-list-tile-title><strong>Add Item</strong></v-list-tile-title>
-                                      </v-list-tile-content>
-                                    </v-list-tile>
-                                    <v-divider></v-divider>
-                                      
-                                    <div v-for="item in currentPackItems">
-                                      <v-list-tile avatar @click="">
-                                          <v-list-tile-content>
-                                            <v-list-tile-title v-text="item.name"></v-list-tile-title>
-                                          </v-list-tile-content>
-                                        <v-list-tile-avatar>
-                                          <v-icon color="red" @click="unlinkItemFromPack(item.id)">delete_forever</v-icon>
-                                        </v-list-tile-avatar>
-                                      </v-list-tile>
-                                      <v-divider></v-divider>
-                                    </div>
-      
-                                  </v-list>
-
-                              </template>
-                            </v-container>
-    
-                          </section>
+                   
 
                         
             </v-app>

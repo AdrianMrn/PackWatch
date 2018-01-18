@@ -1,4 +1,27 @@
-
+Vue.component('modal', {
+  
+  props: ['header'],
+  template: `
+            <div id="modal1" class="modal open" style="z-index: 1003; display: block; opacity: 1; transform: scaleX(1); top: 10%;">
+              <div class="modal-content">
+              <img class="img-align" src="img/danger.png" />
+                <h4 class="center-align"><slot name="header"></slot></h4>
+                <p> <slot></slot></p>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class="left modal-action modal-close waves-effect waves-red btn-flat" @click="cancelModal">Cancel</a>
+                <a href="#!" class="right modal-action modal-close waves-effect waves-green btn-flat" @click="deleteModal">Agree</a>
+              </div>
+            </div>`,
+  methods: {
+    cancelModal: function() {
+      this.$emit('cancel');
+    }, 
+    deleteModal: function() {
+      this.$emit('delete');
+    }
+  }
+})
 
 new Vue({
     el: '#app',
@@ -12,11 +35,14 @@ new Vue({
         stepper1: 0,
 
         sectionItems: false,
-        sectionPacks: true,
+        sectionPacks: false,
         sectionCreateItem: false,
         sectionCreatePack: false,
         sectionEditPack: false,
         sectionEditItems: false,
+        sectionPackingItem: false,
+        sectionDashboard: false,
+        sectionPackingPack: false,
 
         settings_items: [
           { title: 'Settings' },
@@ -63,6 +89,9 @@ new Vue({
         showNFCStepper: false,
         NFCTimestamp: 0,
 
+        currentItemEdit:null,
+        currentPackEdit:null,
+
         userPacks: [],
         userItems: [],
 
@@ -74,11 +103,15 @@ new Vue({
 
         addingItemToPack: false,
         showToast:false,
+        loggedIn:null,
+        modalOpen:false,
+        sectionTitle: 'Dashboard',
 
     },
     mounted() {
+      
       // start at dashboard when app is mounted
-      this.navigate('sectionCreateItem');
+      this.navigate('sectionDashboard');
       //if we are on homepage (lol pls don't judge us)
       if (window.location.href.indexOf('index.html') != -1) {
         //todo: show loading screen/icon/whatever & disable everything else until last "then"
@@ -101,6 +134,8 @@ new Vue({
           }).catch(error => {
           })
         }).catch(error => {
+          // logout if unauthorised
+          window.location.replace('login.html');
         })
 
       }
@@ -129,6 +164,9 @@ new Vue({
           break
         }
       },
+      numberItems () {
+
+      },
     },
     methods: {
       navigate(url) {
@@ -139,24 +177,45 @@ new Vue({
         this.sectionCreatePack = false;
         this.sectionEditPack = false;
         this.sectionEditItems = false;
+        this.sectionPackingItem = false;
+        this.sectionDashboard = false;
+        this.sectionPackingPack = false;
         switch(url){
           case "sectionPacks":
             this.sectionPacks = true;
+            this.sectionTitle = 'All packs ( ' + this.userPacks.length + ' )';
             break;
           case "sectionCreateItem":
             this.sectionCreateItem = true;
+            this.sectionTitle = 'Create item';
             break;
           case "sectionCreatePack":
             this.sectionCreatePack = true;
+            this.sectionTitle = 'Create pack';
             break;
           case "sectionEditPack":
             this.sectionEditPack = true;
+            this.sectionTitle = 'Edit pack';
             break;
           case "sectionItems":
             this.sectionItems = true;
+            this.sectionTitle = 'All items ( ' + this.userPacks.length + ' )';
             break;
           case "sectionEditItems":
             this.sectionEditItems = true;
+            this.sectionTitle = 'Edit items';
+            break;
+          case "sectionPackingItem":
+            this.sectionPackingItem = true;
+            this.sectionTitle = 'Pack item';
+            break;
+          case "sectionDashboard":
+            this.sectionDashboard = true;
+            this.sectionTitle = 'Dashboard';
+            break;
+          case "sectionPackingPack":
+            this.sectionPackingPack = true;
+            this.sectionTitle = 'Pack pack';
             break;
         }
       },
@@ -186,7 +245,7 @@ new Vue({
               'name': response.data.itemName,
               'color': response.data.itemColor,
             });
-            this.navigate("sectionEditPack");
+            //this.navigate("sectionEditPack");
           }).catch(error => {
             console.log(error);
           });

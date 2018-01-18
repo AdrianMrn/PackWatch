@@ -47,5 +47,22 @@ body {
     background:#fff;
     box-shadow: none;
 }
+#sectionPacks {
+    height:100%;
+    position: relative;
+}
+.packs-wrapper {
+    position: relative;
+}
+.test{
+    position: relative;
+}
+/* Transition animations */
+.fadeOut, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fadeOut, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
 
 /* Landscape layout (with min-width) */

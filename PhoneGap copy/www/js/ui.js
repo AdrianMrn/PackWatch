@@ -183,7 +183,7 @@ new Vue({
         switch(url){
           case "sectionPacks":
             this.sectionPacks = true;
-            this.sectionTitle = 'Packs';
+            this.sectionTitle = 'All packs ( ' + this.userPacks.length + ' )';
             break;
           case "sectionCreateItem":
             this.sectionCreateItem = true;
@@ -199,7 +199,7 @@ new Vue({
             break;
           case "sectionItems":
             this.sectionItems = true;
-            this.sectionTitle = 'Items';
+            this.sectionTitle = 'All items ( ' + this.userPacks.length + ' )';
             break;
           case "sectionEditItems":
             this.sectionEditItems = true;
@@ -207,7 +207,7 @@ new Vue({
             break;
           case "sectionPackingItem":
             this.sectionPackingItem = true;
-            this.sectionTitle = 'Packing';
+            this.sectionTitle = 'Pack item';
             break;
           case "sectionDashboard":
             this.sectionDashboard = true;
@@ -215,7 +215,7 @@ new Vue({
             break;
           case "sectionPackingPack":
             this.sectionPackingPack = true;
-            this.sectionTitle = 'Packing';
+            this.sectionTitle = 'Pack pack';
             break;
         }
       },
