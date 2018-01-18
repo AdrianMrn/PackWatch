@@ -106,6 +106,8 @@ new Vue({
         loggedIn:null,
         modalOpen:false,
         sectionTitle: 'Dashboard',
+        numberItems:0,
+        numberPacks: 0,
 
     },
     mounted() {
@@ -135,13 +137,14 @@ new Vue({
           })
         }).catch(error => {
           // logout if unauthorised
-          window.location.replace('login.html');
+          window.location.replace('landing.html');
         })
 
       }
       //axios.defaults.headers.common['Accept'] = 'application/json'
      // axios.defaults.headers.common['Authorization'] = 'value' // for all requests
-
+     numberPacks = this.userPacks.length;
+     numberItems = this.userItems.length;
      
        
   
@@ -164,9 +167,6 @@ new Vue({
           break
         }
       },
-      numberItems () {
-
-      },
     },
     methods: {
       navigate(url) {
@@ -183,6 +183,7 @@ new Vue({
         switch(url){
           case "sectionPacks":
             this.sectionPacks = true;
+            this.numberPacks = this.userPacks.length;
             this.sectionTitle = 'All packs ( ' + this.userPacks.length + ' )';
             break;
           case "sectionCreateItem":
@@ -199,7 +200,8 @@ new Vue({
             break;
           case "sectionItems":
             this.sectionItems = true;
-            this.sectionTitle = 'All items ( ' + this.userPacks.length + ' )';
+            this.numberItems = this.userItems.length;
+            this.sectionTitle = 'All items ( ' + this.numberItems + ' )';
             break;
           case "sectionEditItems":
             this.sectionEditItems = true;
@@ -304,7 +306,8 @@ new Vue({
           this.packName = "";
           this.selectColor = "";
           this.getPackItems(response.data.id);
-          this.showToast = true;
+          // this.showToast = true;
+          this.navigate('sectionItems');
         }).catch(error => {
           //todo: catch & show bad password, email taken errors ...: this.errorMsgs[] = error.response.data
           console.log(error.response.data);
@@ -368,7 +371,9 @@ new Vue({
           if (this.addingItemToPack) {
             this.interactWithItem(response.data.id);
           } else {
+            numberItems = this.userItems.length;
             this.navigate("sectionItems");
+            
           }
         }).catch(error => {
           //todo: catch & show bad password, email taken errors ...: this.errorMsgs[] = error.response.data
