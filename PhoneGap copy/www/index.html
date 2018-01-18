@@ -291,12 +291,14 @@
                                   </div>
                               </div>
                             </div>
+                            <div class="row">
+                                <div class="col offset-s1 s10 center-align btn-large red">
+                                  Scan backpack
+                                </div>
+                              </div>
+                              <br>
                           </div>
-                      <div class="row">
-                        <div class="col offset-s1 s10 center-align btn-large red">
-                          Scan backpack
-                        </div>
-                      </div>
+                      
                         
                       </div>
                     </section>
@@ -309,7 +311,7 @@
                       <div class="container">
                         <div class="row">
                           <div class="col offset-s1 s10 center-align btn-large red">
-                            add item to backpack
+                            <h5>Add item to backpack</h5>
                           </div>
                         </div>
                           
@@ -324,10 +326,7 @@
                               </a> {{item.name}}
                               <!-- right -->
                               <a href="#!" class="secondary-content " @click="addToBackpack(item.id)">
-                                    <!-- <p>
-                                      <input type="checkbox" id="test5" />
-                                      <label for="test5"> </label>
-                                    </p> -->
+                                   
                                     <i class="material-icons">send</i>
       
                               </a>
@@ -345,8 +344,8 @@
                       <br><br>
                       <div class="container">
                         <div class="row">
-                          <div class="col offset-s1 s10 center-align btn-large red">
-                            Add pack to backpack
+                          <div class="col offset-s1 s10 center-align">
+                            <h5>Add pack to backpack</h5>
                           </div>
                         </div>
                           
@@ -361,12 +360,7 @@
                               </a> {{pack.name}}
                               <!-- right -->
                               <a href="#!" class="secondary-content " @click="addToBackpack(pack.id)">
-                                    <!-- <p>
-                                      <input type="checkbox" id="test5" />
-                                      <label for="test5"> </label>
-                                    </p> -->
                                     <i class="material-icons">send</i>
-      
                               </a>
                               
                             </div>
