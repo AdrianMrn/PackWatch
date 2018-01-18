@@ -275,3 +275,101 @@ section {
     display: block;
     margin:0 auto;
 }
+
+/* landing page */
+.relative {
+    position: relative;
+}
+.landing-wrapper-img {
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: 37%;
+    position: absolute;
+    background-image: url(../img/landing.jpg);
+    z-index:-2;
+}
+.landing-wrapper{
+    background-color: rgba(194, 142, 0, 0.9);
+    height: 100%;
+    width: 100%;
+    position:absolute;
+    z-index:-1;       
+}
+.landing-divider {
+    height:80px;
+}
+.circle {
+    background-color:rgba(165, 121, 0, 0.9); 
+    height:180px; 
+    width:180px; 
+    display:block; 
+    margin:0 auto; 
+    position:relative;
+    box-shadow:1px 2px 8px 0px rgba(0, 0, 0, 0.55);
+}
+.circle img{
+    opacity: 0.83;
+    height: 65%;
+    width: auto;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    position: absolute;
+}
+.mb-0{
+    margin-bottom:0;
+}
+.landing-title{
+    margin-top:50px
+}
+.landing-title p {
+    color:white; 
+    font-weight:bold; 
+    font-family:arial; 
+    font-size:20px;
+}
+.landing-text p{
+    color:white;
+    font-size:15px; 
+}
+.landing-buttons-wrapper{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+.landing-button {
+    padding: 12px;
+    background-color: white;
+    border-radius: 30px;
+    width: 130px;
+    height: 45px;
+    color: #c28d04;
+    font-size: 14px;
+    font-weight: bold;
+}
+.landing-button-reverse {
+    padding: 10px;
+    background-color: transparent;
+    border:2px solid white;
+    border-radius: 30px;
+    width: 130px;
+    height: 45px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+}
+input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=text]:focus:not([readonly]){
+    border-bottom:none !important;
+    box-shadow: 0 1px 0 0 #888888;
+}
+
+
+/* general styles */
+
+.main-color{
+    background-color:#e2a700;
+}
+.secondary-color{
+    background-color:#ffc122;
+}

@@ -65,6 +65,8 @@
    
       
     <div id="app" class="app">
+        <!-- <div class="landing-wrapper"></div>
+        <div class="landing-wrapper-img"></div> -->
         <modal v-if="modalOpen" @cancel="modalOpen = false">
             <template slot="header"> Are you sure?</template>
             <template></template>
@@ -86,7 +88,7 @@
         
 
               <nav>
-                <div class="nav-wrapper">
+                <div class="nav-wrapper main-color">
                     <div class="nav-content">
                         <a href="landing.html"><i aria-hidden="true" class="material-icons icon brand-logo">assistant</i></a>
                         <a href="login.html"><span class="nav-title">{{sectionTitle}}</span></a>
@@ -260,7 +262,7 @@
                         <h3 class="center-align">Dashboard</h3>
                         <div class="card">
                             <div class="card-image waves-effect waves-block waves-light">
-                              <img class="activator" src="img/backpack.jpeg">
+                              <img class="activator" src="img/backpack.jpg">
                             </div>
                             <div class="card-content card-position">
                               <span class="card-title activator grey-text text-darken-4">Your backpack contains:
@@ -276,12 +278,12 @@
                               <p>Choose the packs or items you would like to pack.</p>
                               <br>
                               <div class="row">
-                                <div class="col offset-s2 s8 center-align btn-large red"  @click="navigate('sectionPackingItem')">
+                                <div class="col offset-s2 s8 center-align btn-large secondary-color"  @click="navigate('sectionPackingItem')">
                                   Add Items
                                 </div>
                               </div>
                               <div class="row">
-                                <div class="col offset-s2 s8 center-align btn-large red" @click="navigate('sectionPackingPack')">
+                                <div class="col offset-s2 s8 center-align btn-large orange" @click="navigate('sectionPackingPack')">
                                   Add Packs
                                 </div>
                               </div>
@@ -292,7 +294,7 @@
                               </div>
                             </div>
                             <div class="row">
-                                <div class="col offset-s1 s10 center-align btn-large red">
+                                <div class="col offset-s1 s10 center-align btn-large secondary-color">
                                   Scan backpack
                                 </div>
                               </div>

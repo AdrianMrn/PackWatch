@@ -53,7 +53,8 @@
 
 <body>
     <div id="app" class="app">
-           
+        <div class="landing-wrapper"></div>
+        <div class="landing-wrapper-img"></div>
 
        
       
@@ -97,7 +98,7 @@
                   
                         
                         <div class="section"></div>
-                  <h5 class="indigo-text">Please login into your account</h5>
+                  <h5 class="white-text">Please login into your account</h5>
                   <div class="section"></div>
             
                   <div class="container">
@@ -112,30 +113,30 @@
                         <div class='row'>
                           <div class='input-field col s12'>
                             <input class='validate' type='email' name='email' id='email' ref="loginemail" />
-                            <label for='email'>Enter your email</label>
+                            <label for='email' class="white-text">Enter your email</label>
                           </div>
                         </div>
             
                         <div class='row'>
                           <div class='input-field col s12'>
-                            <input class='validate' type='password' name='password' id='password' ref="loginpassword" />
-                            <label for='password'>Enter your password</label>
+                            <input class='validate password-field' type='password' name='password' id='password' ref="loginpassword" l/>
+                            <label for='password' class="white-text">Enter your password</label>
                           </div>
                           <label style='float: right;'>
-                            <a class='blue-text' href='#'><b>Forgot Password?</b></a>
+                            <a class='white-text' href='#'><b>Forgot Password?</b></a>
                         </label>
                         </div>
             
                         <br>
                         <center>
                           <div class='row'>
-                            <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'  @click.prevent="login()" >Login</button>
+                            <button type='submit' name='btn_login' class='col s12 btn  waves-effect white landing-button'  @click.prevent="login()" >Login</button>
                           </div>
                         </center>
                       </form>
                     </div>
                   </div>
-                  <a href="register.html">Create account</a>
+                  <a href="register.html" class='white-text'>Create account</a>
                 </center>
             
                 <div class="section"></div>

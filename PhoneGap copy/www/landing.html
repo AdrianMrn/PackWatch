@@ -53,71 +53,36 @@
 
 <body>
     <div id="app" class="app">
-            <div class="landing-wrapper" style="background-color: rgba(194, 142, 0, 0.9);
-            height: 100%;
-            width: 100%;
-           position:absolute;
-           z-index:-1;
-          
-        ">
-            </div>
-           <div class="landing-wrapper" style="
-           height: 100%;
-           width: 100%;
-           background-size: cover;
-           background-position: 37%;
-           position: absolute;
-           background-image: url(img/landing.jpg);
-           z-index:-2;
-       ">
-           </div>
-           <div class="container" style="position: relative">
-               <div class="row" style="height:128px;"></div>
-               <div class="circle" style="background-color:rgba(165, 121, 0, 0.9); height:180px; width:180px; display:block; margin:0 auto; position:relative;">
-                <img src="img/backpack-icon.png" alt="" style="    opacity: 0.83;
-                height: 65%;
-                width: auto;
-                
-                transform: translate(-50%, -50%);
-                top: 50%;
-                left: 50%;
-                position: absolute; ">
+            <div class="landing-wrapper"></div>
+           <div class="landing-wrapper-img"></div>
+           <div class="container relative">
+               <div class="row landing-divider"></div>
+               <div class="circle">
+                <img src="img/backpack-icon.png" alt="">
                </div>
-               <div class="row" style="margin-bottom:0">
-                   <div class="col s12" style="margin-top:30px">
-                       <p class="center-align" style="color:white; font-weight:bold; font-family:arial; font-size:17px;">Packwatch</p>
-                       
+               <div class="row mb-0">
+                   <div class="col s12 landing-title">
+                       <p class="center-align">Packwatch</p>
                    </div>
                </div>
                <div class="row">
-                   <div class="col s8 offset-s2 center-align">
-                       <p style="color:white;font-size:15px;">Never forget to pack your things again
+                   <div class="col s8 offset-s2 center-align landing-text">
+                       <p>Never forget to pack your things again
                         with the smart technologie of our
                         product</p></div>
                </div>
-               <div class="row" style="    position: fixed;
-               width: 100%;
-               bottom: 0;">
+               <div class="row landing-buttons-wrapper">
                     <div class="col s10 offset-s1 center-align">
-                        <button class="left" style="padding: 10px;
-                        background-color: white;
-                        border-radius: 30px;
-                        width: 130px;
-                        height: 45px;
-                        color: #c28d04;
-                        font-size: 14px;
-                        font-weight: bold;
-                    ">LOGIN</button>
-                        <button class="right" style="padding: 10px;
-                        background-color: transparent;
-                        border:2px solid white;
-                        border-radius: 30px;
-                        width: 130px;
-                        height: 45px;
-                        color: #ffffff;
-                        font-size: 14px;
-                        font-weight: bold;
-                    ">REGISTER</button>
+                        <a href="login.html">
+                            <div class="left landing-button">
+                                LOGIN
+                            </div>
+                        </a>
+                    <a href="register.html">
+                        <div class="right landing-button-reverse">
+                            REGISTER
+                        </div>
+                    </a>
                 </div>
            </div>
 
