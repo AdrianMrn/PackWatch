@@ -373,7 +373,7 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
     /* #7F6626 */
 }
 .secondary-color{
-    background-color:#ffc122;
+    background-color:#ad7c00;
 }
 .text-primary{
     color:#e2a700 !important;
@@ -383,7 +383,7 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
 }
 .tabs .indicator {
     background-color: #e2a700;
-    height:3px;
+    height:100%;
 }
 .item-list-icon {
     /* color:#9a6e00; */
@@ -396,3 +396,11 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
 select {
     display: initial;
 }
+.active i, .active {
+    color:white !important;
+    z-index: 2;
+}
+.tab {
+    z-index: 2;
+}
+
