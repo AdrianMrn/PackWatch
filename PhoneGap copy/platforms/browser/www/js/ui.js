@@ -418,6 +418,11 @@ new Vue({
           this.data = []
         })
       },
+      logout() {
+        
+        window.localStorage.removeItem("accestoken");
+        window.location.href ='landing.html';
+      },
       submit () {
         if (this.$refs.form.validate()) {
           // Native form submission is not yet supported
