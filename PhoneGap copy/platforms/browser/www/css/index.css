@@ -387,10 +387,11 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    padding: 2px 2px 2px 20px;
+    padding: 2px 2px 2px 30px;
     border: 1px solid #888888;
     background: transparent url("../img/arrow_down.png") no-repeat 2% center;
     background-color:rgb(216, 216, 216);
+    outline:none;
 }
 
 
@@ -414,6 +415,9 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
 .delete-color {
     background-color:#b20b07 !important;
 }
+.secondary-button:hover, .secondary-button:active{
+    background-color:#ce6c04;
+}
 .tabs {
     border-top: 1px solid #e2a700;
 }
@@ -431,6 +435,7 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
 }
 select {
     display: initial;
+    outline:none;
 }
 .active i, .active {
     color:white !important;
@@ -451,4 +456,24 @@ select {
 }
 .mt-15 {
     margin-top:15px;
+}
+
+/* nfc stepper */
+.nfc-stepper{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 2;
+    top: 0;
+
+}
+.stepper {
+    transition: 0.5s;
+}
+.step-1{
+    transform: translateX(-150%);
+}
+.step-2 {
+    transform: translateX(0%);
 }
