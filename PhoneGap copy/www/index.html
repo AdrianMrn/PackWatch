@@ -179,7 +179,7 @@
                           <div class="row mt-15">
                             <i class="material-icons back-icon" @click="navigate('sectionItems')">arrow_back</i>
                           </div>
-                          <form>
+                          <form v-on:submit.prevent="createItem">
                             <div class="input-field item">
                                     <input id="last_name" type="text" class="validate" 
                                     v-model="itemName"
@@ -189,8 +189,8 @@
                             </div>
                             <label for="">Color</label>
                             <div  class="dropdown-color">
-                            <select v-model="selectColor">
-                                <option selected value="green">Green</option>
+                            <select v-model="selectColor" required>
+                                <option value="green" selected>Green</option>
                                 <option value="red">Red</option>
                                 <option value="orange">Orange</option>
                                 <option value="blue">Blue</option>
@@ -204,7 +204,7 @@
                                 </p>
                             </div>
                             <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color" type="submit" name="action" onclick="Materialize.toast('Created Item', 1500, 'toast-style');" @click="createItem()" >Submit
+                                <button class="btn waves-effect waves-light btn-block secondary-color" type="submit" onclick="Materialize.toast('Created Pack', 1500, 'toast-style');" name="action">Submit
                                     <i class="material-icons right"></i>
                                 </button>
                             </div>
@@ -409,8 +409,7 @@
 
                     <section id="sectionCreatePack" v-if="sectionCreatePack" v-transition>
 
-                        <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
-                        <!-- <h3 class="center-align">Create Pack</h3> -->
+                        <!-- <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
                         
                         <div class="container">
                             <div class="input-field">
@@ -434,7 +433,39 @@
                                 </button>
                             </div>
                             
+                        </div> -->
+
+                        <div class="container">
+                          <div class="row mt-15">
+                            <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
+                          </div>
+                          <form v-on:submit.prevent="createPack">
+                            <div class="input-field item">
+                                    <input id="last_name" type="text" class="validate" 
+                                    v-model="packName"
+                                    :rules="nameRules"
+                                    required>
+                                    <label for="last_name">Name</label>
+                            </div>
+                            <label for="">Color</label>
+                            <div  class="dropdown-color">
+                            <select v-model="selectColor" required>
+                                <option selected value="green">Green</option>
+                                <option value="red">Red</option>
+                                <option value="orange">Orange</option>
+                                <option value="blue">Blue</option>
+                              </select>
+                            </div>
+
+                            <div class="col mt-15">
+                                <button class="btn waves-effect waves-light btn-block secondary-color" type="submit" name="action" onclick="Materialize.toast('Created Pack', 1500, 'toast-style');">Submit
+                                    <i class="material-icons right"></i>
+                                </button>
+                            </div>
+                          </form>
+                            
                         </div>
+
                     </section>
 
                     <!-- Section edit pack -->

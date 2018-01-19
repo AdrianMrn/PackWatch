@@ -312,7 +312,7 @@ new Vue({
           this.selectColor = "";
           this.getPackItems(response.data.id);
           // this.showToast = true;
-          this.navigate('sectionItems');
+          this.navigate('sectionPacks');
         }).catch(error => {
           //todo: catch & show bad password, email taken errors ...: this.errorMsgs[] = error.response.data
           console.log(error.response.data);
