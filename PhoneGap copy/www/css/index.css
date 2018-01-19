@@ -96,6 +96,9 @@ nav .nav-title{
     
     height: 90vh;
 }
+#options {
+    color:black !important;
+}
 .item-icon{
     
     position: absolute;
@@ -362,7 +365,9 @@ section {
 input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=text]:focus:not([readonly]){
     border-bottom:none !important;
     box-shadow: 0 1px 0 0 #888888;
+    color:white;
 }
+
 
 
 /* general styles */
@@ -377,6 +382,12 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
 }
 .text-primary{
     color:#e2a700 !important;
+}
+.edit-color {
+    background-color:#e2a700 !important;
+}
+.delete-color {
+    background-color:#b20b07 !important;
 }
 .tabs {
     border-top: 1px solid #e2a700;
@@ -403,4 +414,14 @@ select {
 .tab {
     z-index: 2;
 }
-
+.validation-error {
+    position: fixed;
+    width: 70%;
+    top: 110px;
+    border: 2px solid #b20b07;
+    border-radius: 30px;
+}
+.validation-error b{
+    color: #b20b07;
+    
+}

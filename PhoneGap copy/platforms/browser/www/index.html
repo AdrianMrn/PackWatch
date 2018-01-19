@@ -144,12 +144,12 @@
                               <li v-for="item in userItems" class="collection-item dismissable">
                                   <div class="fixed-action-btn item-btn horizontal click-to-toggle">
                                       <a class="btn-floating btn-change">
-                                        <i class="material-icons">more_vert</i>
+                                        <i class="material-icons" id="options">more_vert</i>
                                       </a>
                                       <ul>
 
-                                        <li><a class="btn-floating btn-change-li yellow darken-1"><i class="material-icons" @click="navigate('sectionEditItems'); currentItemEdit = item;">edit</i></a></li>
-                                        <li><a class="btn-floating btn-change-li red"><i class="material-icons" @click="deleteItem(item.id);modalOpen = true">delete</i></a></li>
+                                        <li><a class="btn-floating btn-change-li edit-color"><i class="material-icons " @click="navigate('sectionEditItems'); currentItemEdit = item;">edit</i></a></li>
+                                        <li><a class="btn-floating btn-change-li delete-color"><i class="material-icons " @click="deleteItem(item.id);modalOpen = true">delete</i></a></li>
                                         
                                       </ul>
                                     </div>

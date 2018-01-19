@@ -61,27 +61,7 @@
               <style>
                
             
-                body {
-                  background: #fff;
-                }
-            
-                .input-field input[type=date]:focus + label,
-                .input-field input[type=text]:focus + label,
-                .input-field input[type=email]:focus + label,
-                .input-field input[type=password]:focus + label {
-                  color: #e91e63;
-                }
-            
-                .input-field input[type=date]:focus,
-                .input-field input[type=text]:focus,
-                .input-field input[type=email]:focus,
-                .input-field input[type=password]:focus {
-                  border-bottom: 2px solid #e91e63;
-                  box-shadow: none;
-                }
-                .input-field label.active {
-                    transform: translateY(-180%) !important;
-                }
+               
               </style>
          
               <div class="section"></div>
@@ -93,6 +73,18 @@
             
                   <div class="container">
                     <div class="row" style=" padding: 32px 48px 0px 48px; ">
+                        <div class="row">
+                            <div class='col s12' v-if="validationBoolean">
+                                <div class="red-text center-align validation-error">
+                                  <ul>
+                                    <li v-for="errorMsg in errorArray">
+                                      <b>{{errorMsg}}</b>
+                                    </li>
+                                  </ul>
+                                  
+                                </div>
+                            </div>
+                        </div>
             
                       <form class="col s12" method="post">
                         
@@ -129,7 +121,7 @@
                       
                     </div>
                   </div>
-                  <small><p>Already have an accout?</p></small>
+                  <small><p class="white-text">Already have an accout?</p></small>
                   <a href="login.html" class="white-text">Login</a>
                 </center>
             

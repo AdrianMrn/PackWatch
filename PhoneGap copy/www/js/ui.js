@@ -109,6 +109,10 @@ new Vue({
         numberItems:0,
         numberPacks: 0,
 
+        errorMsg: null,
+        validationBoolean: false,
+        errorArray: [],
+
     },
     mounted() {
       
@@ -167,6 +171,7 @@ new Vue({
           break
         }
       },
+      
     },
     methods: {
       navigate(url) {
@@ -368,6 +373,7 @@ new Vue({
           });
           this.itemName = "";
           this.selectColor = "";
+          this.errorMsg = '';
           if (this.addingItemToPack) {
             this.interactWithItem(response.data.id);
           } else {
@@ -389,12 +395,17 @@ new Vue({
           email: this.$refs.registeremail.value,
           password: this.$refs.registerpassword.value
         }).then(response => {
+          this.validationBoolean = false;
+          this.errorMsg = '';
           window.localStorage.setItem("accestoken", response.data.access_token);
           window.location.href ='index.html';
         }).catch(error => {
-          //todo: catch bad password, catch email taken, 
+          //todo: catch bad password, catch email taken,
+          this.validationBoolean = true;
+          this.errorMsg = error.response.data.message; 
+          
+          this.errorArray = error.response.data; 
           console.log(error.response.data);
-          this.errorMsg = 'No user or no location!'
           this.data = []
         })
         //window.localStorage.setItem("accestoken", response);
@@ -409,12 +420,15 @@ new Vue({
           client_secret: 'I8pD2NrqTzoI0aUCeKTxuzR19yIFXTdFo0PP5sXJ', //todo: maybe set this in phonegap manifest or whatever?
           scope: '*',
         }).then(response => {
+          this.validationBoolean = false;
+          this.errorMsg = '';
           window.localStorage.setItem("accestoken", response.data.access_token);
           window.location.href ='index.html';
         }).catch(error => {
           //todo: catch & show bad password, email taken errors ...: this.errorMsgs[] = error.response.data
           console.log(error.response.data);
-          this.errorMsg = 'No user or no location!'
+          this.validationBoolean = true;
+          this.errorMsg = error.response.data.message;
           this.data = []
         })
       },
@@ -433,6 +447,9 @@ new Vue({
             checkbox: this.checkbox
           })
         }
+      },
+      validate(message) {
+        this.errorMessage = this.message;
       },
       clear () {
         this.$refs.form.reset()
