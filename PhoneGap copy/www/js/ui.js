@@ -190,7 +190,7 @@ new Vue({
           case "sectionPacks":
             this.sectionPacks = true;
             this.numberPacks = this.userPacks.length;
-            this.sectionTitle = 'All packs ( ' + this.userPacks.length + ' )';
+            this.sectionTitle = 'All packs (' + this.userPacks.length + ')';
             break;
           case "sectionCreateItem":
             this.sectionCreateItem = true;
@@ -207,7 +207,7 @@ new Vue({
           case "sectionItems":
             this.sectionItems = true;
             this.numberItems = this.userItems.length;
-            this.sectionTitle = 'All items ( ' + this.numberItems + ' )';
+            this.sectionTitle = 'All items (' + this.numberItems + ')';
             break;
           case "sectionEditItems":
             this.sectionEditItems = true;

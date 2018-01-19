@@ -126,7 +126,7 @@
                
                 <!-- Section Items -->
 
-                    <section id="sectionItems" v-if="sectionItems">
+                    <section id="sectionItems" v-if="sectionItems" style="overflow-y:scroll">
                         <div class="col s12">
                             <!-- <h3 class="center-align">All items <small>( {{userItems.length}} ) </small></h3> -->
                             <div class="col s12 break">
@@ -141,6 +141,7 @@
                                         </a> Add item
                                       </div>
                                 </li>
+                                <div class="list-wrapper">
                               <li v-for="item in userItems" class="collection-item dismissable">
                                   <div class="fixed-action-btn item-btn horizontal click-to-toggle">
                                       <a class="btn-floating btn-change">
@@ -164,6 +165,7 @@
                                   
                                 </div>
                               </li>
+                            </div>
                             </ul>
                         </div>                    
                     </section>
@@ -195,7 +197,7 @@
                           <div class="row mt-15">
                             <i class="material-icons back-icon" @click="navigate('sectionItems')">arrow_back</i>
                           </div>
-                          <form>
+                          <form v-on:submit.prevent="createItem">
                             <div class="input-field item">
                                     <input id="last_name" type="text" class="validate" 
                                     v-model="itemName"
@@ -221,7 +223,8 @@
                                 </p>
                             </div>
                             <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" onclick="Materialize.toast('Created Item', 1500, 'toast-style');" @click="createItem()" >Submit
+                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" onclick="Materialize.toast('Created Pack', 1500, 'toast-style');" name="action">Submit
+                                    <i class="material-icons right"></i>
                                 </button>
                             </div>
                           </form>
@@ -344,7 +347,7 @@
                               </div>
                             </div>
                             <div class="row">
-                                <div class="col offset-s1 s10 center-align btn-large secondary-color">
+                                <div class="col offset-s1 s10 center-align btn-large secondary-color secondary-button">
                                   Scan backpack
                                 </div>
                               </div>
@@ -358,9 +361,11 @@
                     <!-- Section packing Item -->
 
                     <section id="sectionPackingItem" v-if="sectionPackingItem">
-                        <i class="material-icons back-icon" @click="navigate('sectionDashboard')">arrow_back</i>
-                      <br><br>
+                       
                       <div class="container">
+                          <div class="row mt-15">
+                              <i class="material-icons back-icon" @click="navigate('sectionDashboard')">arrow_back</i>
+                          </div>
                         <div class="row">
                           <div class="col offset-s1 s10 center-align">
                             <h5>Add item to backpack</h5>
@@ -369,8 +374,8 @@
                           
                         </div>
 
-                        <ul class="collection">
-                            
+                        <ul class="collection pack-item">
+                            <div class="list-wrapper-packing">
                           <li v-for="item in userItems" class="collection-item dismissable">
                             <div> 
                               <a href="#!" class="secondary-content item-list-icon">
@@ -385,6 +390,7 @@
                               
                             </div>
                           </li>
+                        </div>
                         </ul>
 
                     </section>
@@ -392,9 +398,10 @@
                     <!-- Section packing Pack -->
 
                     <section id="sectionPackingPack" v-if="sectionPackingPack">
-                        <i class="material-icons back-icon" @click="navigate('sectionDashboard')">arrow_back</i>
-                      <br><br>
                       <div class="container">
+                          <div class="row mt-15">
+                              <i class="material-icons back-icon" @click="navigate('sectionDashboard')">arrow_back</i>
+                          </div>
                         <div class="row">
                           <div class="col offset-s1 s10 center-align">
                             <h5>Add pack to backpack</h5>
@@ -403,8 +410,8 @@
                           
                         </div>
 
-                        <ul class="collection">
-                            
+                        <ul class="collection collection-packing">
+                            <div class="list-wrapper-packing">
                           <li v-for="pack in userPacks" class="collection-item dismissable">
                             <div> 
                               <a href="#!" class="secondary-content item-list-icon">
@@ -417,6 +424,7 @@
                               
                             </div>
                           </li>
+                        </div>
                         </ul>
 
                     </section>
@@ -425,8 +433,7 @@
 
                     <section id="sectionCreatePack" v-if="sectionCreatePack" v-transition>
 
-                        <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
-                        <!-- <h3 class="center-align">Create Pack</h3> -->
+                        <!-- <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
                         
                         <div class="container">
                             <div class="input-field">
@@ -450,7 +457,39 @@
                                 </button>
                             </div>
                             
+                        </div> -->
+
+                        <div class="container">
+                          <div class="row mt-15">
+                            <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
+                          </div>
+                          <form v-on:submit.prevent="createPack">
+                            <div class="input-field item">
+                                    <input id="last_name" type="text" class="validate" 
+                                    v-model="packName"
+                                    :rules="nameRules"
+                                    required>
+                                    <label for="last_name">Name</label>
+                            </div>
+                            <label for="">Color</label>
+                            <div  class="dropdown-color">
+                            <select v-model="selectColor" required>
+                                <option selected value="green">Green</option>
+                                <option value="red">Red</option>
+                                <option value="orange">Orange</option>
+                                <option value="blue">Blue</option>
+                              </select>
+                            </div>
+
+                            <div class="col mt-15">
+                                <button class="btn waves-effect waves-light btn-block secondary-color" type="submit" name="action" onclick="Materialize.toast('Created Pack', 1500, 'toast-style');">Submit
+                                    <i class="material-icons right"></i>
+                                </button>
+                            </div>
+                          </form>
+                            
                         </div>
+
                     </section>
 
                     <!-- Section edit pack -->
