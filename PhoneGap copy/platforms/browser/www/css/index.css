@@ -438,7 +438,7 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
     filter: brightness(70%);
 }
 select {
-    display: initial;
+    /* display: initial; */
     outline:none;
 }
 .active i, .active {

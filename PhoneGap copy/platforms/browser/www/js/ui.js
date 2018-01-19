@@ -112,6 +112,8 @@ new Vue({
         errorMsg: null,
         validationBoolean: false,
         errorArray: [],
+
+        stepperNumber: 0,
         
 
     },
