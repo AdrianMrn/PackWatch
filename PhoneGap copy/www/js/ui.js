@@ -112,6 +112,7 @@ new Vue({
         errorMsg: null,
         validationBoolean: false,
         errorArray: [],
+        
 
     },
     mounted() {
@@ -374,18 +375,21 @@ new Vue({
           this.itemName = "";
           this.selectColor = "";
           this.errorMsg = '';
-          if (this.addingItemToPack) {
-            this.interactWithItem(response.data.id);
-          } else {
-            numberItems = this.userItems.length;
-            this.navigate("sectionItems");
+          numberItems = this.userItems.length;
+          this.navigate("sectionItems");
+          // if (this.addingItemToPack) {
+          //   this.interactWithItem(response.data.id);
+          // } else {
+          //   numberItems = this.userItems.length;
+          //   this.navigate("sectionItems");
             
-          }
+          // }
         }).catch(error => {
           //todo: catch & show bad password, email taken errors ...: this.errorMsgs[] = error.response.data
           console.log(error);
-          this.errorMsg = 'No user or no location!'
-          this.data = []
+          this.errorMsg = 'No user or no location!';
+          this.data = [];
+          this.navigate("sectionCreateItem");
         })
       },
       register () {

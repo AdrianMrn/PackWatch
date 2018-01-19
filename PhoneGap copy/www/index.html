@@ -171,7 +171,23 @@
                     <!-- Section create item -->
 
                     <section id="sectionCreateItem" v-if="sectionCreateItem" >
+                      <section id="showNFCStepper" v-if="showNFCStepper" class="nfc-stepper valign-wrapper">
+                        <div class="container relative">
+                          <div class="col s12 ">
+                            <h4 class="white-text center-align">Hold nfc tag near the phone!</h4>
+                          </div>
+                          <div class="col s12 ">
+                              <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action">
+                                Next
+                              </button>
+                              <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" @click="showNFCStepper = false">
+                                  Cancel
+                                </button>
+                            </div>
 
+                        </div>
+
+                      </section>
                         
                         <!-- <h3 class="center-align">Create item</h3> -->
                         
@@ -190,7 +206,8 @@
                             <label for="">Color</label>
                             <div  class="dropdown-color">
                             <select v-model="selectColor" required>
-                                <option value="green" selected>Green</option>
+                                <option value="" disabled selected class="black-text">Choose your option</option>
+                                <option value="green">Green</option>
                                 <option value="red">Red</option>
                                 <option value="orange">Orange</option>
                                 <option value="blue">Blue</option>
@@ -200,11 +217,11 @@
                             <div class="col mt-15">
                                 <p>
                                     <input type="checkbox" id="test5" v-model="showNFCStepper" />
-                                    <label for="test5">Scanned item</label>
+                                    <label for="test5">Scan item?</label>
                                 </p>
                             </div>
                             <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color" type="submit" onclick="Materialize.toast('Created Pack', 1500, 'toast-style');" name="action">Submit
+                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" onclick="Materialize.toast('Created Pack', 1500, 'toast-style');" name="action">Submit
                                     <i class="material-icons right"></i>
                                 </button>
                             </div>
