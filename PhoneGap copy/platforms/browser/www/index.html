@@ -61,7 +61,7 @@
     $('select').material_select(); 
 }, false);
 </script>
-<body onload="$('.collapsible').collapsible();   $('select').material_select(); $('.button-collapse').sideNav(); ">
+<body onload="$('.collapsible').collapsible();   $('select').material_select(); $('.button-collapse').sideNav(); $('.carousel.carousel-slider').carousel({fullWidth: true});">
    
       
     <div id="app" class="app">
@@ -126,7 +126,7 @@
                
                 <!-- Section Items -->
 
-                    <section id="sectionItems" v-show="sectionItems" style="overflow-y:scroll">
+                    <section id="sectionItems" v-show="sectionItems" >
                         <div class="col s12">
                             <!-- <h3 class="center-align">All items <small>( {{userItems.length}} ) </small></h3> -->
                             <div class="col s12 break">
@@ -173,34 +173,25 @@
                     <!-- Section create item -->
 
                     <section id="sectionCreateItem" v-show="sectionCreateItem" >
-                      <section id="showNFCStepper" v-if="showNFCStepper" class="nfc-stepper valign-wrapper">
-                        <div class="container relative" v-if="stepperNumber = 0">
-                          <div class="col s12 ">
-                            <h4 class="white-text center-align">Hold nfc tag near the phone!</h4>
-                          </div>
-                          <div class="col s12 ">
-                              <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" @click="stepperNumber = 1">
-                                Next
-                              </button>
-                              <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" @click="showNFCStepper = false">
-                                  Cancel
-                                </button>
-                          </div>
-                        </div>
-
-                        <div class="container relative" v-if="stepperNumber = 1">
-                            <div class="col s12 ">
-                              <h4 class="white-text center-align">Do something else</h4>
+                      <section id="showNFCStepper" v-show="showNFCStepper" class="nfc-stepper valign-wrapper">
+                          <div class="carousel carousel-slider center" data-indicators="true">
+                              <div class="carousel-fixed-item center">
+                                <a class="btn waves-effect white grey-text darken-text-2">Next</a>
+                              </div>
+                              <div class="carousel-item red white-text" href="#one!">
+                                <h2>NFC 1</h2>
+                                <p class="white-text">Do your thing</p>
+                              </div>
+                              <div class="carousel-item amber white-text" href="#two!">
+                                <h2>NFC 2</h2>
+                                <p class="white-text">Do your other thing</p>
+                              </div>
+                              <div class="carousel-item green white-text" href="#three!">
+                                <h2>NFC 3</h2>
+                                <p class="white-text">Do your other other thing</p>
+                              </div>
+                              
                             </div>
-                            <div class="col s12 ">
-                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action">
-                                  Next
-                                </button>
-                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" @click="showNFCStepper = false">
-                                    Cancel
-                                  </button>
-                            </div>
-                          </div>
 
                       </section>
                         
@@ -248,7 +239,7 @@
 
                     <!-- Section edit items -->
 
-                    <section id="sectionEditItems" v-show="sectionEditItems">
+                    <section id="sectionEditItems" v-if="sectionEditItems">
                         <i class="material-icons back-icon" @click="navigate('sectionItems')">arrow_back</i>
                         <h5 class="text-center">Edit item</h5>
                         
@@ -286,7 +277,7 @@
                         
                     <!-- Section packs -->
                     
-                    <section id="sectionPacks" v-show="sectionPacks">
+                    <section id="sectionPacks" v-if="sectionPacks">
                         <div class="col s12">
                             <!-- <h3 class="center-align">All packs <small>( {{userPacks.length}} )</small></h3> -->
                             <div class="col s12 break"></div>
@@ -322,7 +313,7 @@
 
                     <!-- section dashboard -->
 
-                    <section id="sectionDashboard" v-show="sectionDashboard">
+                    <section id="sectionDashboard" v-if="sectionDashboard">
 
                       <div class="container">
                         <div class="col s12 break"></div>
@@ -374,7 +365,7 @@
 
                     <!-- Section packing Item -->
 
-                    <section id="sectionPackingItem" v-show="sectionPackingItem">
+                    <section id="sectionPackingItem" v-if="sectionPackingItem">
                        
                       <div class="container">
                           <div class="row mt-15">
@@ -411,7 +402,7 @@
 
                     <!-- Section packing Pack -->
 
-                    <section id="sectionPackingPack" v-show="sectionPackingPack">
+                    <section id="sectionPackingPack" v-if="sectionPackingPack">
                       <div class="container">
                           <div class="row mt-15">
                               <i class="material-icons back-icon" @click="navigate('sectionDashboard')">arrow_back</i>
@@ -445,7 +436,7 @@
 
                     <!-- Section create pack -->
 
-                    <section id="sectionCreatePack" v-show="sectionCreatePack" v-transition>
+                    <section id="sectionCreatePack" v-if="sectionCreatePack" v-transition>
 
                         <!-- <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
                         
@@ -508,7 +499,7 @@
 
                     <!-- Section edit pack -->
 
-                    <section id="sectionEditPack" v-show="sectionEditPack">
+                    <section id="sectionEditPack" v-if="sectionEditPack">
                         <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
                         <h5 class="text-center">Edit pack</h5>
                         

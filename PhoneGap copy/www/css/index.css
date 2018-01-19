@@ -502,3 +502,8 @@ select {
    
     height: 57%;
 }
+
+#items{
+    opacity: 0;
+    /* staggered list test */
+}
