@@ -367,6 +367,31 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
     box-shadow: 0 1px 0 0 #888888;
     color:white;
 }
+.item  input[type=text]:focus:not([readonly]) {
+    color:black;
+    box-shadow: 0px 1px black;
+   
+}
+.item .active {
+    color:black !important;
+}
+.dropdown-color{
+   
+    overflow:hidden;
+   
+   
+}
+
+.dropdown-color select{
+    
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 2px 2px 2px 20px;
+    border: 1px solid #888888;
+    background: transparent url("../img/arrow_down.png") no-repeat 2% center;
+    background-color:rgb(216, 216, 216);
+}
 
 
 
@@ -423,5 +448,7 @@ select {
 }
 .validation-error b{
     color: #b20b07;
-    
+}
+.mt-15 {
+    margin-top:15px;
 }

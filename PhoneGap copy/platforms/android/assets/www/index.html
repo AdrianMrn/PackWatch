@@ -172,32 +172,39 @@
 
                     <section id="sectionCreateItem" v-if="sectionCreateItem" >
 
-                        <i class="material-icons back-icon" @click="navigate('sectionItems')">arrow_back</i>
+                        
                         <!-- <h3 class="center-align">Create item</h3> -->
                         
                         <div class="container">
+                          <div class="row mt-15">
+                            <i class="material-icons back-icon" @click="navigate('sectionItems')">arrow_back</i>
+                          </div>
                           <form>
-                            <div class="input-field">
+                            <div class="input-field item">
                                     <input id="last_name" type="text" class="validate" 
                                     v-model="itemName"
                                     :rules="nameRules"
                                     required>
                                     <label for="last_name">Name</label>
                             </div>
+                            <label for="">Color</label>
+                            <div  class="dropdown-color">
                             <select v-model="selectColor">
-                                <option value="green">Green</option>
+                                <option selected value="green">Green</option>
                                 <option value="red">Red</option>
                                 <option value="orange">Orange</option>
                                 <option value="blue">Blue</option>
                               </select>
-                            <div class="col">
+                            </div>
+                              
+                            <div class="col mt-15">
                                 <p>
                                     <input type="checkbox" id="test5" v-model="showNFCStepper" />
                                     <label for="test5">Scanned item</label>
                                 </p>
                             </div>
-                            <div class="col">
-                                <button class="btn waves-effect waves-light btn-block" type="submit" name="action" onclick="Materialize.toast('Created Item', 1500, 'toast-style');" @click="createItem()" >Submit
+                            <div class="col mt-15">
+                                <button class="btn waves-effect waves-light btn-block secondary-color" type="submit" name="action" onclick="Materialize.toast('Created Item', 1500, 'toast-style');" @click="createItem()" >Submit
                                     <i class="material-icons right"></i>
                                 </button>
                             </div>
