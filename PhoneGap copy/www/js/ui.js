@@ -10,7 +10,8 @@ Vue.component('modal', {
       <p><slot></slot></p>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" @click="deleteModal">Agree</a>
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat right" @click="deleteModal">Agree</a>
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat left">Close</a>
     </div>
   </div>
             `,
@@ -36,7 +37,8 @@ Vue.component('modal2', {
       <p><slot></slot></p>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" @click="deleteModal">Agree</a>
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat right" @click="deleteModal">Agree</a>
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat left">Close</a>
     </div>
   </div>
             `,
@@ -242,6 +244,11 @@ new Vue({
             this.sectionTitle = 'Pack Content';
             break;
         }
+      },
+      checkBoxChecked(id) {
+
+        $("'" + id +"'").attr( "checked" );
+
       },
       openModalItem(){
         $('#modal1').modal('open');

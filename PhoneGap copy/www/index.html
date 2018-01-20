@@ -39,6 +39,7 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="css/materialize-stepper.min.css">
     <link rel="stylesheet" href="css/index.css">
 
     <title>PackWatch</title>
@@ -61,7 +62,7 @@
     $('select').material_select(); 
 }, false);
 </script>
-<body onload="$('.collapsible').collapsible();$('.button-collapse').sideNav(); $('.carousel.carousel-slider').carousel({fullWidth: true});$('.modal').modal();">
+<body onload="$('.collapsible').collapsible();$('.button-collapse').sideNav(); $('.carousel.carousel-slider').carousel({fullWidth: true});$('.modal').modal();$('.stepper').activateStepper({autoFormCreation: false});">
    
       
     <div id="app" class="app">
@@ -180,26 +181,48 @@
                     <!-- Section create item -->
 
                     <section id="sectionCreateItem" v-show="sectionCreateItem" >
-                      <section id="showNFCStepper" v-show="showNFCStepper" class="nfc-stepper valign-wrapper">
-                          <div class="carousel carousel-slider center" data-indicators="true">
-                              <div class="carousel-fixed-item center">
-                                <a class="btn waves-effect white grey-text darken-text-2">Next</a>
-                                <a class="btn waves-effect white grey-text darken-text-2">Cancel</a>
-                              </div>
-                              <div class="carousel-item red white-text" href="#one!">
-                                <h2>NFC 1</h2>
-                                <p class="white-text">Do your thing</p>
-                              </div>
-                              <div class="carousel-item amber white-text" href="#two!">
-                                <h2>NFC 2</h2>
-                                <p class="white-text">Do your other thing</p>
-                              </div>
-                              <div class="carousel-item green white-text" href="#three!">
-                                <h2>NFC 3</h2>
-                                <p class="white-text">Do your other other thing</p>
-                              </div>
-                              
-                            </div>
+                      <section id="showNFCStepper" v-show="showNFCStepper" class="nfc-stepper valign-wrapper" >
+                          <ul class="stepper horizontal black-text" style="
+                          width:100%;
+                          padding-left: 30px;
+                          background: white;">
+                              <li class="step active ">
+                                 <div class="step-title waves-effect">Step 1</div>
+                                 <div class="step-content">
+                                    <div class="row">
+                                       <div class="col s12">
+                                         Hold the NFC tag near your phone!
+                                       </div>
+                                    </div>
+                                    <div class="step-actions black-text">
+                                       <button class="waves-effect waves-dark btn next-step blue" style="width:100%">CONTINUE</button>
+                                    </div>
+                                 </div>
+                              </li>
+                              <li class="step black-text">
+                                 <div class="step-title waves-effect">Step 2</div>
+                                 <div class="step-content">
+                                    <div class="row">
+                                       <div class="input-field col s12">
+                                          Some other thing
+                                       </div>
+                                    </div>
+                                    <div class="step-actions">
+                                       <button class="waves-effect waves-dark btn next-step blue" style="width:100%">CONTINUE</button>
+                                       <button class="waves-effect waves-dark btn-flat previous-step red white-text" style="width:100%">BACK</button>
+                                    </div>
+                                 </div>
+                              </li>
+                              <li class="step black-text">
+                                 <div class="step-title waves-effect">All done</div>
+                                 <div class="step-content">
+                                    Finish!
+                                    <div class="step-actions">
+                                       <button class="waves-effect waves-dark btn blue" style="width:100%" type="submit" @click="showNFCStepper = false; checkBoxChecked('addItemCheck')">DONE</button>
+                                    </div>
+                                 </div>
+                              </li>
+                           </ul>
 
                       </section>
                         
@@ -222,17 +245,26 @@
                             <div  class="dropdown-color">
                             <select v-model="selectColor" required class="browser-default">
                                 <option value="" disabled selected class="black-text">Choose your option</option>
-                                <option value="green">Green</option>
                                 <option value="red">Red</option>
-                                <option value="orange">Orange</option>
+                                <option value="pink">Pink</option>
+                                <option value="purple">Purlple</option>
+                                <option value="indigo">Indigo</option>
                                 <option value="blue">Blue</option>
+                                <option value="cyan">Cyan</option>
+                                <option value="teal">Teal</option>
+                                <option value="green">Green</option>
+                                <option value="lime">Lime</option>
+                                <option value="yellow">Yellow</option>
+                                <option value="amber">Amber</option>
+                                <option value="orange">Orange</option>
+                                <option value="brow">Brown</option>
                               </select>
                             </div>
                               
                             <div class="col mt-15">
                                 <p>
-                                    <input type="checkbox" id="test5" v-model="showNFCStepper" />
-                                    <label for="test5">Scan item?</label>
+                                    <input type="checkbox" id="addItemCheck" @click="showNFCStepper = true"/>
+                                    <label for="addItemCheck">Scan item?</label>
                                 </p>
                             </div>
                             <div class="col mt-15">
@@ -256,13 +288,13 @@
                                 <div class="carousel-item red white-text" href="#one!">
                                   <h2>NFC 1</h2>
                                   <p class="white-text">Do your thing</p>
-                                  <a class="btn waves-effect white grey-text darken-text-2">Next</a>
+                                  <a class="btn waves-effect white grey-text darken-text-2" href="#two!">Next</a>
                                   <a class="btn waves-effect white grey-text darken-text-2">Cancel</a>
                                 </div>
                                 <div class="carousel-item amber white-text" href="#two!">
                                   <h2>NFC 2</h2>
                                   <p class="white-text">Do your other thing</p>
-                                  <a class="btn waves-effect white grey-text darken-text-2">Next</a>
+                                  <a class="btn waves-effect white grey-text darken-text-2" href="#three!">Next</a>
                                   <a class="btn waves-effect white grey-text darken-text-2">Cancel</a>
                                 </div>
                                 <div class="carousel-item green white-text" href="#three!">
@@ -301,10 +333,19 @@
                               <div  class="dropdown-color">
                               <select v-model="selectColor" required class="browser-default">
                                   <option value="" disabled selected class="black-text">Choose your option</option>
-                                  <option value="green">Green</option>
                                   <option value="red">Red</option>
-                                  <option value="orange">Orange</option>
+                                  <option value="pink">Pink</option>
+                                  <option value="purple">Purlple</option>
+                                  <option value="indigo">Indigo</option>
                                   <option value="blue">Blue</option>
+                                  <option value="cyan">Cyan</option>
+                                  <option value="teal">Teal</option>
+                                  <option value="green">Green</option>
+                                  <option value="lime">Lime</option>
+                                  <option value="yellow">Yellow</option>
+                                  <option value="amber">Amber</option>
+                                  <option value="orange">Orange</option>
+                                  <option value="brow">Brown</option>
                                 </select>
                               </div>
                                 
@@ -546,10 +587,19 @@
                             <div  class="dropdown-color">
                             <select v-model="selectColor" required class="browser-default">
                                 <option value="" disabled selected class="black-text">Choose your option</option>
-                                <option value="green">Green</option>
                                 <option value="red">Red</option>
-                                <option value="orange">Orange</option>
+                                <option value="pink">Pink</option>
+                                <option value="purple">Purlple</option>
+                                <option value="indigo">Indigo</option>
                                 <option value="blue">Blue</option>
+                                <option value="cyan">Cyan</option>
+                                <option value="teal">Teal</option>
+                                <option value="green">Green</option>
+                                <option value="lime">Lime</option>
+                                <option value="yellow">Yellow</option>
+                                <option value="amber">Amber</option>
+                                <option value="orange">Orange</option>
+                                <option value="brow">Brown</option>
                               </select>
                             </div>
 
@@ -591,10 +641,19 @@
                               <div  class="dropdown-color">
                               <select v-model="selectColor" required class="browser-default">
                                   <option value="" disabled selected class="black-text">Choose your option</option>
-                                  <option value="green">Green</option>
                                   <option value="red">Red</option>
-                                  <option value="orange">Orange</option>
+                                  <option value="pink">Pink</option>
+                                  <option value="purple">Purlple</option>
+                                  <option value="indigo">Indigo</option>
                                   <option value="blue">Blue</option>
+                                  <option value="cyan">Cyan</option>
+                                  <option value="teal">Teal</option>
+                                  <option value="green">Green</option>
+                                  <option value="lime">Lime</option>
+                                  <option value="yellow">Yellow</option>
+                                  <option value="amber">Amber</option>
+                                  <option value="orange">Orange</option>
+                                  <option value="brow">Brown</option>
                                 </select>
                               </div>
                               <div class="col mt-15">
@@ -691,6 +750,7 @@
         app.initialize();
     </script>
      <script src="js/materialize.js"></script>
+     <script src="js/materialize-stepper.min.js"></script>
     
 
 </body>

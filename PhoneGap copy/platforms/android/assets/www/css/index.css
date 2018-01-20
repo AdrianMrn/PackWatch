@@ -510,3 +510,7 @@ select {
 .carousel.carousel-slider {
     height:50% !important;
 }
+ul.stepper .step.active {
+    color:black !important;
+}
+
