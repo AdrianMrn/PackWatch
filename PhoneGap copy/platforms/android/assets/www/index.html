@@ -277,7 +277,7 @@
                         
                     <!-- Section packs -->
                     
-                    <section id="sectionPacks" v-if="sectionPacks">
+                    <section id="sectionPacks" v-show="sectionPacks">
                         <div class="col s12">
                             <!-- <h3 class="center-align">All packs <small>( {{userPacks.length}} )</small></h3> -->
                             <div class="col s12 break"></div>
@@ -436,7 +436,7 @@
 
                     <!-- Section create pack -->
 
-                    <section id="sectionCreatePack" v-if="sectionCreatePack" v-transition>
+                    <section id="sectionCreatePack" v-show="sectionCreatePack" >
 
                         <!-- <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
                         
@@ -476,15 +476,16 @@
                                     required>
                                     <label for="last_name">Name</label>
                             </div>
-                            <label for="">Color</label>
-                            <div  class="dropdown-color">
-                            <select v-model="selectColor" required>
-                                <option selected value="green">Green</option>
-                                <option value="red">Red</option>
-                                <option value="orange">Orange</option>
-                                <option value="blue">Blue</option>
-                              </select>
-                            </div>
+                            <div class="input-field col s12 mt-15">
+                                <select>
+                                  <option value="" disabled selected>Choose a color</option>
+                                  <option value="yellow">Yellow</option>
+                                  <option value="green">Green</option>
+                                  <option value="black">Black</option>
+                                  <option value="red">Red</option>
+                                </select>
+                                <label>Color</label>
+                              </div>
 
                             <div class="col mt-15">
                                 <button class="btn waves-effect waves-light btn-block secondary-color" type="submit" name="action" onclick="Materialize.toast('Created Pack', 1500, 'toast-style');">Submit
@@ -499,7 +500,7 @@
 
                     <!-- Section edit pack -->
 
-                    <section id="sectionEditPack" v-if="sectionEditPack">
+                    <section id="sectionEditPack" v-show="sectionEditPack">
                         <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
                         <h5 class="text-center">Edit pack</h5>
                         

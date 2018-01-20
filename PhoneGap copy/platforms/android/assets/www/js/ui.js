@@ -124,38 +124,12 @@ new Vue({
       //if we are on homepage (lol pls don't judge us)
       if (window.location.href.indexOf('index.html') != -1) {
         //todo: show loading screen/icon/whatever & disable everything else until last "then"
-        apiUrl = 'https://packwatch.dietervercammen.be/api/getuseritems'
-        axios.get(apiUrl, {
-          headers: {
-            'Accept': 'application/json',
-            'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
-        }).then(response => {
-          this.userItems = response.data;
-          //getting packs
-          apiUrl = 'https://packwatch.dietervercammen.be/api/getuserpacks'
-          axios.get(apiUrl, {
-            headers: {
-              'Accept': 'application/json',
-              'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
-          }).then(response => {
-            this.userPacks = response.data;
-            //todo: disable loader & enable navigation, .....
-          }).catch(error => {
-          })
-        }).catch(error => {
-          // logout if unauthorised
-          window.location.replace('landing.html');
-        })
+        this.refreshUserItems();
+        this.refreshUserPacks();
 
       }
       //axios.defaults.headers.common['Accept'] = 'application/json'
-     // axios.defaults.headers.common['Authorization'] = 'value' // for all requests
-     numberPacks = this.userPacks.length;
-     numberItems = this.userItems.length;
-     
-       
-  
-
+      // axios.defaults.headers.common['Authorization'] = 'value' // for all requests
     },
     computed: {
       computedColor () {
@@ -228,6 +202,33 @@ new Vue({
             this.sectionTitle = 'Pack pack';
             break;
         }
+      },
+      refreshUserItems() {
+        apiUrl = 'https://packwatch.dietervercammen.be/api/getuseritems'
+        axios.get(apiUrl, {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
+        }).then(response => {
+          this.userItems = response.data;
+          numberItems = this.userItems.length;
+        }).catch(error => {
+          // logout if unauthorised
+          window.location.replace('landing.html');
+        })
+      },
+      refreshUserPacks() {
+        //getting packs
+        apiUrl = 'https://packwatch.dietervercammen.be/api/getuserpacks'
+          axios.get(apiUrl, {
+            headers: {
+              'Accept': 'application/json',
+              'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
+          }).then(response => {
+            this.userPacks = response.data;
+            numberPacks = this.userPacks.length;
+          }).catch(error => {
+          })
       },
       interactWithItem(id) {
         if (this.addingItemToPack) {
@@ -325,24 +326,22 @@ new Vue({
       },
       deleteItem(id) {
 
-        apiUrl = 'http://packwatch.test/api/item/' + id;
-        axios.post(apiUrl, {
-          _method: 'delete',
-          item_id: id,
-        }, {
+        apiUrl = 'https://packwatch.dietervercammen.be/api/item/' + id;
+        axios.delete(apiUrl, {
           headers: {
             'Accept': 'application/json',
             'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
         }).then(response => {
           console.log(response);
-          //this.getPackItems(this.currentPackId);
+          this.refreshUserItems();
+          
         }).catch(error => {
           console.log(error);
         });
       },
       updateItem(id) {
 
-        apiUrl = 'http://packwatch.test/api/item/' + id;
+        apiUrl = 'https://packwatch.dietervercammen.be/api/item/' + id;
         axios.post(apiUrl, {
           _method: 'patch',
           item_id: id,
