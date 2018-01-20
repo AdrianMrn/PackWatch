@@ -61,24 +61,21 @@
     $('select').material_select(); 
 }, false);
 </script>
-<body onload="$('.collapsible').collapsible();   $('.button-collapse').sideNav(); $('.carousel.carousel-slider').carousel({fullWidth: true});">
+<body onload="$('.collapsible').collapsible();$('.button-collapse').sideNav(); $('.carousel.carousel-slider').carousel({fullWidth: true});$('.modal').modal();">
    
       
     <div id="app" class="app">
         <!-- <div class="landing-wrapper"></div>
         <div class="landing-wrapper-img"></div> -->
-        <!-- <modal v-if="modalOpen" @cancel="modalOpen = false" @delete="deleteItem(item.id);">
-            <template slot="header"> Are you sure?</template>
-            <template></template>
-          </modal> -->
-          <modal v-show="modalOpen" @cancel="modalOpen = false" @delete="deleteItem(deleteId); modalOpen = false">
+        
+          <modal  @delete="deleteItem(deleteId);">
               <template slot="header"> Are you sure?</template>
               <template></template>
             </modal>
-            <modal v-show="modalPackOpen" @cancel="modalPackOpen = false" @delete="deletePack(deleteId); modalPackOpen = false">
+            <modal2 @delete="deletePack(deleteId); ">
                 <template slot="header"> Are you sure?</template>
                 <template></template>
-              </modal>
+              </modal2>
       
         <ul id="tabs-swipe-demo" class="tabs">
             <li class="tab col s3" @click="navigate('sectionItems');">
@@ -239,7 +236,7 @@
                                 </p>
                             </div>
                             <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" onclick="Materialize.toast('Created Pack', 1500, 'toast-style');" name="action">Submit
+                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit"  name="action">Submit
                                     <i class="material-icons right"></i>
                                 </button>
                             </div>
@@ -254,20 +251,25 @@
                         <section id="showNFCStepper" v-show="showNFCStepper" class="nfc-stepper valign-wrapper">
                             <div class="carousel carousel-slider center" data-indicators="true">
                                 <div class="carousel-fixed-item center">
-                                  <a class="btn waves-effect white grey-text darken-text-2">Next</a>
-                                  <a class="btn waves-effect white grey-text darken-text-2">Cancel</a>
+                                  
                                 </div>
                                 <div class="carousel-item red white-text" href="#one!">
                                   <h2>NFC 1</h2>
                                   <p class="white-text">Do your thing</p>
+                                  <a class="btn waves-effect white grey-text darken-text-2">Next</a>
+                                  <a class="btn waves-effect white grey-text darken-text-2">Cancel</a>
                                 </div>
                                 <div class="carousel-item amber white-text" href="#two!">
                                   <h2>NFC 2</h2>
                                   <p class="white-text">Do your other thing</p>
+                                  <a class="btn waves-effect white grey-text darken-text-2">Next</a>
+                                  <a class="btn waves-effect white grey-text darken-text-2">Cancel</a>
                                 </div>
                                 <div class="carousel-item green white-text" href="#three!">
                                   <h2>NFC 3</h2>
                                   <p class="white-text">Do your other other thing</p>
+                                  <a class="btn waves-effect white grey-text darken-text-2">Next</a>
+                                  <a class="btn waves-effect white grey-text darken-text-2">Cancel</a>
                                 </div>
                                 
                               </div>
@@ -279,7 +281,7 @@
                           <div class="container">
                             <div class="row mt-15">
                               <i class="material-icons back-icon" @click="navigate('sectionItems')">arrow_back</i>
-                              <a class="btn-floating btn-change-li delete-color right"><i class="material-icons " @click="modalOpen = true; deleteId = currentItemEdit.id">delete</i></a>
+                              <a class="btn-floating btn-change-li delete-color right"><i class="material-icons " @click="deleteId = currentItemEdit.id; openModalItem()">delete</i></a>
                             </div>
                             <form v-on:submit.prevent="updateItem">
                               <div class="input-field item">
@@ -313,7 +315,7 @@
                                   </p>
                               </div>
                               <div class="col mt-15">
-                                  <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" onclick="Materialize.toast('Created Pack', 1500, 'toast-style');" name="action" >Submit
+                                  <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Submit
                                       <i class="material-icons right"></i>
                                   </button>
                               </div>
@@ -552,7 +554,7 @@
                             </div>
 
                             <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color" type="submit" name="action" onclick="Materialize.toast('Created Pack', 1500, 'toast-style');">Submit
+                                <button class="btn waves-effect waves-light btn-block secondary-color" type="submit" name="action">Submit
                                     <i class="material-icons right"></i>
                                 </button>
                             </div>
@@ -569,7 +571,7 @@
                         <div class="container">
                             <div class="row mt-15">
                               <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
-                              <a href="#!" class="right btn-floating btn-change-li delete-color"><i class="material-icons" @click="modalPackOpen = true; deleteId = currentPackEdit.id">delete</i></a>
+                              <a href="#!" class="right btn-floating btn-change-li delete-color"><i class="material-icons" @click="openModalPack(); deleteId = currentPackEdit.id">delete</i></a>
                             </div>
                             <form v-on:submit.prevent="updateItem">
                               <div class="input-field item">
@@ -596,7 +598,7 @@
                                 </select>
                               </div>
                               <div class="col mt-15">
-                                  <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" onclick="Materialize.toast('Created Pack', 1500, 'toast-style');" name="action" >Submit
+                                  <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Submit
                                       <i class="material-icons right"></i>
                                   </button>
                               </div>
@@ -658,7 +660,8 @@
                                     <i class="material-icons">filter</i>
                                   </a> {{item.name}} 
                                   <!-- right -->
-                                    <i v-if="itemsInPack[item.id]" class="material-icons secondary-content">filter</i>
+                                    <i v-if="itemsInPack[item.id]" class="material-icons secondary-content green-text">check</i>
+                                    <i v-else="itemsInPack[item.id]" class="material-icons secondary-content red-text">clear</i>
 
                                 </div>
                               </li>

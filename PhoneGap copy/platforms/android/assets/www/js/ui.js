@@ -2,17 +2,18 @@ Vue.component('modal', {
   
   props: ['header'],
   template: `
-            <div id="modal1" class="modal open" style="z-index: 1003; display: block; opacity: 1; transform: scaleX(1); top: 10%;">
-              <div class="modal-content">
-              <img class="img-align" src="img/danger.png" />
-                <h4 class="center-align"><slot name="header"></slot></h4>
-                <p> <slot></slot></p>
-              </div>
-              <div class="modal-footer">
-                <a href="#!" class="left modal-action modal-close waves-effect waves-red btn-flat" @click="cancelModal">Cancel</a>
-                <a href="#!" class="right modal-action modal-close waves-effect waves-green btn-flat" @click="deleteModal">Agree</a>
-              </div>
-            </div>`,
+
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+    <img class="img-align" src="img/danger.png" />
+      <h4 class="center-align"><slot name="header"></slot></h4>
+      <p><slot></slot></p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" @click="deleteModal">Agree</a>
+    </div>
+  </div>
+            `,
   methods: {
     cancelModal: function() {
       this.$emit('cancel');
@@ -21,7 +22,33 @@ Vue.component('modal', {
       this.$emit('delete');
     }
   }
-})
+});
+
+Vue.component('modal2', {
+  
+  props: ['header'],
+  template: `
+
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+    <img class="img-align" src="img/danger.png" />
+      <h4 class="center-align"><slot name="header"></slot></h4>
+      <p><slot></slot></p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" @click="deleteModal">Agree</a>
+    </div>
+  </div>
+            `,
+  methods: {
+    cancelModal: function() {
+      this.$emit('cancel');
+    }, 
+    deleteModal: function() {
+      this.$emit('delete');
+    }
+  }
+});
 
 new Vue({
     el: '#app',
@@ -216,6 +243,13 @@ new Vue({
             break;
         }
       },
+      openModalItem(){
+        $('#modal1').modal('open');
+      },
+      openModalPack(){
+        
+        $('#modal2').modal('open');
+      },
       prepareForPacking() {
         for (var i = 0; i < this.currentPackItems.length; i++)
         {
@@ -264,7 +298,7 @@ new Vue({
           for (var i = 0; i < this.currentPackItems.length; i++) {
             if (id == this.currentPackItems[i].id) {
               //todo: toast "item is already in pack"
-              alert("Item is already in pack");
+              Materialize.toast('Item is already in pack', 2500,'toast-style');
               return;
             }
           }
@@ -285,6 +319,7 @@ new Vue({
               'name': response.data.itemName,
               'color': response.data.itemColor,
             });
+            Materialize.toast('Item added to pack', 2500,'toast-style');
             this.navigate("sectionPackItems");
           }).catch(error => {
             console.log(error);
@@ -342,12 +377,14 @@ new Vue({
           this.packName = "";
           this.selectColor = "";
           // this.showToast = true;
+          Materialize.toast('Created pack', 1500, 'toast-style');
           this.navigate('sectionPacks');
         }).catch(error => {
           //todo: catch & show bad password, email taken errors ...: this.errorMsgs[] = error.response.data
           console.log(error.response.data);
           this.errorMsg = 'No user or no location!'
-          this.data = []
+          this.data = [];
+          Materialize.toast('Error creating pack', 1500,'toast-style');
         })
       },
       deleteItem(id) {
@@ -359,8 +396,10 @@ new Vue({
         }).then(response => {
           console.log(response);
           this.refreshUserItems();
+          Materialize.toast('Item deleted', 1500,'toast-style');
           this.navigate('sectionItems');
         }).catch(error => {
+          Materialize.toast('Error item deleted', 1500,'toast-style');
           console.log(error);
         });
       },
@@ -373,9 +412,11 @@ new Vue({
         }).then(response => {
           console.log(response);
           this.refreshUserPacks();
+          Materialize.toast('Pack deleted', 1500,'toast-style');
           this.navigate('sectionPacks');
         }).catch(error => {
           console.log(error);
+          Materialize.toast('Error deleting pack', 1500,'toast-style');
         });
       },
       updateItem(id) {
@@ -391,8 +432,10 @@ new Vue({
             'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
         }).then(response => {
           console.log(response);
+          Materialize.toast('Item updated', 1500,'toast-style');
           this.navigate("sectionItems");
         }).catch(error => {
+          Materialize.toast('Error item updating', 1500,'toast-style');
           console.log(error);
         });
       },
@@ -409,9 +452,11 @@ new Vue({
             'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
         }).then(response => {
           console.log(response);
+          Materialize.toast('Pack updated', 1500,'toast-style');
           this.navigate("sectionPacks");
         }).catch(error => {
           console.log(error);
+          Materialize.toast('Error updating pack', 1500,'toast-style');
         });
       },
       createItem() {
@@ -439,6 +484,7 @@ new Vue({
              this.interactWithItem(response.data.id);
           } else {
              numberItems = this.userItems.length;
+             Materialize.toast('Item created', 1500,'toast-style');
              this.navigate("sectionItems");
            }
         }).catch(error => {
@@ -446,6 +492,7 @@ new Vue({
           console.log(error);
           this.errorMsg = 'No user or no location!';
           this.data = [];
+          Materialize.toast(this.error.response.data, 1500,'toast-style');
           this.navigate("sectionCreateItem");
         })
       },
@@ -456,6 +503,7 @@ new Vue({
           email: this.$refs.registeremail.value,
           password: this.$refs.registerpassword.value
         }).then(response => {
+          Materialize.toast('Register successful', 1500,'toast-style');
           this.validationBoolean = false;
           this.errorMsg = '';
           window.localStorage.setItem("accestoken", response.data.access_token);
