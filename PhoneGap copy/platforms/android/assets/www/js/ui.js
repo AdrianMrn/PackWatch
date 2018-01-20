@@ -227,6 +227,11 @@ new Vue({
         this.itemsInPack[id] ? this.itemsInPack[id] = false:this.itemsInPack[id] = true;
         console.log(this.itemsInPack[id]);
       },
+      itemsScanned(ndefString) {
+        //afzonderlijke id's maken van string
+        //per id API call maken naar back-end om item id op te vragen (moet nog geschreven worden in back end)
+        //antwoorden van API call (item_id) in itemsInPack[] op true zetten
+      },
       refreshUserItems() {
         apiUrl = 'https://packwatch.dietervercammen.be/api/getuseritems'
         axios.get(apiUrl, {
