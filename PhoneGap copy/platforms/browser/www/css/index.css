@@ -394,7 +394,7 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
     padding: 2px 2px 2px 30px;
     border: 1px solid #888888;
     background: transparent url("../img/arrow_down.png") no-repeat 2% center;
-    background-color:rgb(216, 216, 216);
+    background-color:rgb(255, 255, 255);
     outline:none;
 }
 
@@ -506,4 +506,7 @@ select {
 #items{
     opacity: 0;
     /* staggered list test */
+}
+.carousel.carousel-slider {
+    height:50% !important;
 }

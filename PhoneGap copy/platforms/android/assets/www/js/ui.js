@@ -114,6 +114,8 @@ new Vue({
         errorArray: [],
 
         stepperNumber: 0,
+
+        deleteId: 0, 
         
 
     },
