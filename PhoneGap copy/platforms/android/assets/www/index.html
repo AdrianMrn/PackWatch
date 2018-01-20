@@ -75,6 +75,10 @@
               <template slot="header"> Are you sure?</template>
               <template></template>
             </modal>
+            <modal v-show="modalPackOpen" @cancel="modalPackOpen = false" @delete="deletePack(deleteId); modalPackOpen = false">
+                <template slot="header"> Are you sure?</template>
+                <template></template>
+              </modal>
       
         <ul id="tabs-swipe-demo" class="tabs">
             <li class="tab col s3" @click="navigate('sectionItems');">
@@ -147,8 +151,8 @@
                                       </div>
                                 </li>
                                 <div class="list-wrapper">
-                              <li v-for="item in userItems" class="collection-item dismissable" >
-                                  <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
+                              <li v-for="item in userItems" class="collection-item dismissable" @click="interactWithItem(item.id); currentItemEdit = item;">
+                                  <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
                                       <a class="btn-floating btn-change">
                                         <i class="material-icons" id="options">more_vert</i>
                                       </a>
@@ -158,7 +162,7 @@
                                         <li><a class="btn-floating btn-change-li delete-color"><i class="material-icons " @click="modalOpen = true; deleteId = item.id">delete</i></a></li>
                                         
                                       </ul>
-                                    </div>
+                                    </div> -->
                                 <div > 
                                   <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': item.color  }">
                                     <i class="material-icons">filter</i>
@@ -275,6 +279,7 @@
                           <div class="container">
                             <div class="row mt-15">
                               <i class="material-icons back-icon" @click="navigate('sectionItems')">arrow_back</i>
+                              <a class="btn-floating btn-change-li delete-color right"><i class="material-icons " @click="modalOpen = true; deleteId = currentItemEdit.id">delete</i></a>
                             </div>
                             <form v-on:submit.prevent="updateItem">
                               <div class="input-field item">
@@ -320,9 +325,6 @@
                     <!-- Section packs -->
                     
                     <section id="sectionPacks" v-show="sectionPacks">
-
-
-
                         <div class="col s12">
                             <!-- <h3 class="center-align">All items <small>( {{userItems.length}} ) </small></h3> -->
                             <div class="col s12 break">
@@ -338,8 +340,8 @@
                                       </div>
                                 </li>
                                 <div class="list-wrapper">
-                              <li v-for="pack in userPacks" class="collection-item dismissable" >
-                                  <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
+                              <li v-for="pack in userPacks" class="collection-item dismissable" @click="currentPackEdit = pack; navigate('sectionEditPack'); getPackItems(pack.id);">
+                                  <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
                                       <a class="btn-floating btn-change">
                                         <i class="material-icons" id="options">more_vert</i>
                                       </a>
@@ -348,7 +350,7 @@
                                         <li class="btn-floating btn-change-li delete-color"><a href="#!"><i class="material-icons" @click="modalOpen = true">delete</i></a></li>
                                         
                                       </ul>
-                                    </div>
+                                    </div> -->
                                 <div > 
                                   <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': pack.color  }">
                                     <i class="material-icons">filter</i>
@@ -492,7 +494,7 @@
 
                     <!-- Section packing Pack -->
 
-                    <section id="sectionPackingPack" v-if="sectionPackingPack">
+                    <!-- <section id="sectionPackingPack" v-if="sectionPackingPack">
                       <div class="container">
                           <div class="row mt-15">
                               <i class="material-icons back-icon" @click="navigate('sectionDashboard')">arrow_back</i>
@@ -512,7 +514,6 @@
                               <a href="#!" class="secondary-content item-list-icon">
                                 <i class="material-icons">filter</i>
                               </a> {{pack.name}}
-                              <!-- right -->
                               <a href="#!" class="secondary-content " @click="addToBackpack(pack.id)">
                                     <i class="material-icons">send</i>
                               </a>
@@ -522,38 +523,11 @@
                         </div>
                         </ul>
 
-                    </section>
+                    </section> -->
 
                     <!-- Section create pack -->
 
                     <section id="sectionCreatePack" v-show="sectionCreatePack" >
-
-                        <!-- <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
-                        
-                        <div class="container">
-                            <div class="input-field">
-                                    <input id="last_name" type="text" class="validate" 
-                                    
-                                    v-model="packName"
-                                    :rules="nameRules"
-                                    required>
-                                    <label for="last_name">Name</label>
-                            </div>
-                            <select>
-                                <option value="red">Red</option>
-                                <option value="green">Green</option>
-                                <option value="yellow">Yellow</option>
-                                <option value="blue">blue</option>
-                              </select>
-                            
-                            <div class="col">
-                                <button class="btn waves-effect waves-light btn-block" type="submit" name="action" onclick="Materialize.toast('Created Pack', 1000, 'toast-style')">Submit
-                                    <i class="material-icons right"></i>
-                                </button>
-                            </div>
-                            
-                        </div> -->
-
                         <div class="container">
                           <div class="row mt-15">
                             <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
@@ -595,6 +569,7 @@
                         <div class="container">
                             <div class="row mt-15">
                               <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
+                              <a href="#!" class="right btn-floating btn-change-li delete-color"><i class="material-icons" @click="modalPackOpen = true; deleteId = currentPackEdit.id">delete</i></a>
                             </div>
                             <form v-on:submit.prevent="updateItem">
                               <div class="input-field item">
@@ -628,16 +603,67 @@
                             </form>
 
                             <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" onclick="Materialize.toast('Created Pack', 1500, 'toast-style');" name="action" >Edit content
+                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" @click="getPackItems(currentPackEdit.id); navigate('sectionPackItems');" name="action" >Edit content
                                     <i class="material-icons right"></i>
                                 </button>
                             </div>
 
-                            
-                              
-                          </div>      
+                            <div class="col mt-15">
+                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" @click="prepareForPacking(); navigate('sectionPackingPack');" name="action" >Start packing! jej
+                                    <i class="material-icons right"></i>
+                                </button>
+                            </div>
 
-       
+                          </div>      
+                        </section>
+
+
+                        <section id="sectionPackItems" v-show="sectionPackItems">
+                          <div class="row mt-15">
+                              <i class="material-icons back-icon" @click="navigate('sectionEditPack')">arrow_back</i>
+                          </div>
+    
+                          <ul class="collection">
+                            <li class="collection-item dismissable" @click="navigate('sectionItems'); addingItemToPack = true;">
+                              <div> 
+                                <a href="#!" class="secondary-content item-list-icon">
+                                  <i class="material-icons">add</i>
+                                </a> Add item to pack
+                              </div>
+                            </li>
+                            <div class="list-wrapper">
+                              <li v-for="item in currentPackItems" class="collection-item dismissable">
+                                <div> 
+                                  <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': item.color  }">
+                                    <i class="material-icons">filter</i>
+                                  </a> {{item.name}}
+                                  <!-- right -->
+                                  <a href="#!" class="secondary-content" @click="unlinkItemFromPack(item.id)"><!-- future: add delete button --></a>   
+                                </div>
+                              </li>
+                            </div>
+                          </ul>                    
+                        </section>
+
+                        <section id="sectionPackingPack" v-show="sectionPackingPack">
+                          <div class="row mt-15">
+                              <i class="material-icons back-icon" @click="navigate('sectionEditPack')">arrow_back</i>
+                          </div>
+    
+                          <ul class="collection">
+                            <div class="list-wrapper">
+                              <li v-for="item in currentPackItems" class="collection-item dismissable" @click="toggleItemInPack(item.id); navigate('sectionPackingPack');">
+                                <div v-if="Object.getOwnPropertyNames(itemsInPack).length > 0"> 
+                                  <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': item.color  }">
+                                    <i class="material-icons">filter</i>
+                                  </a> {{item.name}} 
+                                  <!-- right -->
+                                    <i v-if="itemsInPack[item.id]" class="material-icons secondary-content">filter</i>
+
+                                </div>
+                              </li>
+                            </div>
+                          </ul>                    
                         </section>
 
                   

@@ -43,6 +43,7 @@ new Vue({
         sectionPackingItem: false,
         sectionDashboard: false,
         sectionPackingPack: false,
+        sectionPackItems: false,
 
         settings_items: [
           { title: 'Settings' },
@@ -105,6 +106,7 @@ new Vue({
         showToast:false,
         loggedIn:null,
         modalOpen:false,
+        modalPackOpen: false,
         sectionTitle: 'Dashboard',
         numberItems:0,
         numberPacks: 0,
@@ -117,7 +119,9 @@ new Vue({
 
         deleteId: 0, 
         currentItemEdit: [ 'name' ],
-        currentPackEdit: [ 'name' ]
+        currentPackEdit: [ 'name' ],
+
+        itemsInPack: {},
         
 
     },
@@ -166,6 +170,7 @@ new Vue({
         this.sectionPackingItem = false;
         this.sectionDashboard = false;
         this.sectionPackingPack = false;
+        this.sectionPackItems = false;
         switch(url){
           case "sectionPacks":
             this.sectionPacks = true;
@@ -205,7 +210,22 @@ new Vue({
             this.sectionPackingPack = true;
             this.sectionTitle = 'Pack pack';
             break;
+          case "sectionPackItems":
+            this.sectionPackItems = true;
+            this.sectionTitle = 'Pack Content';
+            break;
         }
+      },
+      prepareForPacking() {
+        for (var i = 0; i < this.currentPackItems.length; i++)
+        {
+          var key = this.currentPackItems[i].id;
+          this.itemsInPack[key] = false;
+        }
+      },
+      toggleItemInPack(id) {
+        this.itemsInPack[id] ? this.itemsInPack[id] = false:this.itemsInPack[id] = true;
+        console.log(this.itemsInPack[id]);
       },
       refreshUserItems() {
         apiUrl = 'https://packwatch.dietervercammen.be/api/getuseritems'
@@ -236,7 +256,6 @@ new Vue({
       },
       interactWithItem(id) {
         if (this.addingItemToPack) {
-          this.addingItemToPack = false;
           for (var i = 0; i < this.currentPackItems.length; i++) {
             if (id == this.currentPackItems[i].id) {
               //todo: toast "item is already in pack"
@@ -244,11 +263,12 @@ new Vue({
               return;
             }
           }
+          this.addingItemToPack = false;
           //adding item to pack
           apiUrl = 'https://packwatch.dietervercammen.be/api/link'
           axios.post(apiUrl, {
             item_id: id,
-            pack_id: this.currentPackId,
+            pack_id: this.currentPackEdit.id,
           }, {
             headers: {
               'Accept': 'application/json',
@@ -260,13 +280,13 @@ new Vue({
               'name': response.data.itemName,
               'color': response.data.itemColor,
             });
-            //this.navigate("sectionEditPack");
+            this.navigate("sectionPackItems");
           }).catch(error => {
             console.log(error);
           });
         } else {
           //edit the item (navigate to item detail page)
-
+          this.navigate('sectionEditItems');
         }
       },
       unlinkItemFromPack(id) {
@@ -295,7 +315,6 @@ new Vue({
         }).then(response => {
           console.log(response);
           this.currentPackItems = response.data;
-          this.navigate("sectionEditPack");
         }).catch(error => {
           console.log(error);
         })
@@ -315,10 +334,8 @@ new Vue({
             color:this.selectColor,
             id: response.data.id
           });
-          this.currentPackName = this.packName;
           this.packName = "";
           this.selectColor = "";
-          this.getPackItems(response.data.id);
           // this.showToast = true;
           this.navigate('sectionPacks');
         }).catch(error => {
@@ -337,6 +354,7 @@ new Vue({
         }).then(response => {
           console.log(response);
           this.refreshUserItems();
+          this.navigate('sectionItems');
         }).catch(error => {
           console.log(error);
         });
@@ -350,6 +368,7 @@ new Vue({
         }).then(response => {
           console.log(response);
           this.refreshUserPacks();
+          this.navigate('sectionPacks');
         }).catch(error => {
           console.log(error);
         });
@@ -368,7 +387,6 @@ new Vue({
         }).then(response => {
           console.log(response);
           this.navigate("sectionItems");
-          //this.getPackItems(this.currentPackId);
         }).catch(error => {
           console.log(error);
         });
@@ -387,7 +405,6 @@ new Vue({
         }).then(response => {
           console.log(response);
           this.navigate("sectionPacks");
-          //this.getPackItems(this.currentPackId);
         }).catch(error => {
           console.log(error);
         });
@@ -412,15 +429,13 @@ new Vue({
           this.itemName = "";
           this.selectColor = "";
           this.errorMsg = '';
-          numberItems = this.userItems.length;
-          this.navigate("sectionItems");
-          // if (this.addingItemToPack) {
-          //   this.interactWithItem(response.data.id);
-          // } else {
-          //   numberItems = this.userItems.length;
-          //   this.navigate("sectionItems");
-            
-          // }
+
+          if (this.addingItemToPack) {
+             this.interactWithItem(response.data.id);
+          } else {
+             numberItems = this.userItems.length;
+             this.navigate("sectionItems");
+           }
         }).catch(error => {
           //todo: catch & show bad password, email taken errors ...: this.errorMsgs[] = error.response.data
           console.log(error);
