@@ -116,6 +116,8 @@ new Vue({
         stepperNumber: 0,
 
         deleteId: 0, 
+        currentItemEdit: [ 'name' ],
+        currentPackEdit: [ 'name' ]
         
 
     },
@@ -354,16 +356,37 @@ new Vue({
       },
       updateItem(id) {
 
-        apiUrl = 'https://packwatch.dietervercammen.be/api/item/' + id;
+        apiUrl = 'https://packwatch.dietervercammen.be/api/item/' + this.currentItemEdit.id;
         axios.post(apiUrl, {
           _method: 'patch',
-          item_id: id,
+          name: this.currentItemEdit.name,
+          color: this.selectColor
         }, {
           headers: {
             'Accept': 'application/json',
             'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
         }).then(response => {
           console.log(response);
+          this.navigate("sectionItems");
+          //this.getPackItems(this.currentPackId);
+        }).catch(error => {
+          console.log(error);
+        });
+      },
+      updatePack(id) {
+
+        apiUrl = 'https://packwatch.dietervercammen.be/api/pack/' + this.currentPackEdit.id;
+        axios.post(apiUrl, {
+          _method: 'patch',
+          name: this.currentPackEdit.name,
+          color: this.selectColor
+        }, {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
+        }).then(response => {
+          console.log(response);
+          this.navigate("sectionPacks");
           //this.getPackItems(this.currentPackId);
         }).catch(error => {
           console.log(error);
