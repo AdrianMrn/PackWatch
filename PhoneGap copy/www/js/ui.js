@@ -325,7 +325,6 @@ new Vue({
         })
       },
       deleteItem(id) {
-
         apiUrl = 'https://packwatch.dietervercammen.be/api/item/' + id;
         axios.delete(apiUrl, {
           headers: {
@@ -334,7 +333,19 @@ new Vue({
         }).then(response => {
           console.log(response);
           this.refreshUserItems();
-          
+        }).catch(error => {
+          console.log(error);
+        });
+      },
+      deletePack(id) {
+        apiUrl = 'https://packwatch.dietervercammen.be/api/pack/' + id;
+        axios.delete(apiUrl, {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
+        }).then(response => {
+          console.log(response);
+          this.refreshUserPacks();
         }).catch(error => {
           console.log(error);
         });
