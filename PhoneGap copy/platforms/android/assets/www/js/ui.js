@@ -117,6 +117,7 @@ new Vue({
           'pink'
         ],
         showNFCStepper: false,
+        showNFCStepperEdit:false,
         NFCTimestamp: 0,
 
         currentItemEdit:null,
@@ -247,7 +248,8 @@ new Vue({
       },
       checkBoxChecked(id) {
 
-        $("'" + id +"'").attr( "checked" );
+        $("'#" + id +"'").attr( "checked" );
+        // future: API checked om te weten welke je al wel/niet ingescant hebt?
 
       },
       openModalItem(){
