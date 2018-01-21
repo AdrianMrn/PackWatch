@@ -177,23 +177,21 @@ new Vue({
       //axios.defaults.headers.common['Accept'] = 'application/json'
       // axios.defaults.headers.common['Authorization'] = 'value' // for all requests
     },
+    filters: {
+      filterColor: function (array, color) {
+        var id = someId;
+        var item = array.filter(function(color){ return item.color == color;} ).pop();
+       
+      }
+    },
     computed: {
-      computedColor () {
-        switch (this.e2) {
-          case 0:
-            return 'blue-grey'
-          break
-          case 1:
-            return 'teal'
-          break
-          case 2:
-            return 'brown'
-          break
-          case 3:
-            return 'lime darken-3'
-          break
-        }
-      },
+      filterItems: function (array) {
+        return this.array.filter(function (color) {
+          console.log(color);
+          return color == array.color;
+        })
+      }
+     
       
     },
     methods: {
