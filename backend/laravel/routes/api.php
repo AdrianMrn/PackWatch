@@ -36,4 +36,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/authtest', function () {
         return "authentication successful!";
     });
+
+    Route::get('/get-next-nfc-id', 'ItemController@getNextNfcId');
+    Route::get('/translate-nfc-id/{id}', 'ItemController@translateNfcId');
 });

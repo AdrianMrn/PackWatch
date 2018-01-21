@@ -146,6 +146,22 @@ class ItemController extends Controller
       'message' => 'OK'
     ]);
   }
+
+  public function getNextNfcId(Request $request) {
+    $max = Item::where('user_id', $request->user()->id)->max('nfcId');
+    if (!$max)
+    {
+      return 0;
+    }
+
+    return $max;
+  }
+
+  public function translateNfcId(Request $request, $nfcId) {
+    $item = Item::where([['user_id', $request->user()->id], ['nfcId', $nfcId]])->first();
+
+    return $item->id;
+  }
   
 }
 

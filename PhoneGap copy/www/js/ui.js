@@ -154,7 +154,10 @@ new Vue({
         itemsInPack: {},
 
         writeSuccess: false,
-        writeFalse: false
+        writeFalse: false,
+
+        startPacking: false,
+
         
 
     },
@@ -254,6 +257,13 @@ new Vue({
             break;
         }
       },
+      interactWithPack() {
+        if (this.startPacking) {
+          this.prepareForPacking();
+        } else {
+          this.navigate('sectionEditPack');
+        }
+      },
       checkBoxChecked(id) {
 
         $("'#" + id +"'").attr( "checked" );
@@ -273,6 +283,7 @@ new Vue({
           var key = this.currentPackItems[i].id;
           this.itemsInPack[key] = false;
         }
+        this.navigate('sectionPackingPack');
       },
       toggleItemInPack(id) {
         this.itemsInPack[id] ? this.itemsInPack[id] = false:this.itemsInPack[id] = true;

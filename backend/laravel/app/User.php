@@ -38,7 +38,13 @@ class User extends Authenticatable
 
     public function packs()
     {
-        return $this->hasMany('App\Pack')->get();
+        $packs = $this->hasMany('App\Pack')->get();
+        foreach ($packs as $pack)
+        {
+            $pack->amountOfItems = $pack->amountOfItems($pack->id);
+        }
+
+        return $packs;
     }
 
     public function user_items()
