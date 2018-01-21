@@ -156,7 +156,7 @@
                                      
                                 </li>
                                 <div class="list-wrapper">
-                              <li v-for="item in userItems" class="collection-item dismissable" @click="currentItemNameBack = item.name; currentItemEdit = item; interactWithItem(item.id); ">
+                              <li v-for="item in userItems" class="collection-item dismissable" @click="selectColor = item.color; currentItemNameBack = item.name; currentItemEdit = item; interactWithItem(item.id); ">
                                   <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
                                       <a class="btn-floating btn-change">
                                         <i class="material-icons" id="options">more_vert</i>
@@ -411,7 +411,7 @@
                                       </div>
                                 </li>
                                 <div class="list-wrapper">
-                              <li v-for="pack in userPacks" class="collection-item dismissable" @click="currentPackNameBack = pack.name; currentPackEdit = pack; navigate('sectionEditPack'); getPackItems(pack.id);">
+                              <li v-for="pack in userPacks" class="collection-item dismissable" @click="selectColor = pack.color; currentPackNameBack = pack.name; currentPackEdit = pack; navigate('sectionEditPack'); getPackItems(pack.id);">
                                   <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
                                       <a class="btn-floating btn-change">
                                         <i class="material-icons" id="options">more_vert</i>
