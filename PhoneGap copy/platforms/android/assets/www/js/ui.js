@@ -250,7 +250,7 @@ new Vue({
             break;
           case "sectionPackItems":
             this.sectionPackItems = true;
-            this.sectionTitle = 'Pack Content';
+            this.sectionTitle = this.currentPackEdit.name;
             break;
         }
       },

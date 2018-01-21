@@ -111,7 +111,7 @@
               </nav> -->
               <nav>
                   <div class="nav-wrapper main-color">
-                    <a href="#!" class="brand-logo">{{sectionTitle}}</a>
+                    <a href="#!" class="brand-logo truncate">{{sectionTitle}}</a>
                     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
                       <li> &nbsp;</li>
@@ -603,7 +603,7 @@
                                     <input id="last_name" type="text" class="validate" 
                                     v-model="packName"
                                     :rules="nameRules"
-                                    required>
+                                    required maxlength="15">
                                     <label for="last_name">Name</label>
                             </div>
                             <label for="">Color</label>
@@ -656,7 +656,7 @@
                                       <input id="last_name" type="text" class="validate" 
                                       v-model="currentPackEdit.name"
                                       :rules="nameRules"
-                                      required>
+                                      required maxlength="15">
                                       
                               </div>
                              
