@@ -494,6 +494,7 @@ select {
    height:90%;
    position: absolute;
    overflow:auto;
+   background-color:#f9f9f9;
 }
 .list-wrapper-packing {
     width: 100%;
@@ -507,7 +508,7 @@ select {
 }
 .collection-packing {
    
-    height: 57%;
+    height: 90%;
 }
 
 #items{
@@ -528,6 +529,7 @@ ul.stepper .step.active {
   }
   .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
+    
   }
   .transparent-filter {
     height: 5px;
