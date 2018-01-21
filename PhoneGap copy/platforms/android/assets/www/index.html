@@ -142,11 +142,18 @@
 
                             <ul class="collection">
                                 <li class="collection-item dismissable" @click="navigate('sectionCreateItem')">
-                                    <div> 
+                                    <div  v-if="addingItemToPack"> 
                                         <a href="#!" class="secondary-content item-list-icon">
                                           <i class="material-icons">add</i>
-                                        </a> Add item
+                                        </a> Add new item to pack
                                       </div>
+                                      <div  v-else> 
+                                          <a href="#!" class="secondary-content item-list-icon">
+                                            <i class="material-icons">add</i>
+                                          </a> Add item
+                                        </div>
+
+                                     
                                 </li>
                                 <div class="list-wrapper">
                               <li v-for="item in userItems" class="collection-item dismissable" @click="interactWithItem(item.id); currentItemEdit = item;">

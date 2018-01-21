@@ -225,7 +225,12 @@ new Vue({
           case "sectionItems":
             this.sectionItems = true;
             this.numberItems = this.userItems.length;
-            this.sectionTitle = 'All items (' + this.numberItems + ')';
+            if(this.addingItemToPack){
+              this.sectionTitle = 'Add item to pack';
+            } else {
+              this.sectionTitle = 'All items (' + this.numberItems + ')';
+            }
+            
             break;
           case "sectionEditItems":
             this.sectionEditItems = true;
