@@ -92,11 +92,27 @@ function writeNFC(nfcMessage){
     nfc.write(message, function () { // success callback
         navigator.vibrate(500);
         alert("Write succesfull " + message[0]);
+
+        document.getElementById("NFCSuccess").click();
+        
+        $("#NFCSuccess").trigger("click");
+        $("#NFCSuccess").click(function() {
+            alert( "Handler for .click() called." );
+          });
+
+        
     },
     function (error) { // error callback
         navigator.vibrate([100, 100, 300]);
         alert("Error writing: " + message[0] + JSON.stringify(error));
 
+        document.getElementById("NFCFail").click();
+       
+        $("#NFCFail").trigger("click");
+        $("#NFCFail").click(function() {
+            alert( "Handler for .click() called." );
+          });
+       
     });
 }
 function readTag() {
