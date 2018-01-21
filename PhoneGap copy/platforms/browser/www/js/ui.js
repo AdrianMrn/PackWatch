@@ -159,7 +159,10 @@ new Vue({
         writeSuccess: false,
         writeFalse: false,
 
+        startPacking: false,
+      
         email:window.localStorage.getItem("email"),
+
         
 
     },
@@ -223,7 +226,7 @@ new Vue({
             break;
           case "sectionEditPack":
             this.sectionEditPack = true;
-            this.sectionTitle = 'Edit ' + this.currentPackEdit.name;
+            this.sectionTitle = this.currentPackEdit.name;
             break;
           case "sectionItems":
             this.sectionItems = true;
@@ -237,7 +240,7 @@ new Vue({
             break;
           case "sectionEditItems":
             this.sectionEditItems = true;
-            this.sectionTitle = 'Edit ' + this.currentItemEdit.name;
+            this.sectionTitle =  this.currentItemEdit.name;
             break;
           case "sectionPackingItem":
             this.sectionPackingItem = true;
@@ -255,6 +258,14 @@ new Vue({
             this.sectionPackItems = true;
             this.sectionTitle = this.currentPackEdit.name;
             break;
+        }
+      },
+      interactWithPack() {
+        if (this.startPacking) {
+          this.startPacking = false;
+          this.prepareForPacking();
+        } else {
+          this.navigate('sectionEditPack');
         }
       },
       checkBoxChecked(id) {
@@ -276,6 +287,7 @@ new Vue({
           var key = this.currentPackItems[i].id;
           this.itemsInPack[key] = false;
         }
+        this.navigate('sectionPackingPack');
       },
       toggleItemInPack(id) {
         this.itemsInPack[id] ? this.itemsInPack[id] = false:this.itemsInPack[id] = true;
@@ -444,7 +456,7 @@ new Vue({
         apiUrl = 'https://packwatch.dietervercammen.be/api/item/' + this.currentItemEdit.id;
         axios.post(apiUrl, {
           _method: 'patch',
-          name: this.currentPackEdit.name,
+          name: this.currentItemEdit.name,
           color: this.selectColor
         }, {
           headers: {

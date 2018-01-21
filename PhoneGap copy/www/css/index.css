@@ -208,13 +208,17 @@ nav .nav-title{
    transform: translate(-50%,-50%);
 }
 .fixed-action-btn.horizontal ul li {
-    margin:10px 10px 0px 0px;
+    margin:15px auto;
 }
+
 .collection-item {
     position: relative;
 }
 .break {
     height:30px;
+}
+.break-2{
+    height:50px;
 }
 #items-add {
     position: absolute;
@@ -434,11 +438,11 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
 }
 .item-list-icon {
     /* color:#9a6e00; */
-    filter: brightness(70%);
+    /* filter: brightness(70%); */
 }
 .secondary-content {
     /* color:#7e6526; */
-    filter: brightness(70%);
+    /* filter: brightness(70%); */
 }
 select {
     /* display: initial; */
@@ -490,6 +494,7 @@ select {
    height:90%;
    position: absolute;
    overflow:auto;
+   background-color:#f9f9f9;
 }
 .list-wrapper-packing {
     width: 100%;
@@ -503,7 +508,7 @@ select {
 }
 .collection-packing {
    
-    height: 57%;
+    height: 90%;
 }
 
 #items{
@@ -524,4 +529,29 @@ ul.stepper .step.active {
   }
   .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
+    
+  }
+  .transparent-filter {
+    height: 3px;
+    background-color: #f44236 !important;
+    position: absolute;
+    top: 50%;
+    z-index: 30000;
+    width: 100%;
+    transform: translateY(-50%);
+  }
+  .no-color-btn {
+      transform: rotate(-45deg);
+  }
+  .filter-btn{
+    position: fixed;
+    right: 10px;
+    top: 50px;
+    padding-top: 15px !important;
+    margin-bottom: 0;
+    z-index: 997;
+  }
+  .btn-icon {
+    position: absolute;
+    left: 20px;
   }

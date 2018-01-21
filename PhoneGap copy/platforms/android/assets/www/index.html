@@ -136,8 +136,23 @@
                       
                         <div class="col s12">
                             <!-- <h3 class="center-align">All items <small>( {{userItems.length}} ) </small></h3> -->
-                            <div class="col s12 break">
-                                
+                            <div class="col s12 break-2">
+                                <div class="fixed-action-btn horizontal click-to-toggle filter-btn">
+                                    <a class="btn-floating" style="background-color:#bb8b03">
+                                      <i class="material-icons">visibility</i>
+                                    </a>
+                                    <ul>
+                                      <li><a class="btn-floating white no-color-btn">
+                                        <div class="transparent-filter"></div>
+                                        <i class="material-icons"></i>
+                                      </a></li>
+                                      <li><a class="btn-floating red"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating orange"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating yellow"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating green"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating blue"><i class="material-icons"></i></a></li>
+                                    </ul>
+                                  </div>
                             </div>
 
                             <ul class="collection">
@@ -253,18 +268,10 @@
                             <select v-model="selectColor" required class="browser-default">
                                 <option value="" disabled selected class="black-text">Choose your option</option>
                                 <option value="red">Red</option>
-                                <option value="pink">Pink</option>
-                                <option value="purple">Purlple</option>
-                                <option value="indigo">Indigo</option>
-                                <option value="blue">Blue</option>
-                                <option value="cyan">Cyan</option>
-                                <option value="teal">Teal</option>
-                                <option value="green">Green</option>
-                                <option value="lime">Lime</option>
-                                <option value="yellow">Yellow</option>
-                                <option value="amber">Amber</option>
                                 <option value="orange">Orange</option>
-                                <option value="brow">Brown</option>
+                                <option value="yellow">Yellow</option>
+                                <option value="green">Green</option>
+                                <option value="blue">Blue</option>
                               </select>
                             </div>
                               
@@ -275,8 +282,8 @@
                                 </p>
                             </div>
                             <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit"  name="action">Submit
-                                    <i class="material-icons right"></i>
+                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Add item
+                                    <i class="material-icons left btn-icon">add_box</i>
                                 </button>
                             </div>
                           </form>
@@ -362,18 +369,10 @@
                               <select v-model="selectColor" required class="browser-default">
                                   <option value="" disabled selected class="black-text">Choose your option</option>
                                   <option value="red">Red</option>
-                                  <option value="pink">Pink</option>
-                                  <option value="purple">Purlple</option>
-                                  <option value="indigo">Indigo</option>
-                                  <option value="blue">Blue</option>
-                                  <option value="cyan">Cyan</option>
-                                  <option value="teal">Teal</option>
-                                  <option value="green">Green</option>
-                                  <option value="lime">Lime</option>
-                                  <option value="yellow">Yellow</option>
-                                  <option value="amber">Amber</option>
                                   <option value="orange">Orange</option>
-                                  <option value="brow">Brown</option>
+                                  <option value="yellow">Yellow</option>
+                                  <option value="green">Green</option>
+                                  <option value="blue">Blue</option>
                                 </select>
                               </div>
                                 
@@ -384,8 +383,8 @@
                                   </p>
                               </div>
                               <div class="col mt-15">
-                                  <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Submit
-                                      <i class="material-icons right"></i>
+                                  <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Edit item
+                                      <i class="material-icons left btn-icon">border_color</i>
                                   </button>
                               </div>
                             </form>
@@ -398,11 +397,26 @@
                     <section id="sectionPacks" v-show="sectionPacks">
                         <div class="col s12">
                             <!-- <h3 class="center-align">All items <small>( {{userItems.length}} ) </small></h3> -->
-                            <div class="col s12 break">
-                                
+                            <div class="col s12 break-2">
+                                <div class="fixed-action-btn horizontal click-to-toggle filter-btn">
+                                    <a class="btn-floating" style="background-color:#bb8b03">
+                                      <i class="material-icons">visibility</i>
+                                    </a>
+                                    <ul>
+                                      <li><a class="btn-floating white">
+                                        <div class="transparent-filter"></div>
+                                        <i class="material-icons"></i>
+                                      </a></li>
+                                      <li><a class="btn-floating red"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating orange"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating yellow"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating green"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating blue"><i class="material-icons"></i></a></li>
+                                    </ul>
+                                  </div>
                             </div>
 
-                            <ul class="collection">
+                            <ul class="collection collection-packing">
                                 <li class="collection-item dismissable" @click="navigate('sectionCreatePack')">
                                     <div> 
                                         <a href="#!" class="secondary-content item-list-icon">
@@ -411,7 +425,7 @@
                                       </div>
                                 </li>
                                 <div class="list-wrapper">
-                              <li v-for="pack in userPacks" class="collection-item dismissable" @click="selectColor = pack.color; currentPackNameBack = pack.name; currentPackEdit = pack; navigate('sectionEditPack'); getPackItems(pack.id);">
+                                  <li v-for="pack in userPacks" class="collection-item dismissable" @click="selectColor = pack.color; currentPackNameBack = pack.name; currentPackEdit = pack; getPackItems(pack.id); interactWithPack();">
                                   <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
                                       <a class="btn-floating btn-change">
                                         <i class="material-icons" id="options">more_vert</i>
@@ -486,20 +500,20 @@
                               <img class="activator" src="img/backpack.jpg">
                             </div>
                             <div class="card-content card-position">
-                              <span class="card-title activator grey-text text-darken-4">Your backpack contains:
+                              <span class="card-title activator grey-text text-darken-4"><!-- Your backpack contains: -->
                                 <a class="btn-floating halfway-fab halfway-fab-bag waves-effect waves-light red">
                                   <div class="icon-wrapper"><i class="material-icons">add</i></div>
                                 </a>
                               </span>
-                              <p> 2 Packs</p>
-                              <p>7 Items</p>
+                              <!-- <p> 2 Packs</p>
+                              <p>7 Items</p> -->
                             </div>
-                            <div class="card-reveal">
+                            <!-- <div class="card-reveal">
                               <span class="card-title grey-text text-darken-4">Start packing<i class="material-icons right">close</i></span>
                               <p>Choose the packs or items you would like to pack.</p>
                               <br>
                               <div class="row">
-                                <div class="col offset-s2 s8 center-align btn-large orange" @click="navigate('sectionPackingPack');">
+                                <div class="col offset-s2 s8 center-align btn-large orange" @click="prepareForPacking();">
                                   Add Packs
                                 </div>
                               </div>
@@ -508,13 +522,13 @@
                                     Clear backpack
                                   </div>
                               </div>
-                            </div>
+                            </div> -->
                             <div class="row">
-                                <div class="col offset-s1 s10 center-align btn-large secondary-color secondary-button">
-                                  Start packing
-                                </div>
+                              <div class="col offset-s1 s10 center-align btn-large secondary-color secondary-button" @click="navigate('sectionPacks'); startPacking = true;">
+                                Start Packing
                               </div>
-                              <br>
+                            </div>
+                            <br>
                           </div>
                       
                         
@@ -611,24 +625,16 @@
                             <select v-model="selectColor" required class="browser-default">
                                 <option value="" disabled selected class="black-text">Choose your option</option>
                                 <option value="red">Red</option>
-                                <option value="pink">Pink</option>
-                                <option value="purple">Purlple</option>
-                                <option value="indigo">Indigo</option>
-                                <option value="blue">Blue</option>
-                                <option value="cyan">Cyan</option>
-                                <option value="teal">Teal</option>
-                                <option value="green">Green</option>
-                                <option value="lime">Lime</option>
-                                <option value="yellow">Yellow</option>
-                                <option value="amber">Amber</option>
                                 <option value="orange">Orange</option>
-                                <option value="brow">Brown</option>
+                                <option value="yellow">Yellow</option>
+                                <option value="green">Green</option>
+                                <option value="blue">Blue</option>
                               </select>
                             </div>
 
                             <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color" type="submit" name="action">Submit
-                                    <i class="material-icons right"></i>
+                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Add pack
+                                    <i class="material-icons left btn-icon">add_box</i>
                                 </button>
                             </div>
                           </form>
@@ -646,7 +652,7 @@
                               <i class="material-icons back-icon" @click="currentPackEdit.name = currentPackNameBack;navigate('sectionPacks')">arrow_back</i>
                               <a href="#!" class="right btn-floating btn-change-li delete-color"><i class="material-icons" @click="openModalPack(); deleteId = currentPackEdit.id">delete</i></a>
                             </div>
-                            <form v-on:submit.prevent="updateItem">
+                            <form v-on:submit.prevent="updatePack">
                               <div class="input-field item">
                                   <label for="last_name" class="active" style="-webkit-transform: translateY(-14px) scale(0.8);
                                   transform: translateY(-14px) scale(0.8);
@@ -665,39 +671,33 @@
                               <select v-model="selectColor" required class="browser-default">
                                   <option value="" disabled selected class="black-text">Choose your option</option>
                                   <option value="red">Red</option>
-                                  <option value="pink">Pink</option>
-                                  <option value="purple">Purlple</option>
-                                  <option value="indigo">Indigo</option>
-                                  <option value="blue">Blue</option>
-                                  <option value="cyan">Cyan</option>
-                                  <option value="teal">Teal</option>
-                                  <option value="green">Green</option>
-                                  <option value="lime">Lime</option>
-                                  <option value="yellow">Yellow</option>
-                                  <option value="amber">Amber</option>
                                   <option value="orange">Orange</option>
-                                  <option value="brow">Brown</option>
+                                  <option value="yellow">Yellow</option>
+                                  <option value="green">Green</option>
+                                  <option value="blue">Blue</option>
                                 </select>
                               </div>
-                              <div class="col mt-15">
-                                  <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Submit
-                                      <i class="material-icons right"></i>
+                              <div class="row mt-15">
+                                  <button class="btn waves-effect waves-light  secondary-color secondary-button col s3 " type="submit" name="action" >Edit pack
+                                      <i class="material-icons left btn-icon">border_color</i>
                                   </button>
+
+
+                                <button class="btn waves-effect waves-light  secondary-color secondary-button col s3 offset-s1" @click="getPackItems(currentPackEdit.id); navigate('sectionPackItems');" name="action" >Add items to pack
+                                    <i class="material-icons right"></i>
+                                </button>
+                           
+
+                            
+                                <button class="btn waves-effect waves-light secondary-color secondary-button col s3 offset-s1" @click="prepareForPacking();" name="action" >Start packing!
+                                    <i class="material-icons right"></i>
+                                </button>
+                            
+
                               </div>
                             </form>
 
-                            <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" @click="getPackItems(currentPackEdit.id); navigate('sectionPackItems');" name="action" >Add items to pack
-                                    <i class="material-icons right"></i>
-                                </button>
-                            </div>
-
-                            <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" @click="prepareForPacking(); navigate('sectionPackingPack');" name="action" >Start packing!
-                                    <i class="material-icons right"></i>
-                                </button>
-                            </div>
-
+                            
                           </div>      
                         </section>
 

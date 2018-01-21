@@ -234,7 +234,7 @@ new Vue({
             break;
           case "sectionEditPack":
             this.sectionEditPack = true;
-            this.sectionTitle = 'Edit ' + this.currentPackEdit.name;
+            this.sectionTitle = this.currentPackEdit.name;
             break;
           case "sectionItems":
             this.sectionItems = true;
@@ -248,7 +248,7 @@ new Vue({
             break;
           case "sectionEditItems":
             this.sectionEditItems = true;
-            this.sectionTitle = 'Edit ' + this.currentItemEdit.name;
+            this.sectionTitle =  this.currentItemEdit.name;
             break;
           case "sectionPackingItem":
             this.sectionPackingItem = true;
@@ -510,7 +510,7 @@ new Vue({
         apiUrl = 'https://packwatch.dietervercammen.be/api/item/' + this.currentItemEdit.id;
         axios.post(apiUrl, {
           _method: 'patch',
-          name: this.currentPackEdit.name,
+          name: this.currentItemEdit.name,
           color: this.selectColor
         }, {
           headers: {
