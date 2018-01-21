@@ -418,7 +418,7 @@
                                   <li class="collection-item dismissable" @click="filterPackColor= 'all';">show all</li>
                                   <li class="collection-item dismissable" @click="filterPackColor = 'red';">only red</li>
                                   <li class="collection-item dismissable" @click="filterPackColor = 'orange';">only orange</li>
-                                  <li v-for="pack in userPacks" v-show="pack.color == filterPackColor || filterPackColor == 'all'" class="collection-item dismissable" @click="selectColor = pack.color; currentPackNameBack = pack.name; currentPackEdit = pack; getPackItems(pack.id); interactWithPack();">
+                                  <li v-for="pack in userPacks" v-show="pack.color == filterPackColor || filterPackColor == 'all'" class="collection-item dismissable" @click="getPackItems(pack.id); selectColor = pack.color; currentPackNameBack = pack.name; currentPackEdit = pack; interactWithPack(pack.amountOfItems);">
                                   <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
                                       <a class="btn-floating btn-change">
                                         <i class="material-icons" id="options">more_vert</i>
@@ -694,7 +694,7 @@
                             </form>
 
                             <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" @click="getPackItems(currentPackEdit.id); navigate('sectionPackItems');" name="action" >Add items to pack
+                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" @click="navigate('sectionPackItems');" name="action" >Add items to pack
                                     <i class="material-icons right"></i>
                                 </button>
                             </div>
