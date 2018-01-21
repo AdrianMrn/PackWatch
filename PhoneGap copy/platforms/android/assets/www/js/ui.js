@@ -154,7 +154,9 @@ new Vue({
         itemsInPack: {},
 
         writeSuccess: false,
-        writeFalse: false
+        writeFalse: false,
+
+        email:window.localStorage.getItem("email"),
         
 
     },
@@ -549,6 +551,7 @@ new Vue({
           this.validationBoolean = false;
           this.errorMsg = '';
           window.localStorage.setItem("accestoken", response.data.access_token);
+          window.localStorage.setItem("email", this.$refs.loginemail.value);
           window.location.href ='index.html';
         }).catch(error => {
           //todo: catch & show bad password, email taken errors ...: this.errorMsgs[] = error.response.data
