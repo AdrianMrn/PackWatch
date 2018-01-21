@@ -208,7 +208,7 @@ nav .nav-title{
    transform: translate(-50%,-50%);
 }
 .fixed-action-btn.horizontal ul li {
-    margin:10px 10px 0px 0px;
+    /* margin:10px 10px 0px 0px; */
 }
 .collection-item {
     position: relative;
