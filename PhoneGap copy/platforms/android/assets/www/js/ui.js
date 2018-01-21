@@ -163,7 +163,13 @@ new Vue({
       
         email:window.localStorage.getItem("email"),
 
-        
+        // for filter
+        filterPackColor: "all",
+        filterItemColor: "all",
+
+        nextNfcId: 0,
+
+        currentAmountOfItems: 0,
 
     },
     mounted() {
@@ -179,6 +185,7 @@ new Vue({
       }
       //axios.defaults.headers.common['Accept'] = 'application/json'
       // axios.defaults.headers.common['Authorization'] = 'value' // for all requests
+
     },
     filters: {
       filterColor: function (array, color) {
@@ -212,6 +219,7 @@ new Vue({
         this.sectionPackItems = false;
         switch(url){
           case "sectionPacks":
+            this.startPacking = false;
             this.sectionPacks = true;
             this.numberPacks = this.userPacks.length;
             this.sectionTitle = 'All packs (' + this.userPacks.length + ')';
@@ -260,9 +268,35 @@ new Vue({
             break;
         }
       },
-      interactWithPack() {
+      getNextNfcId() {
+        apiUrl = 'https://packwatch.dietervercammen.be/api/get-next-nfc-id';
+        axios.get(apiUrl, {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
+        }).then(response => {
+          this.nextNfcId = response.data;
+        }).catch(error => {
+          //future todo: show error in toast
+        })
+      },
+      translateNfcId(id) {
+        // translate an item's nfcid to item_id
+        apiUrl = 'https://packwatch.dietervercammen.be/api/translate-nfc-id/' + id;
+        axios.get(apiUrl, {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
+        }).then(response => {
+          //future todo: because of the async character of vue, this return doesn't work, maybe set a callback function (next) in the parameters too?
+          return response.data;
+        }).catch(error => {
+          //future todo: show error in toast
+        })
+      },
+      interactWithPack(amountOfItems) {
+        this.currentAmountOfItems = amountOfItems;
         if (this.startPacking) {
-          this.startPacking = false;
           this.prepareForPacking();
         } else {
           this.navigate('sectionEditPack');
@@ -282,12 +316,17 @@ new Vue({
         $('#modal2').modal('open');
       },
       prepareForPacking() {
-        for (var i = 0; i < this.currentPackItems.length; i++)
-        {
-          var key = this.currentPackItems[i].id;
-          this.itemsInPack[key] = false;
+        if (!this.currentAmountOfItems) {
+          Materialize.toast('This pack is empty', 1500,'toast-style');
+        } else {
+          this.startPacking = false;
+          for (var i = 0; i < this.currentPackItems.length; i++)
+          {
+            var key = this.currentPackItems[i].id;
+            this.itemsInPack[key] = false;
+          }
+          this.navigate('sectionPackingPack');
         }
-        this.navigate('sectionPackingPack');
       },
       toggleItemInPack(id) {
         this.itemsInPack[id] ? this.itemsInPack[id] = false:this.itemsInPack[id] = true;
@@ -298,8 +337,22 @@ new Vue({
         //per id API call maken naar back-end om item id op te vragen (moet nog geschreven worden in back end)
         //antwoorden van API call (item_id) in itemsInPack[] op true zetten
       },
+      filterItems(color) {
+        /* console.log(this.userPacks);
+        var packsAfterFilter = [];
+        for (var i = 0; i < this.userPacks.length; i++)
+        {
+          if (this.userPacks[i].color == color)
+          {
+            packsAfterFilter.push(this.userPacks[i]);
+          }
+        }
+        console.log(packsAfterFilter); */
+        this.filterColor = color;
+
+      },
       refreshUserItems() {
-        apiUrl = 'https://packwatch.dietervercammen.be/api/getuseritems'
+        apiUrl = 'https://packwatch.dietervercammen.be/api/getuseritems';
         axios.get(apiUrl, {
           headers: {
             'Accept': 'application/json',
@@ -314,7 +367,7 @@ new Vue({
       },
       refreshUserPacks() {
         //getting packs
-        apiUrl = 'https://packwatch.dietervercammen.be/api/getuserpacks'
+        apiUrl = 'https://packwatch.dietervercammen.be/api/getuserpacks';
           axios.get(apiUrl, {
             headers: {
               'Accept': 'application/json',
@@ -330,7 +383,7 @@ new Vue({
           for (var i = 0; i < this.currentPackItems.length; i++) {
             if (id == this.currentPackItems[i].id) {
               //todo: toast "item is already in pack"
-              Materialize.toast('Item is already in pack', 2500,'toast-style');
+              Materialize.toast('Item is already in pack', 1500,'toast-style');
               return;
             }
           }
@@ -351,7 +404,7 @@ new Vue({
               'name': response.data.itemName,
               'color': response.data.itemColor,
             });
-            Materialize.toast('Item added to pack', 2500,'toast-style');
+            Materialize.toast('Item added to pack', 1500,'toast-style');
             this.navigate("sectionPackItems");
           }).catch(error => {
             console.log(error);
@@ -362,18 +415,18 @@ new Vue({
         }
       },
       unlinkItemFromPack(id) {
-        apiUrl = 'https://packwatch.dietervercammen.be/api/link/0'
+        apiUrl = 'https://packwatch.dietervercammen.be/api/link/0';
         axios.post(apiUrl, {
           _method: 'delete',
           item_id: id,
-          pack_id: this.currentPackId,
+          pack_id: this.currentPackEdit.id,
         }, {
           headers: {
             'Accept': 'application/json',
             'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
         }).then(response => {
           console.log(response);
-          this.getPackItems(this.currentPackId);
+          this.getPackItems(this.currentPackEdit.id);
         }).catch(error => {
           console.log(error);
         });
@@ -392,7 +445,7 @@ new Vue({
         })
       },
       createPack() {
-        apiUrl = 'https://packwatch.dietervercammen.be/api/pack'
+        apiUrl = 'https://packwatch.dietervercammen.be/api/pack';
         axios.post(apiUrl, {
           name: this.packName,
           color: this.selectColor,
@@ -404,7 +457,8 @@ new Vue({
           this.userPacks.push({
             name: this.packName,
             color:this.selectColor,
-            id: response.data.id
+            id: response.data.id,
+            amountOfItems: 0,
           });
           this.packName = "";
           this.selectColor = "";
@@ -492,7 +546,7 @@ new Vue({
         });
       },
       createItem() {
-        apiUrl = 'https://packwatch.dietervercammen.be/api/item'
+        apiUrl = 'https://packwatch.dietervercammen.be/api/item';
         axios.post(apiUrl, {
           name: this.itemName,
           color: this.selectColor,
@@ -529,7 +583,7 @@ new Vue({
         })
       },
       register () {
-        apiUrl = 'https://packwatch.dietervercammen.be/api/register'
+        apiUrl = 'https://packwatch.dietervercammen.be/api/register';
         axios.post(apiUrl, {
           name: this.$refs.registername.value,
           email: this.$refs.registeremail.value,
@@ -552,7 +606,7 @@ new Vue({
         //window.localStorage.setItem("accestoken", response);
       },
       login () {
-        apiUrl = 'https://packwatch.dietervercammen.be/oauth/token'
+        apiUrl = 'https://packwatch.dietervercammen.be/oauth/token';
         axios.post(apiUrl, {
           username: this.$refs.loginemail.value,
           password: this.$refs.loginpassword.value, 
@@ -608,12 +662,12 @@ new Vue({
 
         pack.favorite = !boolean;
         
-        api = 'https://api.github.com/users/1'
+        api = 'https://api.github.com/users/1';
         axios.get(api).then(response => {
         this.data = response.data
         console.log(response.data);
       }).catch(error => {
-        this.errorMsg = 'No user or no location!'
+        this.errorMsg = 'No user or no location!';
         this.data = []
       })
 
