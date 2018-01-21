@@ -438,11 +438,11 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
 }
 .item-list-icon {
     /* color:#9a6e00; */
-    filter: brightness(70%);
+    /* filter: brightness(70%); */
 }
 .secondary-content {
     /* color:#7e6526; */
-    filter: brightness(70%);
+    /* filter: brightness(70%); */
 }
 select {
     /* display: initial; */
@@ -545,4 +545,8 @@ ul.stepper .step.active {
     padding-top: 15px !important;
     margin-bottom: 0;
     z-index: 997;
+  }
+  .btn-icon {
+    position: absolute;
+    left: 20px;
   }

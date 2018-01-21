@@ -282,8 +282,8 @@
                                 </p>
                             </div>
                             <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit"  name="action">Submit
-                                    <i class="material-icons right"></i>
+                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Add item
+                                    <i class="material-icons left btn-icon">add_box</i>
                                 </button>
                             </div>
                           </form>
@@ -383,8 +383,8 @@
                                   </p>
                               </div>
                               <div class="col mt-15">
-                                  <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Submit
-                                      <i class="material-icons right"></i>
+                                  <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Edit item
+                                      <i class="material-icons left btn-icon">border_color</i>
                                   </button>
                               </div>
                             </form>
@@ -633,8 +633,8 @@
                             </div>
 
                             <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color" type="submit" name="action">Submit
-                                    <i class="material-icons right"></i>
+                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Add pack
+                                    <i class="material-icons left btn-icon">add_box</i>
                                 </button>
                             </div>
                           </form>
@@ -677,25 +677,27 @@
                                   <option value="blue">Blue</option>
                                 </select>
                               </div>
-                              <div class="col mt-15">
-                                  <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Submit
-                                      <i class="material-icons right"></i>
+                              <div class="row mt-15">
+                                  <button class="btn waves-effect waves-light  secondary-color secondary-button col s3 " type="submit" name="action" >Edit pack
+                                      <i class="material-icons left btn-icon">border_color</i>
                                   </button>
+
+
+                                <button class="btn waves-effect waves-light  secondary-color secondary-button col s3 offset-s1" @click="getPackItems(currentPackEdit.id); navigate('sectionPackItems');" name="action" >Add items to pack
+                                    <i class="material-icons right"></i>
+                                </button>
+                           
+
+                            
+                                <button class="btn waves-effect waves-light secondary-color secondary-button col s3 offset-s1" @click="prepareForPacking();" name="action" >Start packing!
+                                    <i class="material-icons right"></i>
+                                </button>
+                            
+
                               </div>
                             </form>
 
-                            <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" @click="getPackItems(currentPackEdit.id); navigate('sectionPackItems');" name="action" >Add items to pack
-                                    <i class="material-icons right"></i>
-                                </button>
-                            </div>
-
-                            <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" @click="prepareForPacking();" name="action" >Start packing!
-                                    <i class="material-icons right"></i>
-                                </button>
-                            </div>
-
+                            
                           </div>      
                         </section>
 
