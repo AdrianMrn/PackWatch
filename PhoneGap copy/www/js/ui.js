@@ -152,6 +152,9 @@ new Vue({
         currentPackEdit: [ 'name' ],
 
         itemsInPack: {},
+
+        writeSuccess: false,
+        writeFalse: false
         
 
     },

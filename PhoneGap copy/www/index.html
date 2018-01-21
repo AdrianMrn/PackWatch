@@ -296,27 +296,27 @@
                                          </div>
                                       </div>
                                       <div class="step-actions black-text">
-                                         <button class="waves-effect waves-dark btn next-step blue" style="width:100%" onclick="writeNFC()">CONTINUE</button>
+                                         <button class="waves-effect waves-dark btn next-step blue" style="width:100%" onclick="writeNFC()" @click="writeFalse = true">CONTINUE</button>
                                       </div>
                                    </div>
                                 </li>
-                                <li class="step black-text">
-                                   <div class="step-title waves-effect">Step 2</div>
-                                   <div class="step-content">
+                                <li class="step black-text active" v-show="writeFalse">
+                                   <div class="step-title waves-effect">Write failed</div>
+                                   <div class="step-content" style="display: block !important">
                                       <div class="row">
                                          <div class="input-field col s12">
                                             Some other thing
                                          </div>
                                       </div>
                                       <div class="step-actions">
-                                         <button class="waves-effect waves-dark btn next-step blue" style="width:100%">CONTINUE</button>
-                                         <button class="waves-effect waves-dark btn-flat previous-step red white-text" style="width:100%">BACK</button>
+                                         <button class="waves-effect waves-dark btn next-step blue" style="width:100%">TRY AGAIN</button>
+                                         <button class="waves-effect waves-dark btn-flat previous-step red white-text" style="width:100%">CANCEL</button>
                                       </div>
                                    </div>
                                 </li>
-                                <li class="step black-text">
-                                   <div class="step-title waves-effect">All done</div>
-                                   <div class="step-content">
+                                <li class="step black-text active" v-show=" writeSuccess">
+                                   <div class="step-title waves-effect">Write success</div>
+                                   <div class="step-content"  style="display: block">
                                       Finish!
                                       <div class="step-actions">
                                          <button class="waves-effect waves-dark btn blue" style="width:100%" type="submit" @click="showNFCStepperEdit = false; checkBoxChecked('editItemCheck')">DONE</button>
