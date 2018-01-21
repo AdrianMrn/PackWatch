@@ -411,7 +411,7 @@
                                       </div>
                                 </li>
                                 <div class="list-wrapper">
-                              <li v-for="pack in userPacks" class="collection-item dismissable" @click="selectColor = pack.color; currentPackNameBack = pack.name; currentPackEdit = pack; navigate('sectionEditPack'); getPackItems(pack.id);">
+                                  <li v-for="pack in userPacks" class="collection-item dismissable" @click="selectColor = pack.color; currentPackNameBack = pack.name; currentPackEdit = pack; getPackItems(pack.id); interactWithPack();">
                                   <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
                                       <a class="btn-floating btn-change">
                                         <i class="material-icons" id="options">more_vert</i>
@@ -486,20 +486,20 @@
                               <img class="activator" src="img/backpack.jpg">
                             </div>
                             <div class="card-content card-position">
-                              <span class="card-title activator grey-text text-darken-4">Your backpack contains:
+                              <span class="card-title activator grey-text text-darken-4"><!-- Your backpack contains: -->
                                 <a class="btn-floating halfway-fab halfway-fab-bag waves-effect waves-light red">
                                   <div class="icon-wrapper"><i class="material-icons">add</i></div>
                                 </a>
                               </span>
-                              <p> 2 Packs</p>
-                              <p>7 Items</p>
+                              <!-- <p> 2 Packs</p>
+                              <p>7 Items</p> -->
                             </div>
-                            <div class="card-reveal">
+                            <!-- <div class="card-reveal">
                               <span class="card-title grey-text text-darken-4">Start packing<i class="material-icons right">close</i></span>
                               <p>Choose the packs or items you would like to pack.</p>
                               <br>
                               <div class="row">
-                                <div class="col offset-s2 s8 center-align btn-large orange" @click="navigate('sectionPackingPack');">
+                                <div class="col offset-s2 s8 center-align btn-large orange" @click="prepareForPacking();">
                                   Add Packs
                                 </div>
                               </div>
@@ -508,13 +508,16 @@
                                     Clear backpack
                                   </div>
                               </div>
-                            </div>
+                            </div> -->
                             <div class="row">
+                              <div class="col offset-s1 s10 center-align btn-large secondary-color secondary-button" @click="navigate('sectionPacks'); startPacking = true;">
+                                Start Packing
                                 <div class="col offset-s1 s10 center-align btn-large secondary-color secondary-button">
                                   Start packing
                                 </div>
                               </div>
-                              <br>
+                            </div>
+                            <br>
                           </div>
                       
                         
@@ -693,7 +696,7 @@
                             </div>
 
                             <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" @click="prepareForPacking(); navigate('sectionPackingPack');" name="action" >Start packing!
+                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" @click="prepareForPacking();" name="action" >Start packing!
                                     <i class="material-icons right"></i>
                                 </button>
                             </div>

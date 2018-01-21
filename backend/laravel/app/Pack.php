@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Linkitemspacks;
+
 class Pack extends Model 
 {
 
@@ -28,6 +30,11 @@ class Pack extends Model
     public function packUser()
     {
         return $this->belongsTo('User', 'user_id');
+    }
+
+    public function amountOfItems($packid)
+    {
+        return Linkitemspacks::where('pack_id',$packid)->count();
     }
 
 }
