@@ -111,19 +111,19 @@
               </nav> -->
               <nav>
                   <div class="nav-wrapper main-color">
-                    <a href="#!" class="brand-logo">{{sectionTitle}}</a>
+                    <a href="#!" class="brand-logo truncate">{{sectionTitle}}</a>
                     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
                       <li> &nbsp;</li>
                       <li><a><b>Menu</b></a></li>
-                      <li><a href="#">Dieter Vercammen</a></li>
+                      <li><a href="#">{{email}}</a></li>
                       <li @click="logout()"><a href="#">Logout</a></li>
                       
                     </ul>
                     <ul class="side-nav" id="mobile-demo">
                       <li>&nbsp;</li>
                       <li><a><b>Menu</b></a></li>
-                      <li><a href="#">Dieter Vercammen</a></li>
+                      <li><a href="#">{{email}}</a></li>
                       <li @click="logout()"><a href="#">Logout</a></li>
                       
                     </ul>
@@ -156,7 +156,7 @@
                                      
                                 </li>
                                 <div class="list-wrapper">
-                              <li v-for="item in userItems" class="collection-item dismissable" @click="interactWithItem(item.id); currentItemEdit = item;">
+                              <li v-for="item in userItems" class="collection-item dismissable" @click="selectColor = item.color; currentItemNameBack = item.name; currentItemEdit = item; interactWithItem(item.id); ">
                                   <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
                                       <a class="btn-floating btn-change">
                                         <i class="material-icons" id="options">more_vert</i>
@@ -244,7 +244,7 @@
                                     <input id="last_name" type="text" class="validate" 
                                     v-model="itemName"
                                     :rules="nameRules"
-                                    required>
+                                    required maxlength="15">
                                     <label for="last_name">Name</label>
                             </div>
                            
@@ -340,7 +340,7 @@
                           
                           <div class="container">
                             <div class="row mt-15">
-                              <i class="material-icons back-icon" @click="navigate('sectionItems')">arrow_back</i>
+                              <i class="material-icons back-icon" @click="currentItemEdit.name = currentItemNameBack ;navigate('sectionItems')">arrow_back</i>
                               <a class="btn-floating btn-change-li delete-color right"><i class="material-icons " @click="deleteId = currentItemEdit.id; openModalItem()">delete</i></a>
                             </div>
                             <form v-on:submit.prevent="updateItem">
@@ -353,7 +353,7 @@
                                       <input id="last_name" type="text" class="validate" 
                                       v-model="currentItemEdit.name"
                                       :rules="nameRules"
-                                      required>
+                                      required maxlength="15" minlength="1">
                                       
                               </div>
                              
@@ -411,7 +411,7 @@
                                       </div>
                                 </li>
                                 <div class="list-wrapper">
-                              <li v-for="pack in userPacks" class="collection-item dismissable" @click="currentPackEdit = pack; getPackItems(pack.id); interactWithPack();">
+                                  <li v-for="pack in userPacks" class="collection-item dismissable" @click="selectColor = pack.color; currentPackNameBack = pack.name; currentPackEdit = pack; getPackItems(pack.id); interactWithPack();">
                                   <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
                                       <a class="btn-floating btn-change">
                                         <i class="material-icons" id="options">more_vert</i>
@@ -512,6 +512,9 @@
                             <div class="row">
                               <div class="col offset-s1 s10 center-align btn-large secondary-color secondary-button" @click="navigate('sectionPacks'); startPacking = true;">
                                 Start Packing
+                                <div class="col offset-s1 s10 center-align btn-large secondary-color secondary-button">
+                                  Start packing
+                                </div>
                               </div>
                             </div>
                             <br>
@@ -603,7 +606,7 @@
                                     <input id="last_name" type="text" class="validate" 
                                     v-model="packName"
                                     :rules="nameRules"
-                                    required>
+                                    required maxlength="15">
                                     <label for="last_name">Name</label>
                             </div>
                             <label for="">Color</label>
@@ -643,7 +646,7 @@
 
                         <div class="container">
                             <div class="row mt-15">
-                              <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
+                              <i class="material-icons back-icon" @click="currentPackEdit.name = currentPackNameBack;navigate('sectionPacks')">arrow_back</i>
                               <a href="#!" class="right btn-floating btn-change-li delete-color"><i class="material-icons" @click="openModalPack(); deleteId = currentPackEdit.id">delete</i></a>
                             </div>
                             <form v-on:submit.prevent="updateItem">
@@ -656,7 +659,7 @@
                                       <input id="last_name" type="text" class="validate" 
                                       v-model="currentPackEdit.name"
                                       :rules="nameRules"
-                                      required>
+                                      required maxlength="15" minlength="1">
                                       
                               </div>
                              
@@ -687,7 +690,7 @@
                             </form>
 
                             <div class="col mt-15">
-                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" @click="getPackItems(currentPackEdit.id); navigate('sectionPackItems');" name="action" >Edit content
+                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" @click="getPackItems(currentPackEdit.id); navigate('sectionPackItems');" name="action" >Add items to pack
                                     <i class="material-icons right"></i>
                                 </button>
                             </div>
@@ -722,7 +725,11 @@
                                     <i class="material-icons">filter</i>
                                   </a> {{item.name}}
                                   <!-- right -->
-                                  <a href="#!" class="secondary-content" @click="unlinkItemFromPack(item.id)"><!-- future: add delete button --></a>   
+                                  <a href="#!" class="secondary-content" @click="unlinkItemFromPack(item.id)">
+                                    
+                                    <i class="material-icons delete-text">delete</i>
+                                  
+                                  </a>   
                                 </div>
                               </li>
                             </div>

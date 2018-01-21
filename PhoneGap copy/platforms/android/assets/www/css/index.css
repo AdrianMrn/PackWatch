@@ -419,6 +419,9 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
 .delete-color {
     background-color:#b20b07 !important;
 }
+.delete-text {
+    color:#b20b07;
+}
 .secondary-button:hover, .secondary-button:active{
     background-color:#ce6c04;
 }
