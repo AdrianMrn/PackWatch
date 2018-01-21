@@ -156,7 +156,7 @@
                                      
                                 </li>
                                 <div class="list-wrapper">
-                              <li v-for="item in userItems" class="collection-item dismissable" @click="interactWithItem(item.id); currentItemEdit = item;">
+                              <li v-for="item in userItems" class="collection-item dismissable" @click="currentItemEdit = item; interactWithItem(item.id); ">
                                   <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
                                       <a class="btn-floating btn-change">
                                         <i class="material-icons" id="options">more_vert</i>
@@ -244,7 +244,7 @@
                                     <input id="last_name" type="text" class="validate" 
                                     v-model="itemName"
                                     :rules="nameRules"
-                                    required>
+                                    required maxlength="15">
                                     <label for="last_name">Name</label>
                             </div>
                            
@@ -353,7 +353,7 @@
                                       <input id="last_name" type="text" class="validate" 
                                       v-model="currentItemEdit.name"
                                       :rules="nameRules"
-                                      required>
+                                      required maxlength="15">
                                       
                               </div>
                              

@@ -222,7 +222,7 @@ new Vue({
             break;
           case "sectionEditPack":
             this.sectionEditPack = true;
-            this.sectionTitle = 'Edit pack';
+            this.sectionTitle = 'Edit ' + this.currentPackEdit.name;
             break;
           case "sectionItems":
             this.sectionItems = true;
@@ -236,7 +236,7 @@ new Vue({
             break;
           case "sectionEditItems":
             this.sectionEditItems = true;
-            this.sectionTitle = 'Edit items';
+            this.sectionTitle = 'Edit ' + this.currentItemEdit.name;
             break;
           case "sectionPackingItem":
             this.sectionPackingItem = true;
