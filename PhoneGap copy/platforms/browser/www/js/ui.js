@@ -132,6 +132,9 @@ new Vue({
         currentPackId: null,
         currentPackItems: [],
 
+        currentItemNameBack: '',
+        currentPackNameBack: '',
+
         addingItemToPack: false,
         showToast:false,
         loggedIn:null,
