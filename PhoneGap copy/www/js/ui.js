@@ -456,7 +456,7 @@ new Vue({
         apiUrl = 'https://packwatch.dietervercammen.be/api/item/' + this.currentItemEdit.id;
         axios.post(apiUrl, {
           _method: 'patch',
-          name: this.currentPackEdit.name,
+          name: this.currentItemEdit.name,
           color: this.selectColor
         }, {
           headers: {

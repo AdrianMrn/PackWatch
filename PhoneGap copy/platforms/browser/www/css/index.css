@@ -532,13 +532,16 @@ ul.stepper .step.active {
     
   }
   .transparent-filter {
-    height: 5px;
+    height: 3px;
     background-color: #f44236 !important;
     position: absolute;
     top: 50%;
     z-index: 30000;
     width: 100%;
     transform: translateY(-50%);
+  }
+  .no-color-btn {
+      transform: rotate(-45deg);
   }
   .filter-btn{
     position: fixed;

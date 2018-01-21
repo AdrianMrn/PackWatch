@@ -142,7 +142,7 @@
                                       <i class="material-icons">visibility</i>
                                     </a>
                                     <ul>
-                                      <li><a class="btn-floating white">
+                                      <li><a class="btn-floating white no-color-btn">
                                         <div class="transparent-filter"></div>
                                         <i class="material-icons"></i>
                                       </a></li>
@@ -652,7 +652,7 @@
                               <i class="material-icons back-icon" @click="currentPackEdit.name = currentPackNameBack;navigate('sectionPacks')">arrow_back</i>
                               <a href="#!" class="right btn-floating btn-change-li delete-color"><i class="material-icons" @click="openModalPack(); deleteId = currentPackEdit.id">delete</i></a>
                             </div>
-                            <form v-on:submit.prevent="updateItem">
+                            <form v-on:submit.prevent="updatePack">
                               <div class="input-field item">
                                   <label for="last_name" class="active" style="-webkit-transform: translateY(-14px) scale(0.8);
                                   transform: translateY(-14px) scale(0.8);
