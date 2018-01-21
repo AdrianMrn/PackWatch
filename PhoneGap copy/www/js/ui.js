@@ -262,6 +262,7 @@ new Vue({
       },
       interactWithPack() {
         if (this.startPacking) {
+          this.startPacking = false;
           this.prepareForPacking();
         } else {
           this.navigate('sectionEditPack');
