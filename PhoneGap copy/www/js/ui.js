@@ -163,7 +163,9 @@ new Vue({
       
         email:window.localStorage.getItem("email"),
 
-        
+        // for filter
+        filterPackColor: "all",
+        filterItemColor: "all",
 
     },
     mounted() {
@@ -297,6 +299,20 @@ new Vue({
         //afzonderlijke id's maken van string
         //per id API call maken naar back-end om item id op te vragen (moet nog geschreven worden in back end)
         //antwoorden van API call (item_id) in itemsInPack[] op true zetten
+      },
+      filterItems(color) {
+        /* console.log(this.userPacks);
+        var packsAfterFilter = [];
+        for (var i = 0; i < this.userPacks.length; i++)
+        {
+          if (this.userPacks[i].color == color)
+          {
+            packsAfterFilter.push(this.userPacks[i]);
+          }
+        }
+        console.log(packsAfterFilter); */
+        this.filterColor = color;
+
       },
       refreshUserItems() {
         apiUrl = 'https://packwatch.dietervercammen.be/api/getuseritems'

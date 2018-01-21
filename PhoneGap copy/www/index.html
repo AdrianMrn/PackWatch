@@ -156,7 +156,10 @@
                                      
                                 </li>
                                 <div class="list-wrapper">
-                              <li v-for="item in userItems" class="collection-item dismissable" @click="selectColor = item.color; currentItemNameBack = item.name; currentItemEdit = item; interactWithItem(item.id); ">
+                                    <li class="collection-item dismissable" @click="filterItemColor= 'all';">show all</li>
+                                    <li class="collection-item dismissable" @click="filterItemColor = 'red';">only red</li>
+                                    <li class="collection-item dismissable" @click="filterItemColor = 'orange';">only orange</li>
+                              <li v-for="item in userItems" class="collection-item dismissable" v-show="item.color == filterItemColor || filterItemColor == 'all'" @click="selectColor = item.color; currentItemNameBack = item.name; currentItemEdit = item; interactWithItem(item.id); ">
                                   <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
                                       <a class="btn-floating btn-change">
                                         <i class="material-icons" id="options">more_vert</i>
@@ -411,7 +414,11 @@
                                       </div>
                                 </li>
                                 <div class="list-wrapper">
-                                  <li v-for="pack in userPacks" class="collection-item dismissable" @click="selectColor = pack.color; currentPackNameBack = pack.name; currentPackEdit = pack; getPackItems(pack.id); interactWithPack();">
+
+                                  <li class="collection-item dismissable" @click="filterPackColor= 'all';">show all</li>
+                                  <li class="collection-item dismissable" @click="filterPackColor = 'red';">only red</li>
+                                  <li class="collection-item dismissable" @click="filterPackColor = 'orange';">only orange</li>
+                                  <li v-for="pack in userPacks" v-show="pack.color == filterPackColor || filterPackColor == 'all'" class="collection-item dismissable" @click="selectColor = pack.color; currentPackNameBack = pack.name; currentPackEdit = pack; getPackItems(pack.id); interactWithPack();">
                                   <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
                                       <a class="btn-floating btn-change">
                                         <i class="material-icons" id="options">more_vert</i>
@@ -425,7 +432,7 @@
                                 <div > 
                                   <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': pack.color  }">
                                     <i class="material-icons">filter</i>
-                                  </a> {{pack.name}}
+                                  </a> {{pack.name}} ({{ pack.amountOfItems }} items)
                                   <!-- right -->
                                   <!-- <a href="#!" class="secondary-content" @click="interactWithItem(item.id)">
                                       
