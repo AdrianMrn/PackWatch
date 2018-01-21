@@ -195,7 +195,7 @@
                                        </div>
                                     </div>
                                     <div class="step-actions black-text">
-                                       <button class="waves-effect waves-dark btn next-step blue" style="width:100%">CONTINUE</button>
+                                       <button class="waves-effect waves-dark btn next-step blue" style="width:100%" onclick="writeNFC()">CONTINUE</button>
                                     </div>
                                  </div>
                               </li>
@@ -208,7 +208,7 @@
                                        </div>
                                     </div>
                                     <div class="step-actions">
-                                       <button class="waves-effect waves-dark btn next-step blue" style="width:100%">CONTINUE</button>
+                                       <button class="waves-effect waves-dark btn next-step blue" style="width:100%"  >CONTINUE</button>
                                        <button class="waves-effect waves-dark btn-flat previous-step red white-text" style="width:100%">BACK</button>
                                     </div>
                                  </div>
@@ -278,8 +278,10 @@
                     </section>
 
                     <!-- Section edit items -->
-
-                    <section id="sectionEditItems" v-show="sectionEditItems">
+                    <!-- <transition-group name="fade"> -->
+                        <!-- animation working -->
+                    <section id="sectionEditItems" v-show="sectionEditItems" key="editItems">
+                     
                         <section id="showNFCStepper" v-show="showNFCStepperEdit" class="nfc-stepper valign-wrapper" >
                             <ul class="stepper horizontal black-text" style="
                             width:100%;
@@ -294,7 +296,7 @@
                                          </div>
                                       </div>
                                       <div class="step-actions black-text">
-                                         <button class="waves-effect waves-dark btn next-step blue" style="width:100%">CONTINUE</button>
+                                         <button class="waves-effect waves-dark btn next-step blue" style="width:100%" onclick="writeNFC()">CONTINUE</button>
                                       </div>
                                    </div>
                                 </li>
@@ -324,7 +326,7 @@
                              </ul>
   
                         </section>
-                          
+                      <!-- </transition-group> -->
                           <!-- <h3 class="center-align">Create item</h3> -->
                           
                           <div class="container">
