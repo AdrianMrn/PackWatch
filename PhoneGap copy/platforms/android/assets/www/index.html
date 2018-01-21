@@ -499,12 +499,7 @@
                               <p>Choose the packs or items you would like to pack.</p>
                               <br>
                               <div class="row">
-                                <div class="col offset-s2 s8 center-align btn-large secondary-color"  @click="navigate('sectionPackingItem')">
-                                  Add Items
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col offset-s2 s8 center-align btn-large orange" @click="navigate('sectionPackingPack')">
+                                <div class="col offset-s2 s8 center-align btn-large orange" @click="prepareForPacking(); navigate('sectionPackingPack');">
                                   Add Packs
                                 </div>
                               </div>
@@ -528,7 +523,7 @@
 
                     <!-- Section packing Item -->
 
-                    <section id="sectionPackingItem" v-if="sectionPackingItem">
+                    <!-- <section id="sectionPackingItem" v-if="sectionPackingItem">
                        
                       <div class="container">
                           <div class="row mt-15">
@@ -549,7 +544,7 @@
                               <a href="#!" class="secondary-content item-list-icon">
                                 <i class="material-icons">filter</i>
                               </a> {{item.name}}
-                              <!-- right -->
+                              
                               <a href="#!" class="secondary-content " @click="addToBackpack(item.id)">
                                    
                                     <i class="material-icons">send</i>
@@ -561,7 +556,7 @@
                         </div>
                         </ul>
 
-                    </section>
+                    </section> -->
 
                     <!-- Section packing Pack -->
 
