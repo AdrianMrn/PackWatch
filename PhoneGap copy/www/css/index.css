@@ -208,13 +208,17 @@ nav .nav-title{
    transform: translate(-50%,-50%);
 }
 .fixed-action-btn.horizontal ul li {
-    /* margin:10px 10px 0px 0px; */
+    margin:15px auto;
 }
+
 .collection-item {
     position: relative;
 }
 .break {
     height:30px;
+}
+.break-2{
+    height:50px;
 }
 #items-add {
     position: absolute;
@@ -524,4 +528,21 @@ ul.stepper .step.active {
   }
   .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
+  }
+  .transparent-filter {
+    height: 5px;
+    background-color: #f44236 !important;
+    position: absolute;
+    top: 50%;
+    z-index: 30000;
+    width: 100%;
+    transform: translateY(-50%);
+  }
+  .filter-btn{
+    position: fixed;
+    right: 10px;
+    top: 50px;
+    padding-top: 15px !important;
+    margin-bottom: 0;
+    z-index: 997;
   }

@@ -136,8 +136,23 @@
                       
                         <div class="col s12">
                             <!-- <h3 class="center-align">All items <small>( {{userItems.length}} ) </small></h3> -->
-                            <div class="col s12 break">
-                                
+                            <div class="col s12 break-2">
+                                <div class="fixed-action-btn horizontal click-to-toggle filter-btn">
+                                    <a class="btn-floating" style="background-color:#bb8b03">
+                                      <i class="material-icons">visibility</i>
+                                    </a>
+                                    <ul>
+                                      <li><a class="btn-floating white">
+                                        <div class="transparent-filter"></div>
+                                        <i class="material-icons"></i>
+                                      </a></li>
+                                      <li><a class="btn-floating red"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating orange"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating yellow"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating green"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating blue"><i class="material-icons"></i></a></li>
+                                    </ul>
+                                  </div>
                             </div>
 
                             <ul class="collection">
@@ -253,18 +268,10 @@
                             <select v-model="selectColor" required class="browser-default">
                                 <option value="" disabled selected class="black-text">Choose your option</option>
                                 <option value="red">Red</option>
-                                <option value="pink">Pink</option>
-                                <option value="purple">Purlple</option>
-                                <option value="indigo">Indigo</option>
-                                <option value="blue">Blue</option>
-                                <option value="cyan">Cyan</option>
-                                <option value="teal">Teal</option>
-                                <option value="green">Green</option>
-                                <option value="lime">Lime</option>
-                                <option value="yellow">Yellow</option>
-                                <option value="amber">Amber</option>
                                 <option value="orange">Orange</option>
-                                <option value="brow">Brown</option>
+                                <option value="yellow">Yellow</option>
+                                <option value="green">Green</option>
+                                <option value="blue">Blue</option>
                               </select>
                             </div>
                               
@@ -362,18 +369,10 @@
                               <select v-model="selectColor" required class="browser-default">
                                   <option value="" disabled selected class="black-text">Choose your option</option>
                                   <option value="red">Red</option>
-                                  <option value="pink">Pink</option>
-                                  <option value="purple">Purlple</option>
-                                  <option value="indigo">Indigo</option>
-                                  <option value="blue">Blue</option>
-                                  <option value="cyan">Cyan</option>
-                                  <option value="teal">Teal</option>
-                                  <option value="green">Green</option>
-                                  <option value="lime">Lime</option>
-                                  <option value="yellow">Yellow</option>
-                                  <option value="amber">Amber</option>
                                   <option value="orange">Orange</option>
-                                  <option value="brow">Brown</option>
+                                  <option value="yellow">Yellow</option>
+                                  <option value="green">Green</option>
+                                  <option value="blue">Blue</option>
                                 </select>
                               </div>
                                 
@@ -398,20 +397,19 @@
                     <section id="sectionPacks" v-show="sectionPacks">
                         <div class="col s12">
                             <!-- <h3 class="center-align">All items <small>( {{userItems.length}} ) </small></h3> -->
-                            <div class="col s12 break" style="height:50px">
-                                <div class="fixed-action-btn horizontal click-to-toggle" style="    position: fixed;
-                                right: 10px;
-                                top: 50px;
-                                padding-top: 15px;
-                                margin-bottom: 0;
-                                z-index: 997;
-                                ">
+                            <div class="col s12 break-2">
+                                <div class="fixed-action-btn horizontal click-to-toggle filter-btn">
                                     <a class="btn-floating" style="background-color:#bb8b03">
                                       <i class="material-icons">visibility</i>
                                     </a>
                                     <ul>
+                                      <li><a class="btn-floating white">
+                                        <div class="transparent-filter"></div>
+                                        <i class="material-icons"></i>
+                                      </a></li>
                                       <li><a class="btn-floating red"><i class="material-icons"></i></a></li>
-                                      <li><a class="btn-floating yellow darken-1"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating orange"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating yellow"><i class="material-icons"></i></a></li>
                                       <li><a class="btn-floating green"><i class="material-icons"></i></a></li>
                                       <li><a class="btn-floating blue"><i class="material-icons"></i></a></li>
                                     </ul>
@@ -627,18 +625,10 @@
                             <select v-model="selectColor" required class="browser-default">
                                 <option value="" disabled selected class="black-text">Choose your option</option>
                                 <option value="red">Red</option>
-                                <option value="pink">Pink</option>
-                                <option value="purple">Purlple</option>
-                                <option value="indigo">Indigo</option>
-                                <option value="blue">Blue</option>
-                                <option value="cyan">Cyan</option>
-                                <option value="teal">Teal</option>
-                                <option value="green">Green</option>
-                                <option value="lime">Lime</option>
-                                <option value="yellow">Yellow</option>
-                                <option value="amber">Amber</option>
                                 <option value="orange">Orange</option>
-                                <option value="brow">Brown</option>
+                                <option value="yellow">Yellow</option>
+                                <option value="green">Green</option>
+                                <option value="blue">Blue</option>
                               </select>
                             </div>
 
@@ -681,18 +671,10 @@
                               <select v-model="selectColor" required class="browser-default">
                                   <option value="" disabled selected class="black-text">Choose your option</option>
                                   <option value="red">Red</option>
-                                  <option value="pink">Pink</option>
-                                  <option value="purple">Purlple</option>
-                                  <option value="indigo">Indigo</option>
-                                  <option value="blue">Blue</option>
-                                  <option value="cyan">Cyan</option>
-                                  <option value="teal">Teal</option>
-                                  <option value="green">Green</option>
-                                  <option value="lime">Lime</option>
-                                  <option value="yellow">Yellow</option>
-                                  <option value="amber">Amber</option>
                                   <option value="orange">Orange</option>
-                                  <option value="brow">Brown</option>
+                                  <option value="yellow">Yellow</option>
+                                  <option value="green">Green</option>
+                                  <option value="blue">Blue</option>
                                 </select>
                               </div>
                               <div class="col mt-15">
