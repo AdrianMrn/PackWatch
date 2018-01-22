@@ -482,7 +482,7 @@ new Vue({
         }).then(response => {
           this.userPacks.push({
             name: this.packName,
-            color:this.selectColor,
+            color:this.currentPackEdit.color,
             id: response.data.id,
             amountOfItems: 0,
           });
