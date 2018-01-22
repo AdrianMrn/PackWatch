@@ -118,7 +118,7 @@ function writeNFC(nfcMessage){
     
     nfc.write(message, function () { // success callback
         navigator.vibrate(500);
-        alert("Write succesfull "/*  + JSON.stringify(message[0]) */);
+        alert("Write succesful "/*  + JSON.stringify(message[0]) */);
 
         document.getElementById("NFCSuccess").click();
         
