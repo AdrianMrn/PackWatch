@@ -208,7 +208,16 @@ nav .nav-title{
    transform: translate(-50%,-50%);
 }
 .fixed-action-btn.horizontal ul li {
-    margin:15px auto;
+    margin:0px auto;
+}
+.fixed-action-btn.horizontal ul {
+    text-align: right;
+    right: 64px;
+    position: absolute;
+    top: 70%;
+    -webkit-transform: translateY(-50%);
+    left: auto;
+    width: 500px;
 }
 
 .collection-item {
@@ -219,6 +228,7 @@ nav .nav-title{
 }
 .break-2{
     height:50px;
+    position: relative;
 }
 #items-add {
     position: absolute;
@@ -544,10 +554,11 @@ ul.stepper .step.active {
       transform: rotate(-45deg);
   }
   .filter-btn{
-    position: fixed;
+      position: relative;
     right: 10px;
-    top: 50px;
-    padding-top: 15px !important;
+    float: right;
+    top: 0;
+    padding-top: 10px !important;
     margin-bottom: 0;
     z-index: 997;
   }
