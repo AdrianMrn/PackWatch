@@ -381,7 +381,7 @@
                                 
                               <div class="col mt-15">
                                   <p>
-                                      <input type="checkbox" id="editItemCheck"   @click="showNFCStepperEdit = true;" />
+                                      <input type="checkbox" id="editItemCheck"   @click="showNFCStepperEdit = true; getNextNfcId();" />
                                       <label for="editItemCheck">Scan item?</label>
                                   </p>
                               </div>
@@ -392,7 +392,8 @@
                               </div>
                             </form>
                               
-                          </div>        
+                          </div>
+                          <input type="hidden" id="nextnfcid" v-model="nextNfcId" value=""/>
                         </section>
                         
                     <!-- Section packs -->

@@ -83,8 +83,9 @@ function readNFC(nfcEvent){
 function writeNFC(nfcMessage){
     //alert("Gelieve de NFC tag tegen de gsm te houden aub");
     //var input_value = document.getElementById('input_message').value;
-    var input_value = nfcMessage;
-    console.log(nfcMessage);
+    //console.log(nfcMessage);
+
+    var input_value = document.getElementById('nextnfcid').value + 1;
     var message = [
         ndef.textRecord(input_value),
     ];
@@ -97,7 +98,7 @@ function writeNFC(nfcMessage){
         
         $("#NFCSuccess").trigger("click");
         $("#NFCSuccess").click(function() {
-            alert( "Handler for .click() called." );
+            //alert( "Handler for .click() called." );
           });
 
         
@@ -110,7 +111,7 @@ function writeNFC(nfcMessage){
        
         $("#NFCFail").trigger("click");
         $("#NFCFail").click(function() {
-            alert( "Handler for .click() called." );
+           // alert( "Handler for .click() called." );
           });
        
     });
