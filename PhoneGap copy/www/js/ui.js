@@ -74,28 +74,9 @@ new Vue({
         sectionPackingPack: false,
         sectionPackItems: false,
 
-        settings_items: [
-          { title: 'Settings' },
-          { title: 'Add Items' },
-          { title: 'Add Pack' },
-          { title: 'Scan Item' }
-        ],
-        // packs: [
-        //   { id: 0, favorite: true, title: 'Fitness Pack', icon: 'fitness_center' },
-        //   { id: 1, favorite: true, title: 'Bike Pack', icon: 'directions_bike' },
-        //   { id: 2, favorite: true, title: 'Beach Pack', icon: 'beach_access' },
-        //   { id: 3, favorite: false, title: 'Fitneess Pack', icon: 'fitness_center' },
-        //   { id: 4, favorite: false, title: 'Golff Pack', icon: 'golf_course' },
-        //   { id: 5, favorite: false, title: 'Bikee Pack', icon: 'directions_bike' },
-         
-          
-        // //  paginate api from laravel 
-        // ],
-        page: 1,
         // nfcScanstepper
         nfcScan:1,
-        //snackbar
-        snackbar: false,
+        
         //form
         valid: true,
         itemName: '',

@@ -70,6 +70,8 @@
     <div id="app" class="app">
         <div class="allpacked" v-show="allPacked">
           <img class="allpackedimage" src="img/success.png" alt="">
+          <i class="material-icons white-text allpackedclose" @click="allPacked = false; navigate('sectionDashboard')">close</i>
+
         </div>
         
           <modal  @delete="deleteItem(deleteId);">

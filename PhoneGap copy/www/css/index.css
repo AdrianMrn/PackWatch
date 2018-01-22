@@ -605,11 +605,16 @@ ul.stepper .step.active {
     width:100%; 
     height:100%; 
     background-color:rgba(0, 0, 0, 0.86); 
-    z-index:100;
+    z-index:100000;
   } 
   .allpackedimage {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+  }
+  .allpackedclose {
+      position: absolute;
+      right:10px;
+      top:10px;
   }
