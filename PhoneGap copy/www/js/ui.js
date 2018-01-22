@@ -322,20 +322,6 @@ new Vue({
         })
         /* this.nextNfcId = (new Date).getTime(); */
       },
-      translateNfcId(id) {
-        // translate an item's nfcid to item_id
-        apiUrl = 'https://packwatch.dietervercammen.be/api/translate-nfc-id/' + id;
-        axios.get(apiUrl, {
-          headers: {
-            'Accept': 'application/json',
-            'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
-        }).then(response => {
-          //future todo: because of the async character of vue, this return doesn't work, maybe set a callback function (next) in the parameters too?
-          return response.data;
-        }).catch(error => {
-          //future todo: show error in toast
-        })
-      },
       interactWithPack(amountOfItems) {
         this.currentAmountOfItems = amountOfItems;
         if (this.startPacking) {
