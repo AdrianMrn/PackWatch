@@ -211,7 +211,7 @@
                             padding-left: 30px;
                             background: white;">
                                 <li class="step active ">
-                                   <div class="step-title waves-effect">Step 1</div>
+                                   <div class="step-title waves-effect">Write tag</div>
                                    <div class="step-content">
                                       <div class="row">
                                          <div class="col s12">
@@ -220,34 +220,11 @@
                                       </div>
                                       <div class="step-actions black-text">
                                         
-                                         <button v-if="nextNfcId" class="waves-effect waves-dark btn next-step blue" style="width:100%" onclick="writeNFC()">CONTINUE</button>
+                                         <button v-if="nextNfcId" class="waves-effect waves-dark btn blue" style="width:100%" onclick="writeNFC()">Write now</button>
                                          <button v-else class="waves-effect waves-dark btn next-step blue" style="width:100%" disabled>Loading NFC...</button>
-                                         <button class="waves-effect waves-dark btn-flat previous-step red white-text" style="width:100%" @click="showNFCStepper = false;" >CANCEL</button>
+                                         <button class="waves-effect waves-dark btn-flat previous-step red white-text" style="width:100%" @click="showNFCStepper = false; newItemScanned = false" >CANCEL</button>
                                          <button style="display: none" id="NFCFail" @click="writeFalse = true; writeSuccess = false">fail</button>
-                                         <button style="display: none" id="NFCSuccess" @click="writeSuccess = true; writeFalse = false" >success</button>
-                                      </div>
-                                   </div>
-                                </li>
-                                <li class="step black-text active" v-show="writeFalse">
-                                   <div class="step-title waves-effect">Write failed</div>
-                                   <div class="step-content" style="display: block !important">
-                                      <div class="row">
-                                         <div class="input-field col s12">
-                                            Some other thing
-                                         </div>
-                                      </div>
-                                      <div class="step-actions">
-                                         <button class="waves-effect waves-dark btn next-step blue" style="width:100%" @click="writeFalse = false">AGAIN</button>
-                                         <button class="waves-effect waves-dark btn-flat previous-step red white-text" style="width:100%" @click="showNFCStepper = false;" >CANCEL</button>
-                                      </div>
-                                   </div>
-                                </li>
-                                <li class="step black-text active" v-show="writeSuccess">
-                                   <div class="step-title waves-effect">Write success</div>
-                                   <div class="step-content"  style="display: block !important">
-                                      Finish!
-                                      <div class="step-actions">
-                                         <button class="waves-effect waves-dark btn blue" style="width:100%" type="submit" @click="showNFCStepper = false; checkBoxChecked('editItemCheck')">DONE</button>
+                                         <button style="display: none" id="NFCSuccess" @click="writeSuccess = true; writeFalse = false; showNFCStepper = false; newItemScanned = true" >success</button>
                                       </div>
                                    </div>
                                 </li>
@@ -283,9 +260,17 @@
                             </div>
                               
                             <div class="col mt-15">
-                                <p>
-                                    <input type="checkbox" id="addItemCheck" @click="getNextNfcId(); showNFCStepper = true"/>
-                                    <label for="addItemCheck">Scan item?</label>
+                                <p v-if="newItemScanned">
+                                    <!-- <input type="checkbox" id="addItemCheck" checked=false/> -->
+                                    
+                                    <i class="material-icons left" id="addItemCheck">check_box</i>
+
+                                    <label for="addItemCheck" class="label-font">Scan item?</label>
+                                </p>
+                                <p v-else>
+                                    <!-- <input type="checkbox" id="addItemCheck" disabled @click="getNextNfcId(); showNFCStepper = true"/> -->
+                                    <i class="material-icons left" id="addItemCheck" @click="getNextNfcId(); showNFCStepper = true">check_box_outline_blank</i>
+                                    <label for="addItemCheck " class="label-font">Scan item?</label>
                                 </p>
                             </div>
                             <div class="col mt-15">
@@ -309,7 +294,7 @@
                             padding-left: 30px;
                             background: white;">
                                 <li class="step active ">
-                                   <div class="step-title waves-effect">Step 1</div>
+                                   <div class="step-title waves-effect">Write tag</div>
                                    <div class="step-content">
                                       <div class="row">
                                          <div class="col s12">
@@ -318,7 +303,7 @@
                                       </div>
                                       <div class="step-actions black-text">
                                         
-                                         <button v-if="nextNfcId" class="waves-effect waves-dark btn next-step blue" style="width:100%" onclick="writeNFC()">CONTINUE</button>
+                                         <button v-if="nextNfcId" class="waves-effect waves-dark btn  blue" style="width:100%" onclick="writeNFC()">WRITE TAG</button>
                                          <button v-else class="waves-effect waves-dark btn next-step blue" style="width:100%" disabled>Loading NFC...</button>
                                          <button class="waves-effect waves-dark btn-flat previous-step red white-text" style="width:100%" @click="showNFCStepperEdit = false;" >CANCEL</button>
                                          <button style="display: none" id="NFCFail" @click="writeFalse = true; writeSuccess = false">fail</button>
@@ -326,29 +311,7 @@
                                       </div>
                                    </div>
                                 </li>
-                                <li class="step black-text active" v-show="writeFalse">
-                                   <div class="step-title waves-effect">Write failed</div>
-                                   <div class="step-content" style="display: block !important">
-                                      <div class="row">
-                                         <div class="input-field col s12">
-                                            Some other thing
-                                         </div>
-                                      </div>
-                                      <div class="step-actions">
-                                         <button class="waves-effect waves-dark btn next-step blue" style="width:100%" @click="writeFalse = false">AGAIN</button>
-                                         <button class="waves-effect waves-dark btn-flat previous-step red white-text" style="width:100%" @click="showNFCStepperEdit = false;" >CANCEL</button>
-                                      </div>
-                                   </div>
-                                </li>
-                                <li class="step black-text active" v-show="writeSuccess">
-                                   <div class="step-title waves-effect">Write success</div>
-                                   <div class="step-content"  style="display: block !important">
-                                      Finish!
-                                      <div class="step-actions">
-                                         <button class="waves-effect waves-dark btn blue" style="width:100%" type="submit" @click="showNFCStepperEdit = false; checkBoxChecked('editItemCheck')">DONE</button>
-                                      </div>
-                                   </div>
-                                </li>
+                                
                              </ul>
   
                         </section>
@@ -387,9 +350,19 @@
                               </div>
                                 
                               <div class="col mt-15">
-                                  <p>
-                                      <input type="checkbox" id="editItemCheck" @click="getNextNfcId(); showNFCStepperEdit = true;" />
-                                      <label for="editItemCheck">Scan item?</label>
+                                  <p v-if="currentItemEdit.nfcId == undefined || currentItemEdit.nfcId == null">
+
+                                      <i class="material-icons left" id="editItemCheck" @click="getNextNfcId(); showNFCStepperEdit = true;">check_box_outline_blank</i>
+
+                                      <label for="editItemCheck" class="label-font">Scan item?</label>
+
+                                    
+                                     
+                                  </p>
+                                  <p v-else>
+                                      <i class="material-icons left" id="editItemCheck">check_box</i>
+
+                                      <label for="editItemCheck" class="label-font">Scan item?</label>
                                   </p>
                               </div>
                               <div class="col mt-15">

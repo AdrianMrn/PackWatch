@@ -171,6 +171,8 @@ new Vue({
 
         currentAmountOfItems: 0,
 
+        newItemScanned:false
+
     },
     mounted() {
       
@@ -588,6 +590,7 @@ new Vue({
           this.currentItemEdit.color = "",
           this.errorMsg = '';
           this.nextNfcId = null;
+          this.newItemScanned = false;
 
           if (this.addingItemToPack) {
              this.interactWithItem(response.data.id);

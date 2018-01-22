@@ -589,3 +589,8 @@ ul.stepper .step.active {
   .main-font {
     font-family: 'Cabin', sans-serif;
   }
+
+  .label-font{
+    font-size: 1rem !important;
+  }
+  
