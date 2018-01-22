@@ -44,7 +44,7 @@ void loop(void)
             newItem += strPayload[4];
   
             if (listOfItems.indexOf(newItem) == -1) {
-              listOfItems += newItem;
+              listOfItems += "," + newItem;
             }
   
             Serial.println(listOfItems);

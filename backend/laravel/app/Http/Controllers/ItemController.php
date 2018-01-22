@@ -43,7 +43,7 @@ class ItemController extends Controller
     $this->validate($request, [
       'name' => 'required|string|max:255',
       'color' => 'required|string|max:255',
-      'nfcId' => 'string|max:255'
+      'nfcId' => 'nullable|string|max:255'
     ]);
 
     $nfcId = null;
@@ -151,10 +151,10 @@ class ItemController extends Controller
     $max = Item::where('user_id', $request->user()->id)->max('nfcId');
     if (!$max)
     {
-      return 0;
+      return 1;
     }
 
-    return $max;
+    return $max + 1;
   }
 
   public function translateNfcId(Request $request, $nfcId) {

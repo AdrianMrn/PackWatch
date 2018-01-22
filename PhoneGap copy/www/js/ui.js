@@ -206,7 +206,6 @@ new Vue({
     },
     methods: {
       navigate(url) {
-        
         this.sectionPacks = false;
         this.sectionItems = false;
         this.sectionCreateItem = false;
@@ -267,6 +266,15 @@ new Vue({
             this.sectionTitle = this.currentPackEdit.name;
             break;
         }
+        //stop reading nfc tag
+        //document.getElementById("nfcStopReading").click();
+      },
+      nfcCheck() {
+        console.log("checking nfc");
+        var nfcReadTag = document.getElementById('nfcReadTag').value;
+
+        Materialize.toast(nfcReadTag, 1500,'toast-style');
+        //alert(nfcReadTag);
       },
       getNextNfcId() {
         apiUrl = 'https://packwatch.dietervercammen.be/api/get-next-nfc-id';
@@ -276,9 +284,11 @@ new Vue({
             'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
         }).then(response => {
           this.nextNfcId = response.data;
+          console.log(this.nextNfcId);
         }).catch(error => {
           //future todo: show error in toast
         })
+        /* this.nextNfcId = (new Date).getTime(); */
       },
       translateNfcId(id) {
         // translate an item's nfcid to item_id
@@ -319,6 +329,7 @@ new Vue({
         if (!this.currentAmountOfItems) {
           Materialize.toast('This pack is empty', 1500,'toast-style');
         } else {
+          document.getElementById("nfcStartReading").click();
           this.startPacking = false;
           for (var i = 0; i < this.currentPackItems.length; i++)
           {
@@ -336,20 +347,6 @@ new Vue({
         //afzonderlijke id's maken van string
         //per id API call maken naar back-end om item id op te vragen (moet nog geschreven worden in back end)
         //antwoorden van API call (item_id) in itemsInPack[] op true zetten
-      },
-      filterItems(color) {
-        /* console.log(this.userPacks);
-        var packsAfterFilter = [];
-        for (var i = 0; i < this.userPacks.length; i++)
-        {
-          if (this.userPacks[i].color == color)
-          {
-            packsAfterFilter.push(this.userPacks[i]);
-          }
-        }
-        console.log(packsAfterFilter); */
-        this.filterColor = color;
-
       },
       refreshUserItems() {
         apiUrl = 'https://packwatch.dietervercammen.be/api/getuseritems';
@@ -448,7 +445,7 @@ new Vue({
         apiUrl = 'https://packwatch.dietervercammen.be/api/pack';
         axios.post(apiUrl, {
           name: this.packName,
-          color: this.selectColor,
+          color: this.currentPackEdit.color,
         }, {
           headers: {
             'Accept': 'application/json',
@@ -511,7 +508,7 @@ new Vue({
         axios.post(apiUrl, {
           _method: 'patch',
           name: this.currentItemEdit.name,
-          color: this.selectColor
+          color: this.currentItemEdit.color
         }, {
           headers: {
             'Accept': 'application/json',
@@ -546,11 +543,15 @@ new Vue({
         });
       },
       createItem() {
+        //console.log(this.writeSuccess);
+        var nfcId = null;
+        this.writeSuccess ? nfcId = this.nextNfcId.toString() : nfcId = null;
+        console.log(nfcId);
         apiUrl = 'https://packwatch.dietervercammen.be/api/item';
         axios.post(apiUrl, {
           name: this.itemName,
-          color: this.selectColor,
-          nfcId: this.NFCTimestamp.toString()
+          color: this.currentItemEdit.color,
+          nfcId: nfcId,
         }, {
           headers: {
             'Accept': 'application/json',
@@ -560,11 +561,13 @@ new Vue({
           this.userItems.push({
             name: this.itemName,
             color:this.selectColor,
-            id: response.data.id
+            id: response.data.id,
+            nfcId: nfcId,
           });
           this.itemName = "";
           this.selectColor = "";
           this.errorMsg = '';
+          this.nextNfcId = null;
 
           if (this.addingItemToPack) {
              this.interactWithItem(response.data.id);
@@ -574,6 +577,7 @@ new Vue({
              this.navigate("sectionItems");
            }
         }).catch(error => {
+          alert(JSON.stringify(error));
           //todo: catch & show bad password, email taken errors ...: this.errorMsgs[] = error.response.data
           console.log(error);
           this.errorMsg = 'No user or no location!';

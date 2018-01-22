@@ -142,15 +142,15 @@
                                       <i class="material-icons">visibility</i>
                                     </a>
                                     <ul>
-                                      <li><a class="btn-floating white no-color-btn">
+                                      <li><a class="btn-floating white" @click="filterItemColor= 'all'">
                                         <div class="transparent-filter"></div>
                                         <i class="material-icons"></i>
                                       </a></li>
-                                      <li><a class="btn-floating red"><i class="material-icons"></i></a></li>
-                                      <li><a class="btn-floating orange"><i class="material-icons"></i></a></li>
-                                      <li><a class="btn-floating yellow"><i class="material-icons"></i></a></li>
-                                      <li><a class="btn-floating green"><i class="material-icons"></i></a></li>
-                                      <li><a class="btn-floating blue"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating red" @click="filterItemColor= 'red'"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating orange" @click="filterItemColor= 'orange'"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating yellow" @click="filterItemColor= 'yellow'"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating green" @click="filterItemColor= 'green'"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating blue" @click="filterItemColor= 'blue'"><i class="material-icons"></i></a></li>
                                     </ul>
                                   </div>
                             </div>
@@ -171,9 +171,6 @@
                                      
                                 </li>
                                 <div class="list-wrapper">
-                                    <li class="collection-item dismissable" @click="filterItemColor= 'all';">show all</li>
-                                    <li class="collection-item dismissable" @click="filterItemColor = 'red';">only red</li>
-                                    <li class="collection-item dismissable" @click="filterItemColor = 'orange';">only orange</li>
                               <li v-for="item in userItems" class="collection-item dismissable" v-show="item.color == filterItemColor || filterItemColor == 'all'" @click="selectColor = item.color; currentItemNameBack = item.name; currentItemEdit = item; interactWithItem(item.id); ">
                                   <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
                                       <a class="btn-floating btn-change">
@@ -189,7 +186,7 @@
                                 <div > 
                                   <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': item.color  }">
                                     <i class="material-icons">filter</i>
-                                  </a> {{item.name}}
+                                  </a> {{item.name}} <i v-if="item.nfcId" class="material-icons right">nfc</i>
                                   <!-- right -->
                                   <!-- <a href="#!" class="secondary-content" @click="interactWithItem(item.id)">
                                       
@@ -206,50 +203,55 @@
                     <!-- Section create item -->
 
                     <section id="sectionCreateItem" v-show="sectionCreateItem" >
-                      <section id="showNFCStepper" v-show="showNFCStepper" class="nfc-stepper valign-wrapper" >
-                          <ul class="stepper horizontal black-text" style="
-                          width:100%;
-                          padding-left: 30px;
-                          background: white;">
-                              <li class="step active ">
-                                 <div class="step-title waves-effect">Step 1</div>
-                                 <div class="step-content">
-                                    <div class="row">
-                                       <div class="col s12">
-                                         Hold the NFC tag near your phone!
-                                       </div>
-                                    </div>
-                                    <div class="step-actions black-text">
-                                       <button class="waves-effect waves-dark btn next-step blue" style="width:100%" onclick="writeNFC()">CONTINUE</button>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li class="step black-text">
-                                 <div class="step-title waves-effect">Step 2</div>
-                                 <div class="step-content">
-                                    <div class="row">
-                                       <div class="input-field col s12">
-                                          Some other thing
-                                       </div>
-                                    </div>
-                                    <div class="step-actions">
-                                       <button class="waves-effect waves-dark btn next-step blue" style="width:100%"  >CONTINUE</button>
-                                       <button class="waves-effect waves-dark btn-flat previous-step red white-text" style="width:100%">BACK</button>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li class="step black-text">
-                                 <div class="step-title waves-effect">All done</div>
-                                 <div class="step-content">
-                                    Finish!
-                                    <div class="step-actions">
-                                       <button class="waves-effect waves-dark btn blue" style="width:100%" type="submit" @click="showNFCStepper = false; checkBoxChecked('addItemCheck')">DONE</button>
-                                    </div>
-                                 </div>
-                              </li>
-                           </ul>
-
-                      </section>
+                        <section id="showNFCStepper" v-show="showNFCStepper" class="nfc-stepper valign-wrapper" >
+                            <ul class="stepper horizontal black-text" style="
+                            width:100%;
+                            padding-left: 30px;
+                            background: white;">
+                                <li class="step active ">
+                                   <div class="step-title waves-effect">Step 1</div>
+                                   <div class="step-content">
+                                      <div class="row">
+                                         <div class="col s12">
+                                           Hold the NFC tag near your phone!
+                                         </div>
+                                      </div>
+                                      <div class="step-actions black-text">
+                                        
+                                         <button v-if="nextNfcId" class="waves-effect waves-dark btn next-step blue" style="width:100%" onclick="writeNFC()">CONTINUE</button>
+                                         <button v-else class="waves-effect waves-dark btn next-step blue" style="width:100%" disabled>Loading NFC...</button>
+                                         <button class="waves-effect waves-dark btn-flat previous-step red white-text" style="width:100%" @click="showNFCStepper = false;" >CANCEL</button>
+                                         <button style="display: none" id="NFCFail" @click="writeFalse = true; writeSuccess = false">fail</button>
+                                         <button style="display: none" id="NFCSuccess" @click="writeSuccess = true; writeFalse = false" >success</button>
+                                      </div>
+                                   </div>
+                                </li>
+                                <li class="step black-text active" v-show="writeFalse">
+                                   <div class="step-title waves-effect">Write failed</div>
+                                   <div class="step-content" style="display: block !important">
+                                      <div class="row">
+                                         <div class="input-field col s12">
+                                            Some other thing
+                                         </div>
+                                      </div>
+                                      <div class="step-actions">
+                                         <button class="waves-effect waves-dark btn next-step blue" style="width:100%" @click="writeFalse = false">AGAIN</button>
+                                         <button class="waves-effect waves-dark btn-flat previous-step red white-text" style="width:100%" @click="showNFCStepper = false;" >CANCEL</button>
+                                      </div>
+                                   </div>
+                                </li>
+                                <li class="step black-text active" v-show="writeSuccess">
+                                   <div class="step-title waves-effect">Write success</div>
+                                   <div class="step-content"  style="display: block !important">
+                                      Finish!
+                                      <div class="step-actions">
+                                         <button class="waves-effect waves-dark btn blue" style="width:100%" type="submit" @click="showNFCStepper = false; checkBoxChecked('editItemCheck')">DONE</button>
+                                      </div>
+                                   </div>
+                                </li>
+                             </ul>
+  
+                        </section>
                         
                         <!-- <h3 class="center-align">Create item</h3> -->
                         
@@ -280,7 +282,7 @@
                               
                             <div class="col mt-15">
                                 <p>
-                                    <input type="checkbox" id="addItemCheck" @click="showNFCStepper = true"/>
+                                    <input type="checkbox" id="addItemCheck" @click="getNextNfcId(); showNFCStepper = true"/>
                                     <label for="addItemCheck">Scan item?</label>
                                 </p>
                             </div>
@@ -299,7 +301,7 @@
                         <!-- animation working -->
                     <section id="sectionEditItems" v-show="sectionEditItems" key="editItems">
                      
-                        <section id="showNFCStepper" v-show="showNFCStepperEdit" class="nfc-stepper valign-wrapper" >
+                        <section id="showNFCStepperEdit" v-show="showNFCStepperEdit" class="nfc-stepper valign-wrapper" >
                             <ul class="stepper horizontal black-text" style="
                             width:100%;
                             padding-left: 30px;
@@ -313,7 +315,10 @@
                                          </div>
                                       </div>
                                       <div class="step-actions black-text">
-                                         <button class="waves-effect waves-dark btn next-step blue" style="width:100%" onclick="writeNFC()">CONTINUE</button>
+                                        
+                                         <button v-if="nextNfcId" class="waves-effect waves-dark btn next-step blue" style="width:100%" onclick="writeNFC()">CONTINUE</button>
+                                         <button v-else class="waves-effect waves-dark btn next-step blue" style="width:100%" disabled>Loading NFC...</button>
+                                         <button class="waves-effect waves-dark btn-flat previous-step red white-text" style="width:100%" @click="showNFCStepperEdit = false;" >CANCEL</button>
                                          <button style="display: none" id="NFCFail" @click="writeFalse = true; writeSuccess = false">fail</button>
                                          <button style="display: none" id="NFCSuccess" @click="writeSuccess = true; writeFalse = false" >success</button>
                                       </div>
@@ -381,19 +386,19 @@
                                 
                               <div class="col mt-15">
                                   <p>
-                                      <input type="checkbox" id="editItemCheck"   @click="showNFCStepperEdit = true; getNextNfcId();" />
+                                      <input type="checkbox" id="editItemCheck" @click="getNextNfcId(); showNFCStepperEdit = true;" />
                                       <label for="editItemCheck">Scan item?</label>
                                   </p>
                               </div>
                               <div class="col mt-15">
-                                  <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Edit item
+                                  <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Save item
                                       <i class="material-icons left btn-icon">border_color</i>
                                   </button>
                               </div>
                             </form>
                               
                           </div>
-                          <input type="hidden" id="nextnfcid" v-model="nextNfcId" value=""/>
+                          <input type="hidden" id="nextnfcid" v-model="nextNfcId"/>
                         </section>
                         
                     <!-- Section packs -->
@@ -407,15 +412,15 @@
                                       <i class="material-icons">visibility</i>
                                     </a>
                                     <ul>
-                                      <li><a class="btn-floating white">
-                                        <div class="transparent-filter"></div>
-                                        <i class="material-icons"></i>
-                                      </a></li>
-                                      <li><a class="btn-floating red"><i class="material-icons"></i></a></li>
-                                      <li><a class="btn-floating orange"><i class="material-icons"></i></a></li>
-                                      <li><a class="btn-floating yellow"><i class="material-icons"></i></a></li>
-                                      <li><a class="btn-floating green"><i class="material-icons"></i></a></li>
-                                      <li><a class="btn-floating blue"><i class="material-icons"></i></a></li>
+                                        <li><a class="btn-floating white" @click="filterPackColor= 'all'">
+                                            <div class="transparent-filter"></div>
+                                            <i class="material-icons"></i>
+                                          </a></li>
+                                          <li><a class="btn-floating red" @click="filterPackColor= 'red'"><i class="material-icons"></i></a></li>
+                                          <li><a class="btn-floating orange" @click="filterPackColor= 'orange'"><i class="material-icons"></i></a></li>
+                                          <li><a class="btn-floating yellow" @click="filterPackColor= 'yellow'"><i class="material-icons"></i></a></li>
+                                          <li><a class="btn-floating green" @click="filterPackColor= 'green'"><i class="material-icons"></i></a></li>
+                                          <li><a class="btn-floating blue" @click="filterPackColor= 'blue'"><i class="material-icons"></i></a></li>
                                     </ul>
                                   </div>
                             </div>
@@ -429,21 +434,8 @@
                                       </div>
                                 </li>
                                 <div class="list-wrapper">
-
-                                  <li class="collection-item dismissable" @click="filterPackColor= 'all';">show all</li>
-                                  <li class="collection-item dismissable" @click="filterPackColor = 'red';">only red</li>
-                                  <li class="collection-item dismissable" @click="filterPackColor = 'orange';">only orange</li>
                                   <li v-for="pack in userPacks" v-show="pack.color == filterPackColor || filterPackColor == 'all'" class="collection-item dismissable" @click="getPackItems(pack.id); selectColor = pack.color; currentPackNameBack = pack.name; currentPackEdit = pack; interactWithPack(pack.amountOfItems);">
-                                  <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
-                                      <a class="btn-floating btn-change">
-                                        <i class="material-icons" id="options">more_vert</i>
-                                      </a>
-                                      <ul>
-                                        <li class="btn-floating btn-change-li edit-color"><a href="#!"><i class="material-icons" @click="currentPackEdit = pack; navigate('sectionEditPack');">edit</i></a></li>
-                                        <li class="btn-floating btn-change-li delete-color"><a href="#!"><i class="material-icons" @click="modalOpen = true">delete</i></a></li>
-                                        
-                                      </ul>
-                                    </div> -->
+                                  
                                 <div > 
                                   <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': pack.color  }">
                                     <i class="material-icons">filter</i>
@@ -686,21 +678,21 @@
                                 </select>
                               </div>
                               <div class="row mt-15">
-                                  <button class="btn waves-effect waves-light  secondary-color secondary-button col s3 " type="submit" name="action" >Edit pack
+                                  <button class="btn waves-effect waves-light  secondary-color secondary-button col s3 " type="submit" name="action" >Save pack
                                       <i class="material-icons left btn-icon">border_color</i>
                                   </button>
 
-                                <button class="btn waves-effect waves-light  secondary-color secondary-button col s3 offset-s1" @click="navigate('sectionPackItems');" name="action" >Add items to pack
-                                    <i class="material-icons right"></i>
-                                </button>
-                            
-                                <button class="btn waves-effect waves-light secondary-color secondary-button col s3 offset-s1" @click="prepareForPacking();" name="action" >Start packing!
-                                    <i class="material-icons right"></i>
-                                </button>
-                            
-
-                              </div>
-                            </form>
+                                  <button type="button" class="btn waves-effect waves-light secondary-color secondary-button col s3 offset-s1" @click="navigate('sectionPackItems');" >Items
+                                      <i class="material-icons right"></i>
+                                  </button>
+                              
+                                  <button type="button" class="btn waves-effect waves-light secondary-color secondary-button col s3 offset-s1" @click="prepareForPacking();" >Start packing!
+                                      <i class="material-icons right"></i>
+                                  </button>
+                                  
+                                  
+                                </div>
+                              </form>
 
                             
                           </div>      
@@ -725,13 +717,12 @@
                                 <div> 
                                   <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': item.color  }">
                                     <i class="material-icons">filter</i>
-                                  </a> {{item.name}}
+                                  </a> {{item.name}} 
                                   <!-- right -->
                                   <a href="#!" class="secondary-content" @click="unlinkItemFromPack(item.id)">
-                                    
-                                    <i class="material-icons delete-text">delete</i>
-                                  
+                                    <i class="material-icons right delete-text">delete</i>
                                   </a>   
+                                  <i v-if="item.nfcId" class="material-icons right">nfc</i>  
                                 </div>
                               </li>
                             </div>
@@ -739,8 +730,16 @@
                         </section>
 
                         <section id="sectionPackingPack" v-show="sectionPackingPack">
+                          <input type="hidden" id="nfcReadTag" value=""/>
+                          <button style="display:none" id="nfcCheck" @click="nfcCheck()" hidden></button>
+
+                          <button style="display:none" id="nfcStartReading" onclick="readTag()" hidden>is "clicked" by vue when packing a pack</button>
+                          <button style="display:none" id="nfcStopReading" onclick="nfc.removeNdefListener(readNFC);" hidden>stop listening for tag (needed when writing)</button>
                           <div class="row mt-15">
                               <i class="material-icons back-icon" @click="navigate('sectionEditPack')">arrow_back</i>
+                          </div>
+                          <div class="container mt-15" style="margin: 10px;">
+                            <p>Hold your phone against an item's tag or your PackWatch Sensor© or tap an item</p>
                           </div>
     
                           <ul class="collection">
@@ -749,11 +748,11 @@
                                 <div v-if="Object.getOwnPropertyNames(itemsInPack).length > 0"> 
                                   <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': item.color  }">
                                     <i class="material-icons">filter</i>
-                                  </a> {{item.name}} 
+                                  </a> {{item.name}}
                                   <!-- right -->
-                                    <i v-if="itemsInPack[item.id]" class="material-icons secondary-content green-text">check</i>
-                                    <i v-else="itemsInPack[item.id]" class="material-icons secondary-content red-text">clear</i>
-
+                                    <i v-if="itemsInPack[item.id]" class="material-icons right green-text">check</i>
+                                    <i v-else="itemsInPack[item.id]" class="material-icons right red-text">clear</i>
+                                    <i v-if="item.nfcId" class="material-icons right">nfc</i>
                                 </div>
                               </li>
                             </div>

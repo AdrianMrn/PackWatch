@@ -67,7 +67,7 @@ function readNFC(nfcEvent){
         // dump the raw json of the message
         // note: real code will need to decode
         // the payload from each record
-        // alert(JSON.stringify(ndefMessage));
+        alert(JSON.stringify(ndefMessage));
 
         navigator.vibrate(500);
         
@@ -77,6 +77,16 @@ function readNFC(nfcEvent){
         var message = nfc.bytesToString(ndefMessage[0].payload);
         
         alert( message.substring(3) );
+
+        /* $("#nfcReadTag").val(message.substring(2));
+
+        document.getElementById("nfcCheck").click(); */
+
+        /* future todo:
+            - write message to hidden form input
+            - click hidden button to notify vue to get the item.id where item.nfcId == nfcid that was read
+            - set itemsInPack[item.id] to true if this item was scanned
+        */
     
 }
 
@@ -85,14 +95,18 @@ function writeNFC(nfcMessage){
     //var input_value = document.getElementById('input_message').value;
     //console.log(nfcMessage);
 
-    var input_value = document.getElementById('nextnfcid').value + 1;
+    //document.getElementById("NFCSuccess").click();
+
+    var input_value = document.getElementById('nextnfcid').value;
+    input_value = parseInt(input_value) + 1;
+    
     var message = [
         ndef.textRecord(input_value),
     ];
     
     nfc.write(message, function () { // success callback
         navigator.vibrate(500);
-        alert("Write succesfull " + message[0]);
+        alert("Write succesfull " + JSON.stringify(message[0]));
 
         document.getElementById("NFCSuccess").click();
         
@@ -105,14 +119,14 @@ function writeNFC(nfcMessage){
     },
     function (error) { // error callback
         navigator.vibrate([100, 100, 300]);
-        alert("Error writing: " + message[0] + JSON.stringify(error));
+        /* alert("Error writing: " + message[0] + JSON.stringify(error)); */
 
-        document.getElementById("NFCFail").click();
+        /* document.getElementById("NFCFail").click();
        
         $("#NFCFail").trigger("click");
         $("#NFCFail").click(function() {
            // alert( "Handler for .click() called." );
-          });
+          }); */
        
     });
 }
