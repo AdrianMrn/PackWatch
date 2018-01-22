@@ -237,6 +237,9 @@ nav .nav-title{
     height:50px;
     position: relative;
 }
+.break-3{
+    height:20px;
+}
 #items-add {
     position: absolute;
     right: 5px;
@@ -508,7 +511,7 @@ select {
 
 .list-wrapper {
    width:100%;
-   height:90%;
+   height:100%;
    position: absolute;
    overflow:auto;
    background-color:#f9f9f9;
@@ -579,4 +582,10 @@ ul.stepper .step.active {
   nav .brand-logo{
       font-family: 'Cabin', sans-serif;
 
+  }
+  .collection-packingpack {
+      height:63%;
+  }
+  .main-font {
+    font-family: 'Cabin', sans-serif;
   }

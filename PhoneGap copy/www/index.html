@@ -496,7 +496,8 @@
                     <section id="sectionDashboard" v-if="sectionDashboard">
 
                       <div class="container">
-                        <div class="col s12 break"></div>
+                        <h3 class="center-align main-font">Packwatch</h3>
+                        <div class="col s12 break-3"></div>
                         <!-- <h3 class="center-align">Dashboard</h3> -->
                         <div class="card">
                             <div class="card-image waves-effect waves-block waves-light">
@@ -741,7 +742,7 @@
                             <p>Hold your phone against an item's tag or your PackWatch Sensor© or tap an item</p>
                           </div>
     
-                          <ul class="collection">
+                          <ul class="collection collection-packingpack">
                             <div class="list-wrapper">
                               <li v-for="item in currentPackItems" class="collection-item dismissable" @click="toggleItemInPack(item.id); navigate('sectionPackingPack');">
                                 <div v-if="Object.getOwnPropertyNames(itemsInPack).length > 0"> 
