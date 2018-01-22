@@ -68,11 +68,8 @@
    
       
     <div id="app" class="app">
-        <!-- <div class="landing-wrapper"></div>
-        <div class="landing-wrapper-img"></div> -->
-
-        <div style="position:absolute; width:100%; height:100%; background-color:black;">
-          <img src="" alt="">
+        <div class="allpacked" v-show="allPacked">
+          <img class="allpackedimage" src="img/success.png" alt="">
         </div>
         
           <modal  @delete="deleteItem(deleteId);">
@@ -98,23 +95,6 @@
             </li>
         </ul>
         
-
-              <!-- <nav>
-                <div class="nav-wrapper main-color">
-                    <a href="#!" class="brand-logo"><i class="material-icons">cloud</i>Logo</a>
-                    <ul class="right hide-on-med-and-down">
-                      <li><a href="sass.html"><i class="material-icons">search</i></a></li>
-                      <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
-                      <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
-                      <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li>
-                    </ul>
-
-                     <div class="nav-content">
-                        <a href="landing.html"><i aria-hidden="true" class="material-icons icon brand-logo">assistant</i></a>
-                        <a href="login.html"><span class="nav-title">{{sectionTitle}}</span></a>
-                    </div> 
-                </div>
-              </nav> -->
               <nav>
                   <div class="nav-wrapper main-color">
                     <a href="#!" class="brand-logo truncate">{{sectionTitle}}</a>
@@ -180,27 +160,12 @@
                                 </li>
                                 <div class="list-wrapper">
                               <li v-for="item in userItems" class="collection-item" v-show="item.color == filterItemColor || filterItemColor == 'all'" @click="selectColor = item.color; currentItemNameBack = item.name; currentItemEdit = item; interactWithItem(item.id); ">
-                                  <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
-                                      <a class="btn-floating btn-change">
-                                        <i class="material-icons" id="options">more_vert</i>
-                                      </a>
-                                      <ul>
-
-                                        <li><a class="btn-floating btn-change-li edit-color"><i class="material-icons " @click="navigate('sectionEditItems'); currentItemEdit = item;">edit</i></a></li>
-                                        <li><a class="btn-floating btn-change-li delete-color"><i class="material-icons " @click="modalOpen = true; deleteId = item.id">delete</i></a></li>
-                                        
-                                      </ul>
-                                    </div> -->
+                                 
                                 <div > 
                                   <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': item.color  }">
                                     <i class="material-icons">note</i>
                                   </a> {{item.name}} <i v-if="item.nfcId" class="material-icons right">nfc</i>
-                                  <!-- right -->
-                                  <!-- <a href="#!" class="secondary-content" @click="interactWithItem(item.id)">
-                                      
-                                  </a> -->
-                                   
-                                  
+                                 
                                 </div>
                               </li>
                             </div>
@@ -267,14 +232,12 @@
                               
                             <div class="col mt-15">
                                 <p v-if="newItemScanned">
-                                    <!-- <input type="checkbox" id="addItemCheck" checked=false/> -->
                                     
                                     <i class="material-icons left" id="addItemCheck">check_box</i>
 
                                     <label for="addItemCheck" class="label-font">Scan item?</label>
                                 </p>
                                 <p v-else>
-                                    <!-- <input type="checkbox" id="addItemCheck" disabled @click="getNextNfcId(); showNFCStepper = true"/> -->
                                     <i class="material-icons left" id="addItemCheck" @click="getNextNfcId(); showNFCStepper = true">check_box_outline_blank</i>
                                     <label for="addItemCheck " class="label-font">Scan item?</label>
                                 </p>
@@ -290,8 +253,7 @@
                     </section>
 
                     <!-- Section edit items -->
-                    <!-- <transition-group name="fade"> -->
-                        <!-- animation working -->
+                   
                     <section id="sectionEditItems" v-show="sectionEditItems" key="editItems">
                      
                         <section id="showNFCStepperEdit" v-show="showNFCStepperEdit" class="nfc-stepper valign-wrapper" >
@@ -321,8 +283,7 @@
                              </ul>
   
                         </section>
-                      <!-- </transition-group> -->
-                          <!-- <h3 class="center-align">Create item</h3> -->
+                      
                           
                           <div class="container">
                             <div class="row mt-15">
@@ -386,7 +347,6 @@
                     
                     <section id="sectionPacks" v-show="sectionPacks">
                         <div class="col s12">
-                            <!-- <h3 class="center-align">All items <small>( {{userItems.length}} ) </small></h3> -->
                             <div class="col s12 break-2">
                                 <div class="fixed-action-btn horizontal click-to-toggle filter-btn">
                                     <a class="btn-floating" style="background-color:#bb8b03">
@@ -394,7 +354,6 @@
                                     </a>
                                     <ul>
                                         <li><a class="btn-floating white" @click="filterPackColor= 'all'">
-                                            <!-- <div class="transparent-filter"></div> -->
                                             <i class="material-icons" id="off-icon">visibility_off</i>
                                             <i class="material-icons"></i>
                                           </a></li>
@@ -422,52 +381,12 @@
                                   <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': pack.color  }">
                                     <i class="material-icons">work</i>
                                   </a> {{pack.name}} ({{ pack.amountOfItems }} items)
-                                  <!-- right -->
-                                  <!-- <a href="#!" class="secondary-content" @click="interactWithItem(item.id)">
-                                      
-                                  </a> -->
-                                   
                                   
                                 </div>
                               </li>
                             </div>
                             </ul>
                         </div>               
-
-
-                      
-                        <!-- <div class="col s12"> -->
-                            <!-- <h3 class="center-align">All packs <small>( {{userPacks.length}} )</small></h3> -->
-                            <!-- <div class="col s12 break"></div>
-                            <ul class="collection">
-                              <li class="collection-item" @click="navigate('sectionCreatePack')">
-                                  <div> 
-                                      <a href="#!" class="secondary-content item-list-icon">
-                                        <i class="material-icons">add</i>
-                                      </a> Add pack
-                                    </div>
-                              </li>
-                              <li v-for="pack in userPacks" class="collection-item">
-                                    <div class="fixed-action-btn item-btn pack-btn toolbar">
-                                        <a class="btn btn-change btn-slide btn-floating grey">
-                                            <i class="material-icons">more_vert</i>
-                                        </a>
-                                        <ul class="btn-slide-ul">
-                                          <li class="waves-effect waves-light  btn-change-li"><a href="#!"><i class="material-icons" @click="currentPackName = pack.name; currentPackId = pack.id; getPackItems(pack.id)">insert_link</i></a></li>
-                                          <li class="waves-effect waves-light  btn-change-li"><a href="#!"><i class="material-icons" @click="currentPackEdit = pack; navigate('sectionEditPack');">edit</i></a></li>
-                                          <li class="waves-effect waves-light   btn-change-li"><a href="#!"><i class="material-icons" @click="modalOpen = true">delete</i></a></li>
-                                        
-                                        </ul>
-                                      </div>
-                                <div> 
-                                  <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': pack.color  }">
-                                    <i class="material-icons">work</i>
-                                  </a> {{pack.name}}
-                                  <small> | xx items </small>
-                                </div>
-                              </li>
-                            </ul>
-                        </div>                  -->
                     </section>
 
                     <!-- section dashboard -->
@@ -484,24 +403,7 @@
                             </div>
                             <div class="card-content card-position">
                               
-                              <!-- <p> 2 Packs</p>
-                              <p>7 Items</p> -->
                             </div>
-                            <!-- <div class="card-reveal">
-                              <span class="card-title grey-text text-darken-4">Start packing<i class="material-icons right">close</i></span>
-                              <p>Choose the packs or items you would like to pack.</p>
-                              <br>
-                              <div class="row">
-                                <div class="col offset-s2 s8 center-align btn-large orange" @click="prepareForPacking();">
-                                  Add Packs
-                                </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col offset-s2 s8 center-align btn-large red" @click="modalOpen = true">
-                                    Clear backpack
-                                  </div>
-                              </div>
-                            </div> -->
                             <div class="row">
                               <div class="col offset-s1 s10 center-align btn-large secondary-color secondary-button" @click="navigate('sectionPacks'); startPacking = true;">
                                 Start Packing
@@ -509,80 +411,10 @@
                             </div>
                             <br>
                           </div>
-                      
-                        
                       </div>
                     </section>
 
-                    <!-- Section packing Item -->
-
-                    <!-- <section id="sectionPackingItem" v-if="sectionPackingItem">
-                       
-                      <div class="container">
-                          <div class="row mt-15">
-                              <i class="material-icons back-icon" @click="navigate('sectionDashboard')">arrow_back</i>
-                          </div>
-                        <div class="row">
-                          <div class="col offset-s1 s10 center-align">
-                            <h5>Add item to backpack</h5>
-                          </div>
-                        </div>
-                          
-                        </div>
-
-                        <ul class="collection pack-item">
-                            <div class="list-wrapper-packing">
-                          <li v-for="item in userItems" class="collection-item">
-                            <div> 
-                              <a href="#!" class="secondary-content item-list-icon">
-                                <i class="material-icons">filter</i>
-                              </a> {{item.name}}
-                              
-                              <a href="#!" class="secondary-content " @click="addToBackpack(item.id)">
-                                   
-                                    <i class="material-icons">send</i>
-      
-                              </a>
-                              
-                            </div>
-                          </li>
-                        </div>
-                        </ul>
-
-                    </section> -->
-
-                    <!-- Section packing Pack -->
-
-                    <!-- <section id="sectionPackingPack" v-if="sectionPackingPack">
-                      <div class="container">
-                          <div class="row mt-15">
-                              <i class="material-icons back-icon" @click="navigate('sectionDashboard')">arrow_back</i>
-                          </div>
-                        <div class="row">
-                          <div class="col offset-s1 s10 center-align">
-                            <h5>Add pack to backpack</h5>
-                          </div>
-                        </div>
-                          
-                        </div>
-
-                        <ul class="collection collection-packing">
-                            <div class="list-wrapper-packing">
-                          <li v-for="pack in userPacks" class="collection-item">
-                            <div> 
-                              <a href="#!" class="secondary-content item-list-icon">
-                                <i class="material-icons">filter</i>
-                              </a> {{pack.name}}
-                              <a href="#!" class="secondary-content " @click="addToBackpack(pack.id)">
-                                    <i class="material-icons">send</i>
-                              </a>
-                              
-                            </div>
-                          </li>
-                        </div>
-                        </ul>
-
-                    </section> -->
+                    
 
                     <!-- Section create pack -->
 
@@ -737,11 +569,6 @@
                             </div>
                           </ul>                    
                         </section>
-
-                  
-                   
-
-                        
             </v-app>
     </div>
 

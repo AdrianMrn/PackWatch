@@ -171,7 +171,9 @@ new Vue({
 
         currentAmountOfItems: 0,
 
-        newItemScanned:false
+        newItemScanned:false,
+
+        allPacked: false,
 
     },
     mounted() {
