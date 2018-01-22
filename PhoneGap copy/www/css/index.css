@@ -137,12 +137,17 @@ nav .nav-title{
 
 }
 #toast-container {
-    top:0;
+    
+    top: 0;
+    min-width: auto;
+    height: auto;
+    bottom: auto;
+    right: 0;
     
 }
 #toast-container .toast{
     margin:10px;
-    width:50%;
+    width:100%;
 }
 .back-icon{
     float:left;

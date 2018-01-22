@@ -596,7 +596,7 @@ new Vue({
              this.interactWithItem(response.data.id);
           } else {
              numberItems = this.userItems.length;
-             Materialize.toast('Item created', 1500,'toast-style');
+             Materialize.toast('Item created', 150000,'toast-style');
              this.navigate("sectionItems");
            }
         }).catch(error => {
