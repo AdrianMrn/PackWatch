@@ -289,11 +289,11 @@ new Vue({
           }
         }
         //alert(nfcTags);
+        Materialize.toast('Scanned item', 3500,'toast-style');
         for (var i = 0; i < nfcTags.length; i++)
         {
           if (nfcTags[i] && nfcTags[i] != NaN)
           {
-            Materialize.toast('Scanned item', 3500,'toast-style');
             for (var o = 0; o < this.currentPackItems.length; o++)
             {
               //Materialize.toast(typeof(this.currentPackItems[o].nfcId) + ": " + this.currentPackItems[o].nfcId + " " + typeof(nfcTags[i]) + ": " + nfcTags[i], 3500,'toast-style');
@@ -419,6 +419,7 @@ new Vue({
               'id': response.data.itemId,
               'name': response.data.itemName,
               'color': response.data.itemColor,
+              'nfcId': response.data.nfcId,
             });
             Materialize.toast('Item added to pack', 1500,'toast-style');
             this.navigate("sectionPackItems");
@@ -537,7 +538,7 @@ new Vue({
           Materialize.toast('Item updated', 1500,'toast-style');
           this.navigate("sectionItems");
         }).catch(error => {
-          Materialize.toast('Error item updating', 1500,'toast-style');
+          Materialize.toast('Error updating item', 1500,'toast-style');
           console.log(error);
         });
       },
