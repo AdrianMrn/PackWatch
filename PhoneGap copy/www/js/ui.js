@@ -422,6 +422,8 @@ new Vue({
               'nfcId': response.data.nfcId,
             });
             Materialize.toast('Item added to pack', 1500,'toast-style');
+            this.currentPackEdit.amountOfItems++;
+            this.currentAmountOfItems++;
             this.navigate("sectionPackItems");
           }).catch(error => {
             console.log(error);
@@ -443,6 +445,8 @@ new Vue({
             'Authorization': "Bearer " + window.localStorage.getItem("accestoken")}
         }).then(response => {
           console.log(response);
+          this.currentPackEdit.amountOfItems--;
+          this.currentAmountOfItems--;
           this.getPackItems(this.currentPackEdit.id);
         }).catch(error => {
           console.log(error);

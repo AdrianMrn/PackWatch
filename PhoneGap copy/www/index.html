@@ -158,7 +158,7 @@
                             </div>
 
                             <ul class="collection">
-                                <li class="collection-item dismissable" @click="navigate('sectionCreateItem')">
+                                <li class="collection-item" @click="navigate('sectionCreateItem')">
                                     <div  v-if="addingItemToPack"> 
                                         <a href="#!" class="secondary-content item-list-icon">
                                           <i class="material-icons">add</i>
@@ -173,7 +173,7 @@
                                      
                                 </li>
                                 <div class="list-wrapper">
-                              <li v-for="item in userItems" class="collection-item dismissable" v-show="item.color == filterItemColor || filterItemColor == 'all'" @click="selectColor = item.color; currentItemNameBack = item.name; currentItemEdit = item; interactWithItem(item.id); ">
+                              <li v-for="item in userItems" class="collection-item" v-show="item.color == filterItemColor || filterItemColor == 'all'" @click="selectColor = item.color; currentItemNameBack = item.name; currentItemEdit = item; interactWithItem(item.id); ">
                                   <!-- <div class="fixed-action-btn item-btn horizontal click-to-toggle" >
                                       <a class="btn-floating btn-change">
                                         <i class="material-icons" id="options">more_vert</i>
@@ -429,7 +429,7 @@
                             </div>
 
                             <ul class="collection collection-packing">
-                                <li class="collection-item dismissable" @click="navigate('sectionCreatePack')">
+                                <li class="collection-item" @click="navigate('sectionCreatePack')">
                                     <div> 
                                         <a href="#!" class="secondary-content item-list-icon">
                                           <i class="material-icons">add</i>
@@ -437,7 +437,7 @@
                                       </div>
                                 </li>
                                 <div class="list-wrapper">
-                                  <li v-for="pack in userPacks" v-show="pack.color == filterPackColor || filterPackColor == 'all'" class="collection-item dismissable" @click="getPackItems(pack.id); selectColor = pack.color; currentPackNameBack = pack.name; currentPackEdit = pack; interactWithPack(pack.amountOfItems);">
+                                  <li v-for="pack in userPacks" v-show="pack.color == filterPackColor || filterPackColor == 'all'" class="collection-item" @click="getPackItems(pack.id); selectColor = pack.color; currentPackNameBack = pack.name; currentPackEdit = pack; interactWithPack(pack.amountOfItems);">
                                   
                                 <div > 
                                   <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': pack.color  }">
@@ -461,14 +461,14 @@
                             <!-- <h3 class="center-align">All packs <small>( {{userPacks.length}} )</small></h3> -->
                             <!-- <div class="col s12 break"></div>
                             <ul class="collection">
-                              <li class="collection-item dismissable" @click="navigate('sectionCreatePack')">
+                              <li class="collection-item" @click="navigate('sectionCreatePack')">
                                   <div> 
                                       <a href="#!" class="secondary-content item-list-icon">
                                         <i class="material-icons">add</i>
                                       </a> Add pack
                                     </div>
                               </li>
-                              <li v-for="pack in userPacks" class="collection-item dismissable">
+                              <li v-for="pack in userPacks" class="collection-item">
                                     <div class="fixed-action-btn item-btn pack-btn toolbar">
                                         <a class="btn btn-change btn-slide btn-floating grey">
                                             <i class="material-icons">more_vert</i>
@@ -552,7 +552,7 @@
 
                         <ul class="collection pack-item">
                             <div class="list-wrapper-packing">
-                          <li v-for="item in userItems" class="collection-item dismissable">
+                          <li v-for="item in userItems" class="collection-item">
                             <div> 
                               <a href="#!" class="secondary-content item-list-icon">
                                 <i class="material-icons">filter</i>
@@ -588,7 +588,7 @@
 
                         <ul class="collection collection-packing">
                             <div class="list-wrapper-packing">
-                          <li v-for="pack in userPacks" class="collection-item dismissable">
+                          <li v-for="pack in userPacks" class="collection-item">
                             <div> 
                               <a href="#!" class="secondary-content item-list-icon">
                                 <i class="material-icons">filter</i>
@@ -704,7 +704,7 @@
                           </div>
     
                           <ul class="collection">
-                            <li class="collection-item dismissable" @click="navigate('sectionItems'); addingItemToPack = true;">
+                            <li class="collection-item" @click="navigate('sectionItems'); addingItemToPack = true;">
                               <div> 
                                 <a href="#!" class="secondary-content item-list-icon">
                                   <i class="material-icons">add</i>
@@ -712,7 +712,7 @@
                               </div>
                             </li>
                             <div class="list-wrapper">
-                              <li v-for="item in currentPackItems" class="collection-item dismissable">
+                              <li v-for="item in currentPackItems" class="collection-item">
                                 <div> 
                                   <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': item.color  }">
                                     <i class="material-icons">note</i>
@@ -743,7 +743,7 @@
     
                           <ul class="collection">
                             <div class="list-wrapper">
-                              <li v-for="item in currentPackItems" class="collection-item dismissable" @click="toggleItemInPack(item.id); navigate('sectionPackingPack');">
+                              <li v-for="item in currentPackItems" class="collection-item" @click="toggleItemInPack(item.id); navigate('sectionPackingPack');">
                                 <div v-if="Object.getOwnPropertyNames(itemsInPack).length > 0"> 
                                   <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': item.color  }">
                                     <i class="material-icons">note</i>

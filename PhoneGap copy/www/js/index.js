@@ -43,6 +43,10 @@ var app = {
         $('ul.tabs').tabs();
         $('select').material_select();
         
+        document.addEventListener("backbutton", onBackKeyDown, false);
+        function onBackKeyDown(e) {
+            e.preventDefault();
+        }
     },
     
     // Update DOM on a Received Event
