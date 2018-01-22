@@ -582,12 +582,13 @@ new Vue({
           console.log(response);
           this.userItems.push({
             name: this.itemName,
-            color:this.selectColor,
+            color:this.currentItemEdit.color,
             id: response.data.id,
             nfcId: nfcId,
           });
           this.itemName = "";
           this.selectColor = "";
+          this.currentItemEdit.color = "",
           this.errorMsg = '';
           this.nextNfcId = null;
 
