@@ -43,6 +43,10 @@ var app = {
         $('ul.tabs').tabs();
         $('select').material_select();
         
+        document.addEventListener("backbutton", onBackKeyDown, false);
+        function onBackKeyDown(e) {
+            e.preventDefault();
+        }
     },
     
     // Update DOM on a Received Event
@@ -106,7 +110,7 @@ function writeNFC(nfcMessage){
     //document.getElementById("NFCSuccess").click();
 
     var input_value = document.getElementById('nextnfcid').value;
-    input_value = parseInt(input_value) + 1;
+    input_value = parseInt(input_value);
     
     var message = [
         ndef.textRecord(input_value),
