@@ -618,3 +618,11 @@ ul.stepper .step.active {
       right:10px;
       top:10px;
   }
+  .callToAction{
+      width:180px;
+      background-color: #ad7c00;
+  }
+.collection-3{
+    height:67%;
+}
+  

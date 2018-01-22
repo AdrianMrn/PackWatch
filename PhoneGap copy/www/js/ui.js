@@ -231,6 +231,7 @@ new Vue({
             
             break;
           case "sectionEditItems":
+            this.getNextNfcId();
             this.sectionEditItems = true;
             this.sectionTitle =  this.currentItemEdit.name;
             break;
@@ -336,11 +337,6 @@ new Vue({
         } else {
           document.getElementById("nfcStartReading").click();
           this.startPacking = false;
-          for (var i = 0; i < this.currentPackItems.length; i++)
-          {
-            var key = this.currentPackItems[i].id;
-            this.itemsInPack[key] = false;
-          }
           this.navigate('sectionPackingPack');
         }
       },
@@ -351,9 +347,10 @@ new Vue({
         this.checkIfWeHaveEverything();
       },
       checkIfWeHaveEverything() {
+        console.log("checking");
         var amountOfItemsInItemsInPack = Object.keys(this.itemsInPack).length;
         var everything = true;
-
+        console.log("wtf:", amountOfItemsInItemsInPack);
         for (var property in this.itemsInPack) {
           if (this.itemsInPack.hasOwnProperty(property) && !this.itemsInPack[property])
           {
@@ -453,6 +450,7 @@ new Vue({
         });
       },
       getPackItems(id) {
+        this.currentPackItems = [];
         console.log("getting pack items");
         apiUrl = 'https://packwatch.dietervercammen.be/api/getpackitems?id=' + id;
         axios.get(apiUrl, {
@@ -462,6 +460,12 @@ new Vue({
         }).then(response => {
           console.log(response);
           this.currentPackItems = response.data;
+          this.itemsInPack = {};
+          for (var i = 0; i < this.currentPackItems.length; i++)
+          {
+            var key = this.currentPackItems[i].id;
+            this.itemsInPack[key] = false;
+          }
         }).catch(error => {
           console.log(error);
         })

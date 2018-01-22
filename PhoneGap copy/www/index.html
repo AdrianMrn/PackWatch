@@ -188,7 +188,7 @@
                                    <div class="step-content">
                                       <div class="row">
                                          <div class="col s12">
-                                           Hold the NFC tag near your phone!
+                                           Hold the NFC tag near your phone and press right!
                                          </div>
                                       </div>
                                       <div class="step-actions black-text">
@@ -515,9 +515,10 @@
                         <section id="sectionPackItems" v-show="sectionPackItems">
                           <div class="row mt-15">
                               <i class="material-icons back-icon" @click="navigate('sectionEditPack')">arrow_back</i>
+                              <button class="right btn callToAction" @click="prepareForPacking();">Start packing</button>
                           </div>
     
-                          <ul class="collection">
+                          <ul class="collection collection-3">
                             <li class="collection-item" @click="navigate('sectionItems'); addingItemToPack = true;">
                               <div> 
                                 <a href="#!" class="secondary-content item-list-icon">
