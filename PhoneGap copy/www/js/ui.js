@@ -267,14 +267,36 @@ new Vue({
             break;
         }
         //stop reading nfc tag
-        //document.getElementById("nfcStopReading").click();
+        if (url != "sectionPackingPack")
+        {
+          document.getElementById("nfcStopReading").click();
+        }
       },
       nfcCheck() {
         console.log("checking nfc");
         var nfcReadTag = document.getElementById('nfcReadTag').value;
 
-        Materialize.toast(nfcReadTag, 1500,'toast-style');
-        //alert(nfcReadTag);
+        nfcReadTag = nfcReadTag.replace('en','');
+        var nfcTags = nfcReadTag.split(",");
+        //alert(nfcTags);
+        for (var i = 0; i < nfcTags.length; i++)
+        {
+          if (nfcTags[i])
+          {
+            Materialize.toast('Scanned item: ' + nfcTags[i], 1500,'toast-style');
+            for (var o = 0; o < this.currentPackItems.length; o++)
+            {
+              Materialize.toast('o: ' + o + ": " + parseInt(this.currentPackItems[o].nfcId) + parseInt(nfcTags[i]), 1500,'toast-style');
+              if (parseInt(this.currentPackItems[o].nfcId) == parseInt(nfcTags[i]))
+              {
+                Materialize.toast('got in', 1500,'toast-style');
+                //console.log(this.currentPackItems[o].id);
+                this.itemsInPack[this.currentPackItems[o].id] = true;
+              }
+            }
+          }
+        }
+        this.navigate('sectionPackingPack');
       },
       getNextNfcId() {
         apiUrl = 'https://packwatch.dietervercammen.be/api/get-next-nfc-id';

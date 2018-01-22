@@ -67,7 +67,7 @@ function readNFC(nfcEvent){
         // dump the raw json of the message
         // note: real code will need to decode
         // the payload from each record
-        alert(JSON.stringify(ndefMessage));
+        //alert(JSON.stringify(ndefMessage));
 
         navigator.vibrate(500);
         
@@ -76,11 +76,11 @@ function readNFC(nfcEvent){
         // a payload that can be converted to a string.
         var message = nfc.bytesToString(ndefMessage[0].payload);
         
-        alert( message.substring(3) );
+        //alert( message.substring(3) );
 
-        /* $("#nfcReadTag").val(message.substring(2));
+        $("#nfcReadTag").val(message);
 
-        document.getElementById("nfcCheck").click(); */
+        document.getElementById("nfcCheck").click();
 
         /* future todo:
             - write message to hidden form input
@@ -106,7 +106,7 @@ function writeNFC(nfcMessage){
     
     nfc.write(message, function () { // success callback
         navigator.vibrate(500);
-        alert("Write succesfull " + JSON.stringify(message[0]));
+        alert("Write succesfull "/*  + JSON.stringify(message[0]) */);
 
         document.getElementById("NFCSuccess").click();
         
@@ -131,7 +131,7 @@ function writeNFC(nfcMessage){
     });
 }
 function readTag() {
-    alert('Tag gaat gelezen worden')
+    //alert('Tag gaat gelezen worden')
     // Read NDEF formatted NFC Tags
     nfc.addNdefListener (
         readNFC
@@ -148,7 +148,7 @@ function readTag() {
 
 function dontReadTag() {
 
-    alert('Tag gaat niet meer gelezen worden');
+    //alert('Tag gaat niet meer gelezen worden');
     nfc.removeNdefListener(
         readNFC
         ,
