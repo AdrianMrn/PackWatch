@@ -571,3 +571,6 @@ ul.stepper .step.active {
     position: absolute;
     left: 20px;
   }
+  #off-icon {
+      color:black !important;
+  }
