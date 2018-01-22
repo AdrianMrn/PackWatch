@@ -74,9 +74,17 @@ function readNFC(nfcEvent){
 
         // assuming the first record in the message has
         // a payload that can be converted to a string.
-        var message = nfc.bytesToString(ndefMessage[0].payload);
-        
-        //alert( message.substring(3) );
+        //var message = nfc.bytesToString(ndefMessage[0].payload.slice(3));
+        for (var i = 0; i < ndefMessage[0].payload.length; i++)
+        {
+            if (ndefMessage[0].payload[i] == 2) {
+                ndefMessage[0].payload.splice([i], 1);
+            }
+        }
+
+        var message = String.fromCharCode.apply(null, ndefMessage[0].payload);
+
+        //alert(message);
 
         $("#nfcReadTag").val(message);
 
