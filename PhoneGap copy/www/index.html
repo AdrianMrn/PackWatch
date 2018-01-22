@@ -146,7 +146,7 @@
                             </div>
 
                             <ul class="collection">
-                                <li class="collection-item" @click="navigate('sectionCreateItem')">
+                                <li class="collection-item" @click="getNextNfcId(); navigate('sectionCreateItem')">
                                     <div  v-if="addingItemToPack"> 
                                         <a href="#!" class="secondary-content item-list-icon">
                                           <i class="material-icons">add</i>
