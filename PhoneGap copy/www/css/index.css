@@ -73,6 +73,7 @@ nav .nav-title{
      height:56px;
  }
  .tabs {
+    z-index: 100001009;
     position: absolute;
     bottom: 0;
     border-top:1px solid #ee6d72;
