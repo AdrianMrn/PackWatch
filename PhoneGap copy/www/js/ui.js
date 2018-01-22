@@ -309,6 +309,7 @@ new Vue({
           }
         }
         this.navigate('sectionPackingPack');
+        this.checkIfWeHaveEverything();
       },
       getNextNfcId() {
         apiUrl = 'https://packwatch.dietervercammen.be/api/get-next-nfc-id';
@@ -346,6 +347,7 @@ new Vue({
         $('#modal2').modal('open');
       },
       prepareForPacking() {
+        console.log("preparing for packing");
         if (!this.currentAmountOfItems) {
           Materialize.toast('This pack is empty', 1500,'toast-style');
         } else {
@@ -360,13 +362,26 @@ new Vue({
         }
       },
       toggleItemInPack(id) {
+        console.log(this.currentPackItems.length);
         this.itemsInPack[id] ? this.itemsInPack[id] = false:this.itemsInPack[id] = true;
-        console.log(this.itemsInPack[id]);
+        //console.log(this.itemsInPack[id]);
+        this.checkIfWeHaveEverything();
       },
-      itemsScanned(ndefString) {
-        //afzonderlijke id's maken van string
-        //per id API call maken naar back-end om item id op te vragen (moet nog geschreven worden in back end)
-        //antwoorden van API call (item_id) in itemsInPack[] op true zetten
+      checkIfWeHaveEverything() {
+        var amountOfItemsInItemsInPack = Object.keys(this.itemsInPack).length;
+        var everything = true;
+
+        for (var property in this.itemsInPack) {
+          if (this.itemsInPack.hasOwnProperty(property) && !this.itemsInPack[property])
+          {
+            everything = false;
+          }
+        }
+
+        if (everything && amountOfItemsInItemsInPack == this.currentPackItems.length)
+        {
+          this.allPacked = true;
+        }
       },
       refreshUserItems() {
         apiUrl = 'https://packwatch.dietervercammen.be/api/getuseritems';
@@ -455,6 +470,7 @@ new Vue({
         });
       },
       getPackItems(id) {
+        console.log("getting pack items");
         apiUrl = 'https://packwatch.dietervercammen.be/api/getpackitems?id=' + id;
         axios.get(apiUrl, {
           headers: {
