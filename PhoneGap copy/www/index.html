@@ -441,7 +441,7 @@
                                   
                                 <div > 
                                   <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': pack.color  }">
-                                    <i class="material-icons">folder</i>
+                                    <i class="material-icons">work</i>
                                   </a> {{pack.name}} ({{ pack.amountOfItems }} items)
                                   <!-- right -->
                                   <!-- <a href="#!" class="secondary-content" @click="interactWithItem(item.id)">
@@ -715,7 +715,7 @@
                               <li v-for="item in currentPackItems" class="collection-item dismissable">
                                 <div> 
                                   <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': item.color  }">
-                                    <i class="material-icons">filter</i>
+                                    <i class="material-icons">note</i>
                                   </a> {{item.name}} 
                                   <!-- right -->
                                   <a href="#!" class="secondary-content" @click="unlinkItemFromPack(item.id)">
@@ -746,7 +746,7 @@
                               <li v-for="item in currentPackItems" class="collection-item dismissable" @click="toggleItemInPack(item.id); navigate('sectionPackingPack');">
                                 <div v-if="Object.getOwnPropertyNames(itemsInPack).length > 0"> 
                                   <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': item.color  }">
-                                    <i class="material-icons">filter</i>
+                                    <i class="material-icons">note</i>
                                   </a> {{item.name}}
                                   <!-- right -->
                                     <i v-if="itemsInPack[item.id]" class="material-icons right green-text">check</i>
