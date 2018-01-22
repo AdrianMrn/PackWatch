@@ -277,19 +277,29 @@ new Vue({
         var nfcReadTag = document.getElementById('nfcReadTag').value;
 
         nfcReadTag = nfcReadTag.replace('en','');
+        nfcReadTag = nfcReadTag.replace(' ','');
         var nfcTags = nfcReadTag.split(",");
+        for (var i = 0; i < nfcTags.length; i++)
+        {
+          try {
+            nfcTags[i] = parseInt(nfcTags[i]);
+          }
+          catch (err) {
+            console.log(err);
+          }
+        }
         //alert(nfcTags);
         for (var i = 0; i < nfcTags.length; i++)
         {
-          if (nfcTags[i])
+          if (nfcTags[i] && nfcTags[i] != NaN)
           {
-            Materialize.toast('Scanned item: ' + nfcTags[i], 1500,'toast-style');
+            Materialize.toast('Scanned item', 3500,'toast-style');
             for (var o = 0; o < this.currentPackItems.length; o++)
             {
-              Materialize.toast('o: ' + o + ": " + parseInt(this.currentPackItems[o].nfcId) + parseInt(nfcTags[i]), 1500,'toast-style');
-              if (parseInt(this.currentPackItems[o].nfcId) == parseInt(nfcTags[i]))
+              //Materialize.toast(typeof(this.currentPackItems[o].nfcId) + ": " + this.currentPackItems[o].nfcId + " " + typeof(nfcTags[i]) + ": " + nfcTags[i], 3500,'toast-style');
+              if (this.currentPackItems[o].nfcId.toString() == nfcTags[i])
               {
-                Materialize.toast('got in', 1500,'toast-style');
+                //Materialize.toast('!!got in!!', 3500,'toast-style');
                 //console.log(this.currentPackItems[o].id);
                 this.itemsInPack[this.currentPackItems[o].id] = true;
               }
@@ -398,6 +408,7 @@ new Vue({
           })
       },
       interactWithItem(id) {
+        console.log("logging: " + id);
         if (this.addingItemToPack) {
           for (var i = 0; i < this.currentPackItems.length; i++) {
             if (id == this.currentPackItems[i].id) {
