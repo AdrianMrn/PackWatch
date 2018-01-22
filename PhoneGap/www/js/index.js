@@ -16,6 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+      
 var app = {
     // Application Constructor
     initialize: function() {
@@ -36,8 +38,15 @@ var app = {
         app.receivedEvent('deviceready');
         document.getElementById("start").addEventListener("click", readTag, false);
         document.getElementById("stop").addEventListener("click", dontReadTag, false);
-        document.getElementById("write").addEventListener("click", writeNFC, true);
+        addEventListener("click", writeNFC, true);
+        $('.collapsible').collapsible();
+        $('ul.tabs').tabs();
+        $('select').material_select();
         
+        document.addEventListener("backbutton", onBackKeyDown, false);
+        function onBackKeyDown(e) {
+            e.preventDefault();
+        }
     },
     
     // Update DOM on a Received Event
@@ -62,40 +71,79 @@ function readNFC(nfcEvent){
         // dump the raw json of the message
         // note: real code will need to decode
         // the payload from each record
-        // alert(JSON.stringify(ndefMessage));
+        //alert(JSON.stringify(ndefMessage));
 
         navigator.vibrate(500);
         
 
         // assuming the first record in the message has
         // a payload that can be converted to a string.
-        var message = nfc.bytesToString(ndefMessage[0].payload);
-        
-        alert( message.substring(3) );
+        //var message = nfc.bytesToString(ndefMessage[0].payload.slice(3));
+        for (var i = 0; i < ndefMessage[0].payload.length; i++)
+        {
+            if (ndefMessage[0].payload[i] == 2) {
+                ndefMessage[0].payload.splice([i], 1);
+            }
+        }
+
+        var message = String.fromCharCode.apply(null, ndefMessage[0].payload);
+
+        //alert(message);
+
+        $("#nfcReadTag").val(message);
+
+        document.getElementById("nfcCheck").click();
+
+        /* future todo:
+            - write message to hidden form input
+            - click hidden button to notify vue to get the item.id where item.nfcId == nfcid that was read
+            - set itemsInPack[item.id] to true if this item was scanned
+        */
     
 }
 
 function writeNFC(nfcMessage){
     //alert("Gelieve de NFC tag tegen de gsm te houden aub");
     //var input_value = document.getElementById('input_message').value;
-    var input_value = nfcMessage;
-    console.log(nfcMessage);
+    //console.log(nfcMessage);
+
+    //document.getElementById("NFCSuccess").click();
+
+    var input_value = document.getElementById('nextnfcid').value;
+    input_value = parseInt(input_value);
+    
     var message = [
         ndef.textRecord(input_value),
     ];
     
     nfc.write(message, function () { // success callback
         navigator.vibrate(500);
-        alert("Write succesfull " + message[0]);
+        alert("Write succesful "/*  + JSON.stringify(message[0]) */);
+
+        document.getElementById("NFCSuccess").click();
+        
+        $("#NFCSuccess").trigger("click");
+        $("#NFCSuccess").click(function() {
+            //alert( "Handler for .click() called." );
+          });
+
+        
     },
     function (error) { // error callback
         navigator.vibrate([100, 100, 300]);
-        alert("Error writing: " + message[0] + JSON.stringify(error));
+        /* alert("Error writing: " + message[0] + JSON.stringify(error)); */
 
+        /* document.getElementById("NFCFail").click();
+       
+        $("#NFCFail").trigger("click");
+        $("#NFCFail").click(function() {
+           // alert( "Handler for .click() called." );
+          }); */
+       
     });
 }
 function readTag() {
-    alert('Tag gaat gelezen worden')
+    //alert('Tag gaat gelezen worden')
     // Read NDEF formatted NFC Tags
     nfc.addNdefListener (
         readNFC
@@ -112,7 +160,7 @@ function readTag() {
 
 function dontReadTag() {
 
-    alert('Tag gaat niet meer gelezen worden');
+    //alert('Tag gaat niet meer gelezen worden');
     nfc.removeNdefListener(
         readNFC
         ,

@@ -28,10 +28,10 @@
     <allow-navigation href="cdvfile:*" />
     <name>Packwatch</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Never forget your X again
     </description>
     <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+        Dieter en Adriaan
     </author>
     <content src="index.html" />
     <gap:plugin name="phonegap-nfc" source="npm" />
@@ -64,4 +64,5 @@
     <preference name="loglevel" value="DEBUG" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
+    <preference name="orientation" value="portrait" />
 </widget>

@@ -26,6 +26,7 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
     <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
     <!-- Good default declaration:
@@ -37,13 +38,12 @@
     * Create your own at http://cspisawesome.com
     -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
-    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="css/materialize-stepper.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Cabin|Lato" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
 
-    <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
     <title>PackWatch</title>
 </head>
 <style>
@@ -59,294 +59,540 @@
         background-color:#f78080;
     }
 </style>
-
-<body>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    $('select').material_select(); 
+}, false);
+</script>
+<body onload="$('.collapsible').collapsible();$('.button-collapse').sideNav(); $('.carousel.carousel-slider').carousel({fullWidth: true});$('.modal').modal();$('.stepper').activateStepper({autoFormCreation: false});">
+   
+      
     <div id="app" class="app">
-            <v-app>
-                    <v-toolbar :active.sync="e2" :color="computedColor">
-                     
-                      <a href="register.html"> <v-icon>assistant</v-icon></a>
-                      <v-toolbar-title class="white--text">Packwatch</v-toolbar-title>
-                      <!-- <v-toolbar-title class="subheading black--text ">{{ e1 }}</v-toolbar-title> -->
-                      <v-spacer></v-spacer>
+        <div class="allpacked" v-show="allPacked">
+          <img class="allpackedimage" src="img/success.png" alt="">
+          <i class="material-icons white-text allpackedclose" @click="allPacked = false; navigate('sectionDashboard')">close</i>
+
+        </div>
+        
+          <modal  @delete="deleteItem(deleteId);">
+              <template slot="header"> Are you sure?</template>
+              <template></template>
+            </modal>
+            <modal2 @delete="deletePack(deleteId); ">
+                <template slot="header"> Are you sure?</template>
+                <template></template>
+              </modal2>
+      
+        <ul id="tabs-swipe-demo" class="tabs">
+            <li class="tab col s3" @click="navigate('sectionItems');">
+              <a href="#Items" class="text-primary">Items</a>
+            </li>
+            <li class="tab col s3">
+                <a class="active" href="#dashboard" @click="navigate('sectionDashboard');">
+                    <i aria-hidden="true" class="material-icons icon text-primary">view_comfy</i>
+                </a>
+            </li>
+            <li class="tab col s3" @click="navigate('sectionPacks');">
+              <a href="#packs" class="text-primary">Packs</a>
+            </li>
+        </ul>
+        
+              <nav>
+                  <div class="nav-wrapper main-color">
+                    <a href="#!" class="brand-logo truncate">{{sectionTitle}}</a>
+                    <a href="#!" class="brand-logo truncate right"><img src="img/logo.png" class="nav-image" alt=""></a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                      <li> &nbsp;</li>
+                      <li><a><b>Menu</b></a></li>
+                      <li><a href="#">{{email}}</a></li>
+                      <li @click="logout()"><a href="#">Logout</a></li>
                       
-                        <v-menu offset-y>
-                          <v-btn icon slot="activator">
-                            <v-icon>more_vert</v-icon>
-                          </v-btn>
-                          <v-list>
-                            <v-list-tile v-for="settings_item in settings_items" :key="settings_item.title" @click="">
-                              <v-list-tile-title>{{ settings_item.title }}</v-list-tile-title>
-                            </v-list-tile>
-                          </v-list>
-                        </v-menu>
-                    </v-toolbar>
+                    </ul>
+                    <ul class="side-nav" id="mobile-demo">
+                      <li>&nbsp;</li>
+                      <li><a><b>Menu</b></a></li>
+                      <li><a href="#">{{email}}</a></li>
+                      <li @click="logout()"><a href="#">Logout</a></li>
+                      
+                    </ul>
+                  </div>
+                </nav>
+               
+                <!-- Section Items -->
 
-                    <toast v-if="showToast" v-model='snackbar'>Ik ben een toast</toast>
-                    <!--  -->
-                    <section id="sectionItems" v-if="sectionItems">
-                    <v-layout row>
-                        <v-flex lg12  offset-lg3>
-                          <v-card>
-                            <h2 class="text-xs-center pa-2">Items</h2>
-                            <v-divider></v-divider>
-                            <v-list>
-                              <v-list-tile avatar @click="navigate('sectionCreateItem');">
-                                <v-list-tile-content>
-                                  <v-list-tile-title><strong>New Item</strong></v-list-tile-title>
-                                </v-list-tile-content>
-                              </v-list-tile>
-                              <v-divider></v-divider>
-                                
-                              <div v-for="item in userItems">
-                                <v-list-tile avatar @click="interactWithItem(item.id)">
-                                    <v-list-tile-content>
-                                      <v-list-tile-title v-text="item.name"></v-list-tile-title>
-                                    </v-list-tile-content>
-                                  <v-list-tile-avatar>
-                                    <v-icon color="red" @click="deleteItem(item.id)">delete_forever</v-icon><!-- todo: remove from this pack (unlink) -->
-                                  </v-list-tile-avatar>
-                                  <v-list-tile-avatar>
-                                      <v-icon color="blue" @click="navigate('sectionEditItems')">create</v-icon><!-- todo: remove from this pack (unlink) -->
-                                    </v-list-tile-avatar>
-                                </v-list-tile>
-                                <v-divider></v-divider>
-                              </div>
-
-                            </v-list>
-                          </v-card>
-                          
-                        </v-flex>
-                        
-                      </v-layout>                      
-                    </section>
-
-                    <section id="sectionEditItems" v-if="sectionEditItems">
-                        <v-layout row>
-                            <v-flex lg12  offset-lg3>
-                              <v-card>
-                                  <h2 class="text-xs-center pa-2">Edit item</h2>
-                                  <v-list-tile-avatar>
-                                      <v-icon color="blue" @click="updateItem(item.id)">create</v-icon><!-- todo: remove from this pack (unlink) -->
-                                    </v-list-tile-avatar>
-                              </v-card>
-                            </v-flex>
-                            
-                          </v-layout>                      
-                        </section>
-                        <!--  -->
-                    <!--  -->
-                    
-                    <section id="sectionPacks" v-if="sectionPacks">
-                    <v-layout row >
-                      <v-flex xs12>  
-                          <v-card>
-                            <h2 class="text-xs-center pa-2">Packs</h2>
-                            <v-divider></v-divider>
-                            <div class="packs-wrapper">
-                            <div class="mt-5 test">
-                                <v-btn fab dark color="indigo" right  fixed  @click="navigate('sectionCreatePack');">
-                                    <v-icon dark>add</v-icon>
-                                </v-btn>
+                    <section id="sectionItems" v-show="sectionItems">
+                      
+                        <div class="col s12">
+                            <!-- <h3 class="center-align">All items <small>( {{userItems.length}} ) </small></h3> -->
+                            <div class="col s12 break-2">
+                                <div class="fixed-action-btn horizontal click-to-toggle filter-btn">
+                                    <a class="btn-floating" style="background-color:#bb8b03">
+                                      <i class="material-icons">visibility</i>
+                                    </a>
+                                    <ul>
+                                      <li><a class="btn-floating white" @click="filterItemColor= 'all'">
+                                        <!-- <div class="transparent-filter"></div> -->
+                                        <i class="material-icons" id="off-icon">visibility_off</i>
+                                        <i class="material-icons"></i>
+                                      </a></li>
+                                      <li><a class="btn-floating red" @click="filterItemColor= 'red'"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating orange" @click="filterItemColor= 'orange'"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating yellow" @click="filterItemColor= 'yellow'"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating green" @click="filterItemColor= 'green'"><i class="material-icons"></i></a></li>
+                                      <li><a class="btn-floating blue" @click="filterItemColor= 'blue'"><i class="material-icons"></i></a></li>
+                                    </ul>
+                                  </div>
                             </div>
-                            <v-list>
-                              <!-- <v-list-tile avatar @click="navigate('sectionCreatePack');">
-                                <v-list-tile-content>
-                                  <v-list-tile-title><strong>New Pack</strong></v-list-tile-title>
-                                </v-list-tile-content>
-                              </v-list-tile> -->
-                             
-                              <v-divider></v-divider>
 
-                              <div v-for="pack in userPacks">
-                                <v-list-tile avatar @click="">
-                                    <v-list-tile-content @click="currentPackName = pack.name; currentPackId = pack.id; getPackItems(pack.id)">
-                                      <v-list-tile-title v-text="pack.name"></v-list-tile-title>
-                                    </v-list-tile-content>
-                                  <v-list-tile-avatar>
-                                    <v-icon color="red" @click="favorite(true, pack.id)">delete_forever</v-icon>
-                                  </v-list-tile-avatar>
-                                </v-list-tile>
-                                <v-divider></v-divider>
-                              </div>
+                            <ul class="collection">
+                                <li class="collection-item" @click="getNextNfcId(); navigate('sectionCreateItem')">
+                                    <div  v-if="addingItemToPack"> 
+                                        <a href="#!" class="secondary-content item-list-icon">
+                                          <i class="material-icons">add</i>
+                                        </a> Add new item to pack
+                                      </div>
+                                      <div  v-else> 
+                                          <a href="#!" class="secondary-content item-list-icon">
+                                            <i class="material-icons">add</i>
+                                          </a> Add item
+                                        </div>
 
-                            </v-list>
-                          </div>
-                          </v-card>
-                          
-                        </v-flex>
-                        
-                      </v-layout>
-                      
-                     
-                      
+                                     
+                                </li>
+                                <div class="list-wrapper">
+                              <li v-for="item in userItems" class="collection-item" v-show="item.color == filterItemColor || filterItemColor == 'all'" @click="selectColor = item.color; currentItemNameBack = item.name; currentItemEdit = item; interactWithItem(item.id); ">
+                                 
+                                <div > 
+                                  <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': item.color  }">
+                                    <i class="material-icons">note</i>
+                                  </a> {{item.name}} <i v-if="item.nfcId" class="material-icons right">nfc</i>
+                                 
+                                </div>
+                              </li>
+                            </div>
+                            </ul>
+                        </div>                    
                     </section>
-                  
-                    <!-- end section 1 -->
-                    <section id="sectionCreateItem" v-if="sectionCreateItem" >
-                        <v-container>
-                        <template>
-                            <h2 class="text-xs-center pa-2">Create Item</h2>
-                            <v-divider></v-divider>
-                            <v-form v-model="valid" ref="form" lazy-validation>
-                              <v-text-field
-                                label="Name"
-                                v-model="itemName"
-                                :rules="nameRules"
-                                required
-                              ></v-text-field>
-                              <!-- <v-text-field
-                                label="E-mail"
-                                v-model="email"
-                                :rules="emailRules"
-                                required
-                              ></v-text-field> -->
-                              <v-select
-                                label="Color"
-                                v-model="selectColor"
-                                :items="colors"
-                                
-                                required
-                              ></v-select>
-                              <v-checkbox
-                                label="Scan item"
-                                v-model="showNFCStepper"
-                              ></v-checkbox>
-                              <v-stepper v-model="nfcScan" v-if="showNFCStepper">
-                                <v-stepper-header>
-                                  <v-stepper-step step="1" :complete="nfcScan > 1">Name of step 1</v-stepper-step>
-                                  <v-divider></v-divider>
-                                  <v-stepper-step step="2" :complete="nfcScan > 2">Name of step 2</v-stepper-step>
-                                </v-stepper-header>
-                                <v-stepper-items>
-                                  <v-stepper-content step="1">
-                                    <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-                                    <v-btn color="primary" @click.native="nfcScan = 2" onclick="NFCTimestamp=Math.round((new Date()).getTime() / 1000); writeNFC(NFCTimestamp)">Continue</v-btn>
-                                   
-                                  </v-stepper-content>
-                                  <v-stepper-content step="2">
-                                    <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-                                    <v-btn flat @click.native="nfcScan = 1">Cancel</v-btn>
-                                  </v-stepper-content>
-                                  
-                                </v-stepper-items>
-                              </v-stepper>
-                          
-                              <v-btn
-                              @click="createItem()"
-                                :disabled="!valid"
-                              >
-                                Create Item
-                              </v-btn>
-                            </v-form>
-                          </template>
-                        </v-container>
 
-                      </section>
-                      <!-- end section 2 -->
-                      
-                      <section id="sectionCreatePack" v-if="sectionCreatePack">
-                          <v-container >
-                          <template>
-                              <h2 class="text-xs-center pa-2">Create a Pack</h2>
-                              <v-divider></v-divider>
-                              <v-form v-model="valid" ref="form" lazy-validation>
-                                <v-text-field
-                                  label="Name"
-                                  v-model="packName"
-                                  :rules="nameRules"
-                                  required
-                                ></v-text-field>
-                                <v-select
-                                  label="Color"
-                                  v-model="selectColor"
-                                  :items="colors"
-                                  required
-                                ></v-select>
+                    <!-- Section create item -->
+
+                    <section id="sectionCreateItem" v-show="sectionCreateItem" >
+                        <section id="showNFCStepper" v-show="showNFCStepper" class="nfc-stepper valign-wrapper" >
+                            <ul class="stepper horizontal black-text" style="
+                            width:100%;
+                            padding-left: 30px;
+                            background: white;">
+                                <li class="step active ">
+                                   <div class="step-title waves-effect">Write tag</div>
+                                   <div class="step-content">
+                                      <div class="row">
+                                         <div class="col s12">
+                                           Hold the NFC tag near your phone and press write!
+                                         </div>
+                                      </div>
+                                      <div class="step-actions black-text">
+                                        
+                                         <button v-if="nextNfcId" class="waves-effect waves-dark btn blue" style="width:100%" onclick="writeNFC()">Write now</button>
+                                         <button v-else class="waves-effect waves-dark btn next-step blue" style="width:100%" disabled>Loading NFC...</button>
+                                         <button class="waves-effect waves-dark btn-flat previous-step red white-text" style="width:100%" @click="showNFCStepper = false; newItemScanned = false" >CANCEL</button>
+                                         <button style="display: none" id="NFCFail" @click="writeFalse = true; writeSuccess = false">fail</button>
+                                         <button style="display: none" id="NFCSuccess" @click="writeSuccess = true; writeFalse = false; showNFCStepper = false; newItemScanned = true" >success</button>
+                                      </div>
+                                   </div>
+                                </li>
+                             </ul>
+  
+                        </section>
+                        
+                        <!-- <h3 class="center-align">Create item</h3> -->
+                        
+                        <div class="container">
+                          <div class="row mt-15">
+                            <i class="material-icons back-icon" @click="navigate('sectionItems')">arrow_back</i>
+                          </div>
+                          <form v-on:submit.prevent="createItem">
+                            <div class="input-field item">
+                                    <input id="last_name" type="text" class="validate" 
+                                    v-model="itemName"
+                                    :rules="nameRules"
+                                    required maxlength="15">
+                                    <label for="last_name">Name</label>
+                            </div>
+                           
+                            <label for="">Color</label>
+                            <div  class="dropdown-color">
+                            <select v-model="currentItemEdit.color" required class="browser-default">
+                                <option value="" disabled selected class="black-text">Choose your option</option>
+                                <option value="red">Red</option>
+                                <option value="orange">Orange</option>
+                                <option value="yellow">Yellow</option>
+                                <option value="green">Green</option>
+                                <option value="blue">Blue</option>
+                              </select>
+                            </div>
+                              
+                            <div class="col mt-15">
+                                <p v-if="newItemScanned">
+                                    
+                                    <i class="material-icons left" id="addItemCheck">check_box</i>
+
+                                    <label for="addItemCheck" class="label-font">Scan item?</label>
+                                </p>
+                                <p v-else>
+                                    <i class="material-icons left" id="addItemCheck" @click="getNextNfcId(); showNFCStepper = true">check_box_outline_blank</i>
+                                    <label for="addItemCheck " class="label-font">Scan item?</label>
+                                </p>
+                            </div>
+                            <div class="col mt-15">
+                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Add item
+                                    <i class="material-icons left btn-icon">add_box</i>
+                                </button>
+                            </div>
+                          </form>
                             
-                                <v-btn
-                                @click="createPack()"
-                                  :disabled="!valid"
-                                >
-                                  Create Pack
-                                </v-btn>
-                              </v-form>
-                            </template>
-                          </v-container>
+                        </div>
+                    </section>
+
+                    <!-- Section edit items -->
+                   
+                    <section id="sectionEditItems" v-show="sectionEditItems" key="editItems">
+                     
+                        <section id="showNFCStepperEdit" v-show="showNFCStepperEdit" class="nfc-stepper valign-wrapper" >
+                            <ul class="stepper horizontal black-text" style="
+                            width:100%;
+                            padding-left: 30px;
+                            background: white;">
+                                <li class="step active ">
+                                   <div class="step-title waves-effect">Write tag</div>
+                                   <div class="step-content">
+                                      <div class="row">
+                                         <div class="col s12">
+                                           Hold the NFC tag near your phone!
+                                         </div>
+                                      </div>
+                                      <div class="step-actions black-text">
+                                        
+                                         <button v-if="nextNfcId" class="waves-effect waves-dark btn  blue" style="width:100%" onclick="writeNFC()">WRITE TAG</button>
+                                         <button v-else class="waves-effect waves-dark btn next-step blue" style="width:100%" disabled>Loading NFC...</button>
+                                         <button class="waves-effect waves-dark btn-flat previous-step red white-text" style="width:100%" @click="showNFCStepperEdit = false;" >CANCEL</button>
+                                         <button style="display: none" id="NFCFail" @click="writeFalse = true; writeSuccess = false">fail</button>
+                                         <button style="display: none" id="NFCSuccess" @click="writeSuccess = true; writeFalse = false" >success</button>
+                                      </div>
+                                   </div>
+                                </li>
+                                
+                             </ul>
   
                         </section>
                       
-
-                        <section id="sectionEditPack" v-if="sectionEditPack">
-                            <v-container>
-                            <template>
-                                <h2 class="text-xs-center pa-2">{{ currentPackName }}</h2>
-                                <v-divider></v-divider>
-                                
-                                  <v-list>
-                                    <v-list-tile avatar @click="addingItemToPack=true; navigate('sectionItems');">
-                                      <!-- todo: add 'plus' avatar -->
-                                      <v-list-tile-content>
-                                        <v-list-tile-title><strong>Add Item</strong></v-list-tile-title>
-                                      </v-list-tile-content>
-                                    </v-list-tile>
-                                    <v-divider></v-divider>
+                          
+                          <div class="container">
+                            <div class="row mt-15">
+                              <i class="material-icons back-icon" @click="currentItemEdit.name = currentItemNameBack ;navigate('sectionItems')">arrow_back</i>
+                              <a class="btn-floating btn-change-li delete-color right"><i class="material-icons " @click="deleteId = currentItemEdit.id; openModalItem()">delete</i></a>
+                            </div>
+                            <form v-on:submit.prevent="updateItem">
+                              <div class="input-field item">
+                                  <label for="last_name" class="active" style="-webkit-transform: translateY(-14px) scale(0.8);
+                                  transform: translateY(-14px) scale(0.8);
+                                  -webkit-transform-origin: 0 0;
+                                  transform-origin: 0 0;
+                                  color:black">Name</label>
+                                      <input id="last_name" type="text" class="validate" 
+                                      v-model="currentItemEdit.name"
+                                      :rules="nameRules"
+                                      required maxlength="15" minlength="1">
                                       
-                                    <div v-for="item in currentPackItems">
-                                      <v-list-tile avatar @click="">
-                                          <v-list-tile-content>
-                                            <v-list-tile-title v-text="item.name"></v-list-tile-title>
-                                          </v-list-tile-content>
-                                        <v-list-tile-avatar>
-                                          <v-icon color="red" @click="unlinkItemFromPack(item.id)">delete_forever</v-icon>
-                                        </v-list-tile-avatar>
-                                      </v-list-tile>
-                                      <v-divider></v-divider>
-                                    </div>
-      
-                                  </v-list>
+                              </div>
+                             
+                              <label for="">Color</label>
+                              <div  class="dropdown-color">
+                              <select v-model="currentItemEdit.color" required class="browser-default">
+                                  <option value="" disabled selected class="black-text">Choose your option</option>
+                                  <option value="red">Red</option>
+                                  <option value="orange">Orange</option>
+                                  <option value="yellow">Yellow</option>
+                                  <option value="green">Green</option>
+                                  <option value="blue">Blue</option>
+                                </select>
+                              </div>
+                                
+                              <div class="col mt-15">
+                                  <p v-if="currentItemEdit.nfcId == undefined || currentItemEdit.nfcId == null">
 
-                              </template>
-                            </v-container>
-    
-                          </section>
+                                      <i class="material-icons left" id="editItemCheck" @click="getNextNfcId(); showNFCStepperEdit = true;">check_box_outline_blank</i>
 
-                        <div style="position:initial; height:50px">
-                        <v-bottom-nav style="bottom:0;" absolute shift :value="true" :active.sync="e2" :color="computedColor">
-                          <v-btn dark v-on:click="e1 = 'Inpakken'; navigate('sectionPacks');">
-                            <span>Packs</span>
-                            <v-icon>business_center</v-icon>
-                          </v-btn>
-                          <v-btn dark v-on:click="e1 = 'Pack maken'; navigate('sectionCreateItem');">
-                            <span>Dashboard</span>
-                            <!-- <v-icon>blur_on</v-icon> -->
-                            <v-icon>view_comfy</v-icon>
-                          </v-btn>
-                          <v-btn dark v-on:click="e1 = 'items bekijken'; navigate('sectionItems');">
-                            <span>Items</span>
-                            <v-icon>kitchen</v-icon>
-                          </v-btn>
-                          <!-- <v-btn dark v-on:click="e1 = 'Instellingen'">
-                            <span>menu4</span>
-                            <v-icon>build</v-icon>
-                          </v-btn> -->
-                        </v-bottom-nav>
+                                      <label for="editItemCheck" class="label-font">Scan item?</label>
+
+                                    
+                                     
+                                  </p>
+                                  <p v-else>
+                                      <i class="material-icons left" id="editItemCheck">check_box</i>
+
+                                      <label for="editItemCheck" class="label-font">Scan item?</label>
+                                  </p>
+                              </div>
+                              <div class="col mt-15">
+                                  <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Save item
+                                      <i class="material-icons left btn-icon">border_color</i>
+                                  </button>
+                              </div>
+                            </form>
+                              
+                          </div>
+                          <input type="hidden" id="nextnfcid" v-model="nextNfcId"/>
+                        </section>
+                        
+                    <!-- Section packs -->
+                    
+                    <section id="sectionPacks" v-show="sectionPacks">
+                        <div class="col s12">
+                            <div class="col s12 break-2">
+                                <div class="fixed-action-btn horizontal click-to-toggle filter-btn">
+                                    <a class="btn-floating" style="background-color:#bb8b03">
+                                      <i class="material-icons">visibility</i>
+                                    </a>
+                                    <ul>
+                                        <li><a class="btn-floating white" @click="filterPackColor= 'all'">
+                                            <i class="material-icons" id="off-icon">visibility_off</i>
+                                            <i class="material-icons"></i>
+                                          </a></li>
+                                          <li><a class="btn-floating red" @click="filterPackColor= 'red'"><i class="material-icons"></i></a></li>
+                                          <li><a class="btn-floating orange" @click="filterPackColor= 'orange'"><i class="material-icons"></i></a></li>
+                                          <li><a class="btn-floating yellow" @click="filterPackColor= 'yellow'"><i class="material-icons"></i></a></li>
+                                          <li><a class="btn-floating green" @click="filterPackColor= 'green'"><i class="material-icons"></i></a></li>
+                                          <li><a class="btn-floating blue" @click="filterPackColor= 'blue'"><i class="material-icons"></i></a></li>
+                                    </ul>
+                                  </div>
+                            </div>
+
+                            <ul class="collection collection-packing">
+                                <li class="collection-item" @click="navigate('sectionCreatePack')">
+                                    <div> 
+                                        <a href="#!" class="secondary-content item-list-icon">
+                                          <i class="material-icons">add</i>
+                                        </a> Add pack
+                                      </div>
+                                </li>
+                                <div class="list-wrapper">
+                                  <li v-for="pack in userPacks" v-show="pack.color == filterPackColor || filterPackColor == 'all'" class="collection-item" @click="getPackItems(pack.id); selectColor = pack.color; currentPackNameBack = pack.name; currentPackEdit = pack; interactWithPack(pack.amountOfItems);">
+                                  
+                                <div > 
+                                  <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': pack.color  }">
+                                    <i class="material-icons">work</i>
+                                  </a> {{pack.name}} ({{ pack.amountOfItems }} items)
+                                  
+                                </div>
+                              </li>
+                            </div>
+                            </ul>
+                        </div>               
+                    </section>
+
+                    <!-- section dashboard -->
+
+                    <section id="sectionDashboard" v-if="sectionDashboard">
+
+                      <div class="container">
+                        <h3 class="center-align main-font">Packwatch</h3>
+                        <div class="col s12 break-3"></div>
+                        <!-- <h3 class="center-align">Dashboard</h3> -->
+                        <div class="card">
+                            <div class="card-image waves-effect waves-block waves-light">
+                              <img class="activator" src="img/backpack.jpg">
+                            </div>
+                            <div class="card-content card-position">
+                              
+                            </div>
+                            <div class="row">
+                              <div class="col offset-s1 s10 center-align btn-large secondary-color secondary-button" @click="navigate('sectionPacks'); startPacking = true;">
+                                Start Packing
+                              </div>
+                            </div>
+                            <br>
+                          </div>
                       </div>
+                    </section>
+
+                    
+
+                    <!-- Section create pack -->
+
+                    <section id="sectionCreatePack" v-show="sectionCreatePack" >
+                        <div class="container">
+                          <div class="row mt-15">
+                            <i class="material-icons back-icon" @click="navigate('sectionPacks')">arrow_back</i>
+                          </div>
+                          <form v-on:submit.prevent="createPack">
+                            <div class="input-field item">
+                                    <input id="last_name" type="text" class="validate" 
+                                    v-model="packName"
+                                    :rules="nameRules"
+                                    required maxlength="15">
+                                    <label for="last_name">Name</label>
+                            </div>
+                            <label for="">Color</label>
+                            <div  class="dropdown-color">
+                            <select v-model="currentPackEdit.color" required class="browser-default">
+                                <option value="" disabled selected class="black-text">Choose your option</option>
+                                <option value="red">Red</option>
+                                <option value="orange">Orange</option>
+                                <option value="yellow">Yellow</option>
+                                <option value="green">Green</option>
+                                <option value="blue">Blue</option>
+                              </select>
+                            </div>
+
+                            <div class="col mt-15">
+                                <button class="btn waves-effect waves-light btn-block secondary-color secondary-button" type="submit" name="action" >Add pack
+                                    <i class="material-icons left btn-icon">add_box</i>
+                                </button>
+                            </div>
+                          </form>
+                            
+                        </div>
+
+                    </section>
+
+                    <!-- Section edit pack -->
+
+                    <section id="sectionEditPack" v-show="sectionEditPack">
+
+                        <div class="container">
+                            <div class="row mt-15">
+                              <i class="material-icons back-icon" @click="currentPackEdit.name = currentPackNameBack;navigate('sectionPacks')">arrow_back</i>
+                              <a href="#!" class="right btn-floating btn-change-li delete-color"><i class="material-icons" @click="openModalPack(); deleteId = currentPackEdit.id">delete</i></a>
+                            </div>
+                            <form v-on:submit.prevent="updatePack">
+                              <div class="input-field item">
+                                  <label for="last_name" class="active" style="-webkit-transform: translateY(-14px) scale(0.8);
+                                  transform: translateY(-14px) scale(0.8);
+                                  -webkit-transform-origin: 0 0;
+                                  transform-origin: 0 0;
+                                  color:black">Name</label>
+                                      <input id="last_name" type="text" class="validate" 
+                                      v-model="currentPackEdit.name"
+                                      :rules="nameRules"
+                                      required maxlength="15" minlength="1">
+                                      
+                              </div>
+                             
+                              <label for="">Color</label>
+                              <div  class="dropdown-color">
+                              <select v-model="currentPackEdit.color" required class="browser-default">
+                                  <option value="" disabled selected class="black-text">Choose your option</option>
+                                  <option value="red">Red</option>
+                                  <option value="orange">Orange</option>
+                                  <option value="yellow">Yellow</option>
+                                  <option value="green">Green</option>
+                                  <option value="blue">Blue</option>
+                                </select>
+                              </div>
+                              <div class="row mt-15">
+                                  <button class="btn waves-effect waves-light  secondary-color secondary-button col s3 " type="submit" name="action" >Save pack
+                                      <i class="material-icons left btn-icon">border_color</i>
+                                  </button>
+
+                                  <button type="button" class="btn waves-effect waves-light secondary-color secondary-button col s3 offset-s1" @click="navigate('sectionPackItems');" >Items
+                                      <i class="material-icons right"></i>
+                                  </button>
+                              
+                                  <button type="button" class="btn waves-effect waves-light secondary-color secondary-button col s3 offset-s1" @click="prepareForPacking();" >Start packing!
+                                      <i class="material-icons right"></i>
+                                  </button>
+                                  
+                                  
+                                </div>
+                              </form>
+
+                            
+                          </div>      
+                        </section>
+
+
+                        <section id="sectionPackItems" v-show="sectionPackItems">
+                          <div class="row mt-15">
+                              <i class="material-icons back-icon" @click="navigate('sectionEditPack')">arrow_back</i>
+                              <button class="right btn callToAction" @click="prepareForPacking();">Start packing</button>
+                          </div>
+    
+                          <ul class="collection collection-3">
+                            <li class="collection-item" @click="navigate('sectionItems'); addingItemToPack = true;">
+                              <div> 
+                                <a href="#!" class="secondary-content item-list-icon">
+                                  <i class="material-icons">add</i>
+                                </a> Add item to pack
+                              </div>
+                            </li>
+                            <div class="list-wrapper">
+                              <li v-for="item in currentPackItems" class="collection-item">
+                                <div> 
+                                  <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': item.color  }">
+                                    <i class="material-icons">note</i>
+                                  </a> {{item.name}} 
+                                  <!-- right -->
+                                  <a href="#!" class="secondary-content" @click="unlinkItemFromPack(item.id)">
+                                    <i class="material-icons right delete-text">delete</i>
+                                  </a>   
+                                  <i v-if="item.nfcId" class="material-icons right">nfc</i>  
+                                </div>
+                              </li>
+                            </div>
+                          </ul>                    
+                        </section>
+
+                        <section id="sectionPackingPack" v-show="sectionPackingPack">
+                          <input type="hidden" id="nfcReadTag" value=""/>
+                          <button style="display:none" id="nfcCheck" @click="nfcCheck()" hidden></button>
+
+                          <button style="display:none" id="nfcStartReading" onclick="readTag()" hidden>is "clicked" by vue when packing a pack</button>
+                          <button style="display:none" id="nfcStopReading" onclick="nfc.removeNdefListener(readNFC);" hidden>stop listening for tag (needed when writing)</button>
+                          <div class="row mt-15">
+                              <i class="material-icons back-icon" @click="navigate('sectionEditPack')">arrow_back</i>
+                          </div>
+                          <div class="container mt-15" style="margin: 10px;">
+                            <p>Hold your phone against an item's tag or your PackWatch Sensor© or tap an item</p>
+                          </div>
+    
+                          <ul class="collection collection-packingpack">
+                            <div class="list-wrapper">
+                              <li v-for="item in currentPackItems" class="collection-item" @click="toggleItemInPack(item.id); navigate('sectionPackingPack');">
+                                <div v-if="Object.getOwnPropertyNames(itemsInPack).length > 0"> 
+                                  <a href="#!" class="secondary-content item-list-icon" v-bind:style="{ 'color': item.color  }">
+                                    <i class="material-icons">note</i>
+                                  </a> {{item.name}}
+                                  <!-- right -->
+                                    <i v-if="itemsInPack[item.id]" class="material-icons right green-text">check</i>
+                                    <i v-else="itemsInPack[item.id]" class="material-icons right red-text">clear</i>
+                                    <i v-if="item.nfcId" class="material-icons right">nfc</i>
+                                </div>
+                              </li>
+                            </div>
+                          </ul>                    
+                        </section>
             </v-app>
     </div>
 
-
+    
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
 
-    
-    <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
+     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+   
+   
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
     <script src="js/ui.js"></script>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
         app.initialize();
     </script>
+     <script src="js/materialize.js"></script>
+     <script src="js/materialize-stepper.min.js"></script>
+    
+
 </body>
 
 </html>
